@@ -1,12 +1,14 @@
-<table>
-<tr><td> Title </td><td> A short title of the proposal </td>
-<tr><td> Status </td><td> Draft | Proposed | Accepted | Rejected | Deferred | Implemented </td></tr>
-<tr><td> Author(s) </td><td> Full Name &lt;full.name@gmail.com&gt;</td></tr>
-<tr><td> Created </td><td> Oct 15, 2019</td></tr>
-<tr><td> Updated </td><td> Aug 15, 2019</td></tr>
-<tr><td> Discussion </td><td> link to the PR where the FEP is being discussed, NA is circulated initially </td></tr>
-<tr><td> Implementation </td><td> link to the PR for the implementation, NA if not availble </td></tr>
-</table>
+
+| FEP00             |                                                                               |
+|-------------------|-------------------------------------------------------------------------------|
+| Title             | A short title of the proposal                                                 |
+| Status            | Draft / Proposed / Accepted / Rejected / Deferred / Implemented               |
+| Author(s)         | user name                                                                     |
+| Created           | Oct 15, 2019                                                                  |
+| Updated           | Aug 15, 2019                                                                  |
+| Discussion        | link to the PR where the FEP is being discussed, NA is circulated initially   |
+| Implementation    | link to the PR for the implementation, NA if not availble                     |
+
 
 ## Abstract
 
