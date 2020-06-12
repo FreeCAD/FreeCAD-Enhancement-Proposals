@@ -16,28 +16,17 @@ A proposal for the future handling of versions in FreeCAD.
 
 ## Motivation
 
-A clear requirement for the handling of the versions is the basis for an efficient improvement of FreeCAD and libraries that use FreeCAD. Each of the three digits of the version number represents a degree of change. This must be formulated precisely in order to find a quick compromise on the one hand and on the other hand to give the user a clear message of what type of change he is dealing with.
+A clear requirement for the handling of the versions is the basis for an efficient optimization of FreeCAD and libraries that use FreeCAD. Each of the three digits of the version string represents a different degree of change. This must be formulated precisely in order to  on the one hand and on the other hand to give the user a clear message of what type of change he is dealing with.
 
 Furthermore, a suggestion for the versioning of extensions for FreeCAD should be given. Basically, the same scheme should be used as for FreeCAD itself. This enables package managers and the internal add-on manager to find a compatible version of an extension.
 
 
-## Definitions
+## Definitions of different forms of compatibility
 
-### Interface compatibility
-
-Interface compatibility is important for developers who use FreeCAD as a dependency in other projects. FreeCAd offers interfaces at various levels (c ++, Python, comman-line). All of these interfaces can be handled in the same way using the version number.
-
-### File compatibility
-
-The file compatibility is the compatibility of different versions for opening FreeCAD files (.FCstd).
-
-### Forward compatibility
-
-Forward compatible is the term used to describe changes which guarantee the compatibility of files or interfaces for the new version with an older version.
-
-### Backward compatibility
-
-Backwards compatible are changes that guarantee the compatibility of files or interfaces for the new version with an older version.
+__Interface compatibility__ is important for developers who use FreeCAD as a dependency in other projects. FreeCAd offers interfaces at various levels (c ++, Python, comman-line). All of these interfaces can be handled in the same way using the version number.
+The __file compatibility__ is the compatibility of different versions for opening FreeCAD files (.FCstd).
+__Forward compatible__ is the term used to describe changes which guarantee the compatibility of files or interfaces for the new version with an older version.
+A version is __backward compatible__ with another version if interfaces/files created for the old version are also working with the new version.
 
 ## The version numbers
 
