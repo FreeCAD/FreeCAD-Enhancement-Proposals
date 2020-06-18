@@ -50,7 +50,7 @@ It was decided on topological naming beeing the critical feature which marks the
 
 ### Suggestion for choosing a version-scheme for 3rd-party modules
 
-Extension should use the same scheme as FreeCAD but at least should define theire version handling so that maintainers can provide packages which have no incompatibilities between freecad and the extension itself.
+Extension should use the same scheme as FreeCAD but at least should define theire version handling so that maintainers can provide packages which have no incompatibilities between FreeCAD and the extension itself.
 
 ## Copyright
 
