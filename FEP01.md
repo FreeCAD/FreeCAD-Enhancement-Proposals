@@ -16,20 +16,20 @@ A proposal for the future handling of versions in FreeCAD.
 
 ## Motivation
 
-A clear requirement for the handling of the versions is the basis for an efficient optimization of FreeCAD and libraries that use FreeCAD. Each of the three digits of the version string represents a different degree of change. The meaning of each digit-change must be formulated precisely to make decisions on how the version of a release must be selected and on the other hand give a clear sign for developers using freecad as a dependency or for users to see if files are compatible.
+A clear requirement for the handling of the versions is the basis for an efficient optimization of FreeCAD and libraries that use FreeCAD. Each of the three numbers of the version string represents a different degree of change. The meaning of each digit-change must be formulated precisely to make decisions on how the version of a release must be selected and on the other hand give a clear sign for developers using freecad as library if the version is API-compatible or not and for users to see if files from older versions are compatible.
 
 Furthermore, a suggestion for the versioning of extensions for FreeCAD should be given.
 
 
-
-## Definitions of different forms of compatibility
+## Specification
+### Definitions of different forms of compatibility
 
 __Interface compatibility__ is important for developers who use FreeCAD as a library. FreeCAD offers interfaces at various levels (c ++, Python, comman-line). All of these interfaces can be handled in the same way using the version number.
 The __file compatibility__ is the compatibility of different versions for opening FreeCAD files (.FCstd).
 __Forward compatible__ is the term used to describe changes which guarantee the compatibility of files or interfaces for the new version with an older version.
 A version is __backward compatible__ with another version if interfaces/files created for the old version are also working with the new version.
 
-## The version numbers
+### The version numbers
 
 The version is given by three numbers (**major**.**minor**.**patch**)
 
@@ -44,9 +44,13 @@ Once a higher priority digit changes all lower priority numbers are reset to 0. 
 
 This scheme possible change in the future but holds for major-versions 0 and 1.
 
-## Decision when to change from 0 to 1
+### Decision when to change from 0 to 1
 
 It was decided on topological naming beeing the critical feature which marks the point where we should change the major version from 0 to 1.
+
+### Suggestion for choosing a version-scheme for 3rd-party modules
+
+Extension should use the same scheme as FreeCAD but at least should define theire version handling so that maintainers can provide packages which have no incompatibilities between freecad and the extension itself.
 
 ## Copyright
 
