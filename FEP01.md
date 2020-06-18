@@ -16,47 +16,37 @@ A proposal for the future handling of versions in FreeCAD.
 
 ## Motivation
 
-A clear requirement for the handling of the versions is the basis for an efficient optimization of FreeCAD and libraries that use FreeCAD. Each of the three digits of the version string represents a different degree of change. This must be formulated precisely in order to  on the one hand and on the other hand to give the user a clear message of what type of change he is dealing with.
+A clear requirement for the handling of the versions is the basis for an efficient optimization of FreeCAD and libraries that use FreeCAD. Each of the three digits of the version string represents a different degree of change. The meaning of each digit-change must be formulated precisely to make decisions on how the version of a release must be selected and on the other hand give a clear sign for developers using freecad as a dependency or for users to see if files are compatible.
 
-Furthermore, a suggestion for the versioning of extensions for FreeCAD should be given. Basically, the same scheme should be used as for FreeCAD itself. This enables package managers and the internal add-on manager to find a compatible version of an extension.
+Furthermore, a suggestion for the versioning of extensions for FreeCAD should be given.
+
 
 
 ## Definitions of different forms of compatibility
 
-__Interface compatibility__ is important for developers who use FreeCAD as a dependency in other projects. FreeCAd offers interfaces at various levels (c ++, Python, comman-line). All of these interfaces can be handled in the same way using the version number.
+__Interface compatibility__ is important for developers who use FreeCAD as a library. FreeCAD offers interfaces at various levels (c ++, Python, comman-line). All of these interfaces can be handled in the same way using the version number.
 The __file compatibility__ is the compatibility of different versions for opening FreeCAD files (.FCstd).
 __Forward compatible__ is the term used to describe changes which guarantee the compatibility of files or interfaces for the new version with an older version.
 A version is __backward compatible__ with another version if interfaces/files created for the old version are also working with the new version.
 
 ## The version numbers
 
-The version is given by three digits (major.minor.patch)
+The version is given by three numbers (**major**.**minor**.**patch**)
 
-### The major version
+The first digit of the version-string is the **major-version**. It indicates the degree of development of the project. The major-version is changed whenever a bigger change (This can be for example refactoring or a change of the functionality). The change from 0 to 1 stands for a change from development-phase to a more stable-phase. This means that the 1-version should not get any big changes in terms of functionality and trying to keep the versions compatible will be taken more seriously.
 
-The first number of the version number indicates the degree of development of the project. The 0 (zero) version is a special case and is called (development version). The minor version is handled differently for this. Changing the major version in non-zero versions is equivalent to changing the minor version in the null version.
+The second number is the **minor-version**. A change in the minor version-number represents a change that neither guarantees backward compatibility nor forward compatibility.
 
-### The minor version
+The third number is the **patch-version**. If this version-number increases only backward-compatible chnanges are added.
 
-#### 0 versions
-
-In the 0 versions, a change in the minor version represents a change that neither guarantees backward compatibility nor forward compatibility. This corresponds to a change in the major version for 1+ versions.
-
-#### 1+ versions
-
-In the 1+ versions, a change in the minor version represents a change that guarantees backward compatibility. There is no compatibility in the other direction (forward compatibility)
+Once a higher priority digit changes all lower priority numbers are reset to 0. This means if the minor-version is increased from 18 to 19 the patch version is set to 0. If the major version is increased from 0 to 1 both the minor-version and the patch-version are set to 0.
 
 
-### The patch version
+This scheme possible change in the future but holds for major-versions 0 and 1.
 
-A change in the patch version number represents a change that does not represent a loss of compatibility (forward + backward). Such changes can be, for example:
+## Decision when to change from 0 to 1
 
-- Adaptations to dependencies, which were made available in a newer version
-- Bugfixes
-
-## Change from 0 version to 1+ version
-
-This topic was heavily discussed in the FreeCAD-Forum. (TODO @vocx, @triplus what is the conclusion)
+It was decided on topological naming beeing the critical feature which marks the point where we should change the major version from 0 to 1.
 
 ## Copyright
 
