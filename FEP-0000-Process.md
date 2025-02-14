@@ -42,6 +42,7 @@ digits and new FEPs should get the next free FEP number. FEP numbers are unique 
 once FEP number is obtained it is reserved for that and only that FEP and cannot be reused later.
 
 ### Who can make a FEP?
+
 Everyone! Though given that it is very technical document related to the FreeCAD code and/or
 development process it is mostly aimed for being created by the developer community.
 
@@ -62,7 +63,7 @@ as good FEP candidate.
   process or part of it. In case of this type of FEP the implementation would refer not to code but
   how we can ensure that the process is respected.
 - **Informational** FEPs can be used to for example provide general guides for development, roadmap,
-  goals etc. 
+  goals etc.
 
 ### Audience
 
@@ -75,11 +76,12 @@ for the whole community, not part of it.
 ![](./assets/process.png)
 
 #### Proposing Process
+
 Formal life of FEP starts as Pull Requests to the FEP repository, the title of PR should be
 `FEP-0000: Title of the FEP`. Discussion on the idea for FEP can be started earlier inside the "FEP
 Ideas" discussion forum or on any PR, or issue. While the preliminary discussion is not required it
 is encouraged in one form or another. Once the idea starts to be formalized into concrete proposal
-it should be submitted as PR against the FEP repository. 
+it should be submitted as PR against the FEP repository.
 
 The PR should contain singular file based on the [template](./TEMPLATE.md) named using
 `FEP-0000-kebab-case-title.md` naming scheme. Author may adjust the template to the needs of given
@@ -93,35 +95,39 @@ PR. Author may chose to create new topic or ask Maintainers to simply move topic
 section. Once this is done, PR containing the FEP should be merged into the repository assuming
 there are no formal problems with the PR.
 
+At any stage of the process author can move the FEP into **Withdrawn** stage. If the author is not
+active anymore Maintainers may also choose to move **Proposed** FEP into **Withdrawn** stage.
 
 #### Voting Process
+
 Once the author(s) of the FEP decide that the discussion on FEP is concluded it should be moved into
-**Voting** state. Voting should be announced on the "Voting" of the Discussion forum and original
-discussion topic for the FEP with 1 week notice. Authors can always delay the voting if they deem
-so. 
+**Voting** state. Voting should be announced on the "FEP Voting Announcements" of the Discussion
+forum and original discussion topic for the FEP with 1 week notice. Authors can always delay the
+voting if they deem so.
 
 Voting period lasts for 2 weeks. Members of the FreeCAD Developer have 1 vote each and Maintainers
 GitHub group have two votes each. No member is obliged to vote. FEP must obtain at least 50% + 1 of
 positive votes in order to be accepted. There is no formal quorum required for vote bo be valid, but
 in case of votes having less than 30% of allowed voters participating author may decide to extend
-the vote or reschedule it. If vote closes with low participation vote may be decided by maintainers
-as inconclusive and moved back into Proposed stage.
+the vote or reschedule it. If vote closes with low participation, it may be decided by maintainers
+as inconclusive and FEP moved back into **Proposed** stage for further discussion.
 
 If the FEP is accepted by the vote it moves into **Accepted** stage awaiting for completion of
 implementation, for **Process** and **Informational** FEP types this is the final stage. Once
 implementation is merged into the FreeCAD repository FEP moves into **Implemented** state which is
 the final state for **Core Change** FEPs. Technically FEP may be moved from **Accepted** stage into
 **Rejected** (or **Draft**) if the implementation process is not finished within reasonable time
-frame or the implementation process shows flaws that were not known at discussion stage. 
+frame or the implementation process shows flaws that were not known at discussion stage.
 
 #### Living Standards
+
 **Informational** and **Process** FEPs can also get **Active** status once they are initially
 accepted. FEPs marked as **Active** become living standards, that can evolve in time to reflect
 changes to development practices, processes etc. Changes to **Active** FEPs can be made using normal
 Pull Requests, each Pull Request should update the minor version of the changed FEP. If big changes
 to **Active** FEP are required it should be done by creating another FEP, in that case once that FEP
 is accepted the original one should be updated and Major version should be bumped to reflect that
-change.  
+change.
 
 ## References
 
