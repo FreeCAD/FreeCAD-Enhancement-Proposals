@@ -1,14 +1,15 @@
-# FEP-0000 FEP Process
+# FEP-0001: FEP Process
 
-| FEP-0000       |                           |
-| -------------- | ------------------------- |
-| Type           | Process                   |
-| Status         | Draft                     |
-| Author(s)      | Kacper Donat (@kadet1090) |
-| Version        | 0.1                       |
-| Created        | Feb 15, 2025              |
-| Discussion     | N/A                       |
-| Implementation | Not applicable            |
+| FEP-0001       |                                               |
+| -------------- | --------------------------------------------- |
+| Type           | Process                                       |
+| Description    | Definition of new FreeCAD Enhancement Process |
+| Status         | Draft                                         |
+| Author(s)      | Kacper Donat (@kadet1090)                     |
+| Version        | 0.1                                           |
+| Created        | Feb 15, 2025                                  |
+| Discussion     | N/A                                           |
+| Implementation | Not applicable                                |
 
 FEP - FreeCAD Enhancement Proposal is a design document providing information for the FreeCAD
 developers, establishing a process in FreeCAD development or describing a substantial change to the
@@ -83,7 +84,7 @@ Ideas" discussion forum or on any PR, or issue. While the preliminary discussion
 is encouraged in one form or another. Once the idea starts to be formalized into concrete proposal
 it should be submitted as PR against the FEP repository.
 
-The PR should contain singular file based on the [template](./TEMPLATE.md) named using
+The PR should contain singular file based on the [template](../FEP-0000-template.md) named using
 `FEP-0000-kebab-case-title.md` naming scheme. Author may adjust the template to the needs of given
 FEP, for example add more sections but sticking to the template is very highly encouraged. All FEPs
 should start in the **Draft** stage, within that stage author is free to make any changes to the
