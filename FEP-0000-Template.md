@@ -3,7 +3,7 @@
 | FEP-0000       |                                                                                                 |
 | -------------- | ----------------------------------------------------------------------------------------------- |
 | Type           | Core Change / Informational / Process                                                           |
-| Status         | Draft / Proposed / Withdrawn / Voting / Accepted / Rejected / Implemented / Superseded / Active |
+| Status         | Draft / Proposed / Withdrawn / Voting / Accepted / Rejected / Implemented / Obsolete / Active   |
 | Author(s)      | user name                                                                                       |
 | Version        | 0.x for Draft, 1.y-x.y for Proposed.                                                            |
 | Created        | Feb 15, 2025                                                                                    |
@@ -24,6 +24,10 @@ Why particular decisions were made in the proposal.
 ## Specification
 
 The technical details of the proposed change.
+
+### Impact on existing features / subsystems
+
+Any remarks about how the proposal will impact existing features or subsystem within the FreeCAD.
 
 ### Backwards Compatibility (only for Core Changes)
 

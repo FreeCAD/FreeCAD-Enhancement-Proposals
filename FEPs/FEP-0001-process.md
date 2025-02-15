@@ -53,8 +53,19 @@ FEP process is quite formal and so FEPs can take some time to process, that is w
 mostly for major changes to the codebase or processes. In general, FEPs should be made in situations
 where there is no clear consensus on how to approach given problem, when the proposed change
 requires greater developer community feedback or when requested explicitly on PR by the community
-Each major change (like introducing new core subsystem, component or workbench) should be considered
-as good FEP candidate.
+Each major change should be considered as good FEP candidate.
+
+Examples on when FEPs **should be** created:
+ - Creating new core Workbench
+ - Making a big change to existing workbench (like renaming Path to CAM, or merging part and part
+   design)
+ - Creating new core subsystem (like migration system) 
+
+Examples on when FEPS **are not needed**:
+ - Minor features (addition of another property to existing feature)
+ - Fixing bugs, especially if there is open issue
+ 
+In rare occasions author of PR may be asked to create one if the change requires broader discussion.
 
 ### FEP Types
 
@@ -66,6 +77,18 @@ as good FEP candidate.
 - **Informational** FEPs can be used to for example provide general guides for development, roadmap,
   goals etc.
 
+### What should FEP contain?
+
+A good FEP should:
+ - Provide **Motivation and rationale** for the change, explaining to all community members why the
+   change is needed and how it will improve the current state of the project.
+- Define **Specification** that describes in detail what is expected result, how it can be
+  implemented, impact on other features and subsystems and backward compatibility.
+- Proof that **Implementation** is feasible and possible in reasonable time frame. FEP Author(s) is
+  responsible for making sure that change will be implemented by the Author(s) or any other person.
+- Consider **Alternative** approaches to the problem with explanation why they were not chosen.
+- Consider **Future Work** that can or should be done after FEP is successfully implemented.
+
 ### Audience
 
 FEPs are mostly targeted at the developer community of FreeCAD, though in many cases user community
@@ -74,9 +97,9 @@ for the whole community, not part of it.
 
 ### Workflow
 
-![](./assets/process.png)
+![](./assets/FEP-0001-process.png)
 
-#### Proposing Process
+#### Proposal Phase
 
 Formal life of FEP starts as Pull Requests to the FEP repository, the title of PR should be
 `FEP-0000: Title of the FEP`. Discussion on the idea for FEP can be started earlier inside the "FEP
@@ -96,10 +119,11 @@ PR. Author may chose to create new topic or ask Maintainers to simply move topic
 section. Once this is done, PR containing the FEP should be merged into the repository assuming
 there are no formal problems with the PR.
 
-At any stage of the process author can move the FEP into **Withdrawn** stage. If the author is not
-active anymore Maintainers may also choose to move **Proposed** FEP into **Withdrawn** stage.
+At any stage of the process author can move the FEP into **Withdrawn** stage of Proposal Phase. If
+the author is not active anymore Maintainers may also choose to move **Proposed** FEP into
+**Withdrawn** stage.
 
-#### Voting Process
+##### Voting
 
 Once the author(s) of the FEP decide that the discussion on FEP is concluded it should be moved into
 **Voting** state. Voting should be announced on the "FEP Voting Announcements" of the Discussion
@@ -113,14 +137,22 @@ in case of votes having less than 30% of allowed voters participating author may
 the vote or reschedule it. If vote closes with low participation, it may be decided by maintainers
 as inconclusive and FEP moved back into **Proposed** stage for further discussion.
 
-If the FEP is accepted by the vote it moves into **Accepted** stage awaiting for completion of
-implementation, for **Process** and **Informational** FEP types this is the final stage. Once
-implementation is merged into the FreeCAD repository FEP moves into **Implemented** state which is
-the final state for **Core Change** FEPs. Technically FEP may be moved from **Accepted** stage into
-**Rejected** (or **Draft**) if the implementation process is not finished within reasonable time
-frame or the implementation process shows flaws that were not known at discussion stage.
+#### Post-Voting Phase
 
-#### Living Standards
+If FEP is accepted by the vote it moves into **Accepted** stage awaiting for completion of
+implementation, for **Process** and **Informational** FEP types this is the final stage. 
+
+Once implementation is merged into the FreeCAD repository FEP moves into **Implemented** state which
+is the final state for **Core Change** FEPs. Technically FEP may be moved from **Accepted** stage
+into **Rejected** (or **Draft**) if the implementation process is not finished within reasonable
+time frame or the implementation process shows flaws that were not known at discussion stage.
+Ensuring that the Proposal is implemented is the sole responsibility of the FEP Author(s).
+
+If FEP is rejected it is moved into **Rejected** stage, all rejected FEPs are kept for historical
+record. FEP author may decide to re-try rejected FEP if they deem so, but it should be done as new
+FEP and take into consideration reasons why the original proposal was rejected.
+
+##### Living Standards
 
 **Informational** and **Process** FEPs can also get **Active** status once they are initially
 accepted. FEPs marked as **Active** become living standards, that can evolve in time to reflect
@@ -130,9 +162,20 @@ to **Active** FEP are required it should be done by creating another FEP, in tha
 is accepted the original one should be updated and Major version should be bumped to reflect that
 change.
 
+##### Obsolete FEPs
+
+Once FEP does no longer reflect or is no longer applicable to the current state of the FreeCAD it is
+moved into **Obsolete** state. **Obsolete** FEPs are no longer in power and are kept for historical
+reasons mostly. FEPs can be obsoleted by other FEPs, if newer FEP makes another FEP no longer
+applicable the other one should be marked as obsoleted by the newer FEP, which should be registered
+within the older one.
+
 ## References
 
-- PEP 1: https://peps.python.org/pep-0001/
+1. PEP 1: https://peps.python.org/pep-0001/
+2. PHP RFC Process: https://wiki.php.net/rfc
+3. Vue RFC Process: https://github.com/vuejs/rfcs
+4. QGIS Enhancement Proposals: https://github.com/qgis/QGIS-Enhancement-Proposals
 
 ## License
 
