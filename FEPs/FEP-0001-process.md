@@ -22,19 +22,39 @@ topic related to FreeCAD development direction.
 
 ## Motivation
 
-FreeCAD does not have a good process for making important decisions that affect the whole
-application. Lack of such decision process makes it hard to make big changes to the code, establish
-processes or rules for the FreeCAD development.
+The FreeCAD community does not have a good process for making important decisions that affect the
+whole application.  Currently, important decisions are made ad-hoc, often in relation to a specific
+issue that an author of the given issue or PR is facing.
+
+Consequences of this suboptimal process in issues and PRs are that:
+
+1. discussions typically do not take the whole context into account,
+2. it is challenging to find discussions about important matters,
+3. it is challenging to make large changes to the code, and
+4. that establishing processes or rules for FreeCAD is difficult.
+
+This affects the whole FreeCAD community because it is unclear where FreeCAD is headed and it is
+difficult to propose a development direction with a larger scope.  Finally, developers in the
+FreeCAD community are affected because there is a high risk on working on a larger task that has to
+be split up in many smaller incremental PRs.
+
+Having a decision process as proposed in this document helps to define development directions with
+a larger scope and provides an opportunity to have a large amount of support from the community.
 
 ## Rationale
 
-Currently important decisions are made ad-hoc, often in relation to specific issue that author of
-given issue or PR is facing. This makes it hard to both find the discussions about important
-matters. Discussions happening within context of given PR or issue are also more prone to not take
-the whole picture into the decision making process.
+The goal of the FEP process is to provide a well defined process for both provoking discussion
+about such matters and making the decision on the way to proceed.  Instead of inventing a new
+process, this proposal adopts already established processes used by other projects for similar
+reasons.  In general there are two flavors: Enhancement Proposals and Request for Comments (RFC).
 
-The goal of the FEP process is to provide a well defined process for both provoking discussion about
-such matters and making the decision on the way to proceed.
+Examples of enhancement proposals are Python Enhancement Proposals [[1](#ref1)] and QGIS
+Enhancement Proposals [[2](#ref2)].  Examples of Request for Comments (RFC) are the PHP RFC Process
+[[3](#ref3)] and the Vue RFC Process [[4](#ref4)].
+
+Where RFCs are associated more with internet standards such as HTTP and TCP/IP for which the
+audience is a global community, enhancement proposals are typically project-specific, for example
+for Python.  Therefore, enhancement proposals are a better fit for FreeCAD than RFCs.
 
 ## Specification
 
@@ -172,10 +192,10 @@ within the older one.
 
 ## References
 
-1. PEP 1: https://peps.python.org/pep-0001/
-2. PHP RFC Process: https://wiki.php.net/rfc
-3. Vue RFC Process: https://github.com/vuejs/rfcs
-4. QGIS Enhancement Proposals: https://github.com/qgis/QGIS-Enhancement-Proposals
+1. <span name=ref1>PEP 1</span>: <https://peps.python.org/pep-0001/>
+2. <span name=ref2>QGIS Enhancement Proposals</span>: <https://github.com/qgis/QGIS-Enhancement-Proposals>
+3. <span name=ref3>PHP RFC Process</span>: <https://wiki.php.net/rfc>
+4. <span name=ref4>Vue RFC Process</span>: <https://github.com/vuejs/rfcs>
 
 ## License
 
