@@ -150,17 +150,23 @@ the author is not active anymore Maintainers may also choose to move **Proposed*
 
 ##### Voting
 
-Once the author(s) of the FEP decide that the discussion on FEP is concluded it should be moved into
-**Voting** state. Voting should be announced on the "FEP Voting Announcements" of the Discussion
-forum and original discussion topic for the FEP with 1 week notice. Authors can always delay the
-voting if they deem so.
+Once the author(s) of the FEP decide that the discussion on the FEP has concluded, it should be
+moved into the **Voting** state. Voting should be announced on the "FEP Voting Announcements" of
+the Discussion forum and the original discussion topic for the FEP with 1 week notice. Authors can
+always delay the voting if they deem fitting.
 
-Voting period lasts for 2 weeks. Members of the FreeCAD Developer have 1 vote each and Maintainers
-GitHub group have two votes each. No member is obliged to vote. FEP must obtain at least 50% + 1 of
-positive votes in order to be accepted. There is no formal quorum required for vote bo be valid, but
-in case of votes having less than 30% of allowed voters participating author may decide to extend
-the vote or reschedule it. If vote closes with low participation, it may be decided by maintainers
-as inconclusive and FEP moved back into **Proposed** stage for further discussion.
+The voting period lasts two weeks.  Members of the GitHub Developers group have one vote each and
+members of the GitHub Maintainers GitHub group have two votes each. No member is obliged to
+vote. The FEP must obtain at least 50% + 1 of positive votes in order to be accepted. There is no
+formal quorum required for the vote to be valid, but in case of votes having less than 30% of
+allowed participating voters, the author may decide to extend the vote or reschedule it.  If the
+vote closes with low participation, the maintainers may decided the vote to be inconclusive and
+move the FEP back into the **Proposed** stage for further discussion.
+
+Although only developers and maintainers have the right to vote on the development direction, it
+may often be valuable to have advice and support from the GitHub CAD Working Group and Design
+Working Group.  These groups can be asked to advise and for their support on the proposal.  This
+advice can then be taken into account by the voting participants.
 
 #### Post-Voting Phase
 
