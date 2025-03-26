@@ -99,15 +99,20 @@ In rare occasions author of PR may be asked to create one if the change requires
 
 ### What should FEP contain?
 
-A good FEP should:
- - Provide **Motivation and rationale** for the change, explaining to all community members why the
-   change is needed and how it will improve the current state of the project.
-- Define **Specification** that describes in detail what is expected result, how it can be
-  implemented, impact on other features and subsystems and backward compatibility.
-- Proof that **Implementation** is feasible and possible in reasonable time frame. FEP Author(s) is
-  responsible for making sure that change will be implemented by the Author(s) or any other person.
-- Consider **Alternative** approaches to the problem with explanation why they were not chosen.
-- Consider **Future Work** that can or should be done after FEP is successfully implemented.
+A good FEP should contain:
+
+- a **Motivation** for the change.  It should explain what is lacking or is problematic in the
+  current situation, who is affected by this, and why the proposal is worth pursuing.
+- a **Rationale**.  It should explain why the proposed approach was chosen while justifying design
+  decisions.  Examples are why alternatives are rejected and what trade-offs have been considered.
+- a **Specification** that describes in detail what the expected result is, how it can be
+  implemented, what the impact on other features and subsystems are, and how backward compatibility
+  is guaranteed.
+- proof that the **Implementation** is feasible and possible in a reasonable time frame.  FEP
+  Authors are responsible for making sure that the change will be implemented by the Authors or any
+  other persons.
+- **Alternative** approaches to the problem with an explanation why they were not chosen.
+- a **Future Work** section that can or should be done after the FEP is successfully implemented.
 
 ### Audience
 
