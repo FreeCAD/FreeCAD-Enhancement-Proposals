@@ -1,15 +1,15 @@
 # FEP-0001: FEP Process
 
-| FEP-0001       |                                               |
-| -------------- | --------------------------------------------- |
-| Type           | Process                                       |
-| Description    | Definition of the FreeCAD Enhancement Process |
-| Status         | Draft                                         |
-| Author(s)      | Kacper Donat (@kadet1090)                     |
-| Version        | 0.1                                           |
-| Created        | Feb 15, 2025                                  |
-| Discussion     | N/A                                           |
-| Implementation | Not applicable                                |
+| FEP-0001       |                                                        |
+|----------------|--------------------------------------------------------|
+| Type           | Process                                                |
+| Description    | Definition of the FreeCAD Enhancement Process          |
+| Status         | Draft                                                  |
+| Author(s)      | Kacper Donat (@kadet1090), Pieter Hijma (@pieterhijma) |
+| Version        | 0.1                                                    |
+| Created        | Feb 15, 2025                                           |
+| Discussion     | N/A                                                    |
+| Implementation | Not applicable                                         |
 
 A FreeCAD Enhancement Proposal (FEP) is a design document that provides information for FreeCAD
 developers.  It establishes a process for FreeCAD development or describes a substantial change to
