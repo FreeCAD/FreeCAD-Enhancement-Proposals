@@ -65,9 +65,10 @@ reused later.
 
 ### Who can create a FEP?
 
-Anyone!  However, given that FEPs are highly technical documents related to the FreeCAD code and/or
-the development process, it is mostly aimed for being created by the developer community.  Although
-not strictly necessary, it is advised that non-developers cooperate with a FreeCAD developer.
+FEPs are highly technical documents related to the FreeCAD code and/or the development process.
+Therefore, they are primarily intended to be created by the developer community.  Anyone from the
+GitHub Developers Group can instantiate a FEP.  Anyone outside this group who wishes to propose a
+FEP must do so in collaboration with a member of the Developers Group.
 
 ### When is a FEP required?
 
