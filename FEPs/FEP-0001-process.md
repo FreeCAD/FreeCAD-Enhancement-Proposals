@@ -58,10 +58,9 @@ for Python. Therefore, enhancement proposals are a better fit for FreeCAD than R
 
 ## Specification
 
-FEPs should be published as Discussions on the FEP repository (TBD). Each FEP is numbered using
-four digits and new FEPs should get the next free FEP number. FEP numbers are unique and
-persistent - once a FEP number is obtained, it is reserved for that and only that FEP and cannot be
-reused later.
+Each FEP is numbered using four digits and new FEPs should get the next free FEP number. FEP numbers
+are unique and persistent - once a FEP number is obtained, it is reserved for that and only that FEP
+and cannot be reused later. All FEPs are stored in the [FEP Repository] as files within the `FEPs` folder.
 
 ### Who can create a FEP?
 
@@ -226,3 +225,5 @@ registered within the older one as well.
 ## License
 
 [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/).
+
+[FEP Repository]: https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals
