@@ -63,7 +63,7 @@ Discussion on further work related to the FEP that can be done.
 
 Any substantial changes to the FEP should be recorded in this section - latest changes should be on top:
 
-### 0.x - Feb 15 2025
+### 0.x - 2025-02-15
 
 - First Change
 - Second Change

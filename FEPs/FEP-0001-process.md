@@ -7,7 +7,7 @@
 | Status         | Draft                                                  |
 | Author(s)      | Kacper Donat (@kadet1090), Pieter Hijma (@pieterhijma) |
 | Version        | 0.2                                                    |
-| Created        | Feb 15, 2025                                           |
+| Created        | 2025-02-15                                             |
 | Discussion     | N/A                                                    |
 | Implementation | Not applicable                                         |
 
