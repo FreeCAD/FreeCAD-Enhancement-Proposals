@@ -1,15 +1,16 @@
 # FEP-0001: FEP Process
 
-| FEP-0001       |                                                        |
-| -------------- | ------------------------------------------------------ |
-| Type           | Process                                                |
-| Description    | Definition of the FreeCAD Enhancement Process          |
-| Status         | Draft                                                  |
-| Author(s)      | Kacper Donat (@kadet1090), Pieter Hijma (@pieterhijma) |
-| Version        | 0.2                                                    |
-| Created        | 2025-02-15                                             |
-| Discussion     | N/A                                                    |
-| Implementation | Not applicable                                         |
+| FEP-0001           |                                                                  |
+| ------------------ | ---------------------------------------------------------------- |
+| Type               | Process                                                          |
+| Description        | Definition of the FreeCAD Enhancement Process                    |
+| Status             | Proposed                                                         |
+| Author(s)          | Kacper Donat (@kadet1090), Pieter Hijma (@pieterhijma)           |
+| Version            | 1.0                                                              |
+| Created            | 2025-02-15                                                       |
+| Discussion         | https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/pull/12 |
+| Discussion Started | 2025-05-20                                                       |
+| Implementation     | Not applicable                                                   |
 
 A FreeCAD Enhancement Proposal (FEP) is a design document that provides information for FreeCAD
 developers. It establishes a process for FreeCAD development or describes a substantial change to
@@ -219,8 +220,9 @@ registered within the older one as well.
 4. <span name=ref4>Vue RFC Process</span>: <https://github.com/vuejs/rfcs>
 
 ## Changelog
- - *0.1* - initial version
- - *0.2* - change vote decision process into consensus based one
+
+- _0.1_ - initial version
+- _0.2_ - change vote decision process into consensus based one
 
 ## License
 
