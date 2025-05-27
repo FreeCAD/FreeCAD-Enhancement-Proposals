@@ -87,7 +87,7 @@ An alternative approach would have been to explicitly define and independently m
 * Define guidelines for dropping support for older Ubuntu LTS versions (e.g., sunset grace period).
 * Consider introducing automated tooling or bots to assist maintainers in labeling PRs with `packaging-impact`.
 * Consider setting up an RSS feed for PRs labeled `packaging-impact` to improve visibility for downstream maintainers.
-Consider formalizing a dedicated channel or mailing list to announce major packaging changes.
+* Consider formalizing a dedicated channel or mailing list to announce major packaging changes.
 * Evaluate whether it would be beneficial to shift the baseline from the **oldest** supported Ubuntu LTS to the **newest** available LTS, and clarify the implications for developers and packagers.
 
 ## Changelog
