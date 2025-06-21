@@ -4,7 +4,7 @@
 | ------------------ | ---------------------------------------------------------------- |
 | Type               | Process                                                          |
 | Description        | Definition of the FreeCAD Enhancement Process                    |
-| Status             | Proposed                                                         |
+| Status             | Active                                                           |
 | Author(s)          | Kacper Donat (@kadet1090), Pieter Hijma (@pieterhijma)           |
 | Version            | 1.0                                                              |
 | Created            | 2025-02-15                                                       |
