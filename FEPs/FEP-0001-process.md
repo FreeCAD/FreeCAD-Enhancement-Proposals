@@ -221,11 +221,13 @@ registered within the older one as well.
 
 ## Changelog
 
-- _0.1_ - initial version
-- _0.2_ - change vote decision process into consensus based one
+- [0.1] - initial version
+- [0.2] - change vote decision process into consensus based one
 
 ## License
 
 [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/).
 
 [FEP Repository]: https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals
+[0.1]: https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/blob/0db32cedd561aee3986d43306d8757a9f4ffe919/FEPs/FEP-0001-process.md
+[0.2]: https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/blob/609bb26d67d4834b8d368b184392f774968717d7/FEPs/FEP-0001-process.md
