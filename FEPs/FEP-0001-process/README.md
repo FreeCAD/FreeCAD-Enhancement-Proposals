@@ -6,7 +6,7 @@
 | Description        | Definition of the FreeCAD Enhancement Process                    |
 | Status             | Active                                                           |
 | Author(s)          | Kacper Donat (@kadet1090), Pieter Hijma (@pieterhijma)           |
-| Version            | 1.0                                                              |
+| Version            | 1.1                                                              |
 | Created            | 2025-02-15                                                       |
 | Discussion         | https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/pull/12 |
 | Discussion Started | 2025-05-20                                                       |
@@ -61,7 +61,8 @@ for Python. Therefore, enhancement proposals are a better fit for FreeCAD than R
 
 Each FEP is numbered using four digits and new FEPs should get the next free FEP number. FEP numbers
 are unique and persistent - once a FEP number is obtained, it is reserved for that and only that FEP
-and cannot be reused later. All FEPs are stored in the [FEP Repository] as files within the `FEPs` folder.
+and cannot be reused later. All FEPs are stored in the [FEP Repository] as files within the `FEPs`
+folder. 
 
 ### Who can create a FEP?
 
@@ -138,10 +139,11 @@ inside the "FEP Ideas" discussion forum or on any PR, or issue. While the prelim
 not required it is encouraged in one form or another. Once the idea starts to be formalized into a
 concrete proposal, it should be submitted as a PR in the FEP repository.
 
-The PR should contain a single file based on the [template](../FEP-0000-template.md) named using
-the `FEP-0000-kebab-case-title.md` naming scheme. The author may adjust the template to the needs
-of the given FEP, for example adding more sections. However, sticking to the template is highly
-encouraged.
+The PR should contain a a new directory based on the [template](../FEP-0000-template) named using
+the `FEP-0000-kebab-case-title` naming scheme. The directory must contain `README.md` file with the
+specification. If needed additional files like assets can be added to that directory. The author may
+adjust the template to the needs of the given FEP, for example adding more sections. However,
+sticking to the template is highly encouraged.
 
 All FEPs should start in the **Draft** stage. Within that stage, the author is free to make any
 changes to the proposal. However, they should be versioned (using 0.x version) and noted within
@@ -223,6 +225,8 @@ registered within the older one as well.
 
 - [0.1] - initial version
 - [0.2] - change vote decision process into consensus based one
+- [1.0] - first approved version
+- 1.1 (current) - change structure to keep each FEP in separate directories
 
 ## License
 
@@ -231,3 +235,4 @@ registered within the older one as well.
 [FEP Repository]: https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals
 [0.1]: https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/blob/0db32cedd561aee3986d43306d8757a9f4ffe919/FEPs/FEP-0001-process.md
 [0.2]: https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/blob/609bb26d67d4834b8d368b184392f774968717d7/FEPs/FEP-0001-process.md
+[1.0]: https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/blob/cd53f407071b353fbf0e48f46f2e354c58cb3924/FEPs/FEP-0001-process.md
