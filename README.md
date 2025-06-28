@@ -8,6 +8,6 @@ This repository contains FreeCAD Enhancement Proposals (FEPs) that are used to d
 ### Active
  - [FEP-0001: FEP Process](./FEPs/FEP-0001-process) - Definition of new FreeCAD Enhancement Process
 ### Accepted (awaiting implementation)
-### Implemented 
+### Implemented
 ### Rejected
 ### Withdrawn

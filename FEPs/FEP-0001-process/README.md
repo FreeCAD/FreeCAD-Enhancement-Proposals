@@ -62,7 +62,7 @@ for Python. Therefore, enhancement proposals are a better fit for FreeCAD than R
 Each FEP is numbered using four digits and new FEPs should get the next free FEP number. FEP numbers
 are unique and persistent - once a FEP number is obtained, it is reserved for that and only that FEP
 and cannot be reused later. All FEPs are stored in the [FEP Repository] as files within the `FEPs`
-folder. 
+folder.
 
 ### Who can create a FEP?
 
