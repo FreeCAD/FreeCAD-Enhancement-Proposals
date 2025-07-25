@@ -5,9 +5,9 @@
 | Type           | Informational                                                                                                                             |
 | Status         | Draft                                                                                                                                     |
 | Author(s)      | @maxwxyz (DWG), @obelisk79 (DWG), @tigert, @ryankembrey, @kadet1090 (DWG)                                                                 |
-| Version        | 0.1                                                                                                                                       |
+| Version        | 1.0.1                                                                                                                                     |
 | Created        | 2025-07-08                                                                                                                                |
-| Updated        | 2025-07-08                                                                                                                                |
+| Updated        | 2025-08-01                                                                                                                                |
 | Discussion     | https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/discussions/21, https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/pull/20 |
 | Implementation | https://github.com/FreeCAD/FreeCAD/pulls?q=is%3Apr+Update+strings+for+consistency                                                         |
 
@@ -111,8 +111,15 @@ should use normal **sentence case**.
 **Do not use periods** on short UI elements like buttons or labels. Use them only in full-sentence
 tooltips or descriptive text.
 
-**Use ellipsis (…)** at the end of menu items or commands that require user input. Do not use three
-periods "..." instead of the ellipsis character `…` for consistency.
+**Only use ellipsis (…)** at the end of menu items or commands when the action requires further
+user input which is abbreviated by the ellipsis. For example, `Export As…` will ask about the
+extension to export (e.g. "Export as PDF"). Do not use ellipsis only because the action opens an
+additional dialog: "Unit Converter…" is an example of bad ellipsis use because there is no user input that can
+be used to finish the name of that label.
+
+**When using ellipsis (…)** do not use three periods "..." instead of the ellipsis character `…` for
+consistency and do not place a space in front or after the ellipsis. Do not use a single ellipsis as command
+or button text.
 
 Do not put a colon or space at the end of labels that are followed by required user input (e.g.
 QLabel for input box, button, dropdown, or checkbox) or headers. Instead of "X direction: " write `X
@@ -145,7 +152,7 @@ workflows.` - Complete sentences end with a period.
 - Hint: `Toggles the visibility of the active sketch` - No period at the end
 - Command: `New File` - This is just a short label. A tooltip for that command button would be
   "Creates a new file".
-- Command: `Save As…` - The function requires user input to function.
+- Command: `Save As…` - Save under what name?
 - Command: `Addon Manager` - This is not a simple action, so no ellipsis.
 
 The technical details of the proposed change.
@@ -177,6 +184,10 @@ language).
 As further work it is possible to create linter rules that would perform automatic checks over
 codebase to help with keeping consistency.
 
+## Changelog
+- [1.0] - 2025-07-08 - Initial Proposed Version
+- 1.0.1 (current) - 2025-08-01 - Clarified ellipsis usage policy
+
 ## References (optional)
 
 1. <span name=jakobs-law>Jakob's Law</span>: https://lawsofux.com/jakobs-law/
@@ -188,3 +199,5 @@ codebase to help with keeping consistency.
 ## License / Copyright
 
 All FEPs are explicitly [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/).
+
+[1.0]: https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/tree/18cf4fa481a00950c830bae453f76fd5f28d0a97/FEPs/FEP-0007-consistent-language
