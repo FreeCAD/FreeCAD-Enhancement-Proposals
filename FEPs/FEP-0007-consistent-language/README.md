@@ -1,15 +1,19 @@
-# FEP-0007 Consistent language across FreeCAD
+# FEP-0007 Consistent Language Across FreeCAD
 
 | FEP-0007       |                                                                                                                                           |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | Type           | Informational                                                                                                                             |
 | Status         | Draft                                                                                                                                     |
 | Author(s)      | @maxwxyz (DWG), @obelisk79 (DWG), @tigert, @ryankembrey, @kadet1090 (DWG)                                                                 |
-| Version        | 1.0.1                                                                                                                                     |
+| Version        | 1.0.2                                                                                                                                     |
 | Created        | 2025-07-08                                                                                                                                |
-| Updated        | 2025-08-01                                                                                                                                |
+| Updated        | 2025-08-02                                                                                                                                |
 | Discussion     | https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/discussions/21, https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/pull/20 |
 | Implementation | https://github.com/FreeCAD/FreeCAD/pulls?q=is%3Apr+Update+strings+for+consistency                                                         |
+
+This document defines consistent rules for user-facing text in FreeCAD: menu items, toolbars, dialogs, tooltips, input hints, and other strings.
+
+## Motivation
 
 FreeCAD involves both CAD and programming, it's easy to use overly technical or redundant
 language. Names that seem obvious to developers may confuse general users. Additionally, with
@@ -19,8 +23,6 @@ that developers should follow when naming or labeling functions, features, and a
 > **Note:** While translations exist, English is the reference standard. This document is about
 > English which is the source language. Each translation should have their own guidelines following
 > well established practices and existing translation standards.
-
-## Motivation
 
 FreeCAD has a lot of different user facing texts: menu entries, toolbar items, tooltips, and tool
 hints - to name a few. Historically these texts were added by many developers, often non-native
@@ -67,73 +69,122 @@ IntelliJ, Fusion360, AutoCAD, Catia v5 and more) one can find that these applica
 - for short tooltips, do not put dot at the end;
 - for longer tooltips place the dot the end if needed (clearly a sentence or multiple sentences);
 - prefer short texts are over long ones.
-
 ## Specification
 
 Avoid verbose or inconsistent language in the UI, as it may cause layout issues across workbenches
 and dialogs. Always review naming before merging UI-related pull requests.
 
-### Language
+To make these guidelines easier to apply, they are grouped into **General Language Guidelines**, **Tooltip-Specific Guidelines**, **Input Hints Guidelines**, and **UI Text Style**.
 
-- Use short, descriptive terms. Prefer single nouns when possible: `Additive Cube`, not "Create new
-  Additive Cube".
-- Favor unique noun-first naming: `Horizontal Constraint`, not "Constrain Horizontal".
-- Avoid unnecessary verbs in command names (`New File`, not "Create new file"). Use verbs only if
-  clarity requires them (e.g. `Insert Image`).
-- For items with optional plurality use plural language: e.g. `Creates holes based on the selected
-profiles` not "Creates hole(s) based on the selected profile(s)".
-- Do not add additional information which is obvious or list multiple steps like "Select one or more
-  line(s) click this button, add dimension". Better: `Insert dimension for the selected lines`.
-- Acronyms like `CAD` or `ISO` are allowed but should be reviewed for clarity.
-- Use standard numerals (`0, 1, 2,…`) not spelled out ("one, two,…")
+### 1. General Text Guidelines
+
+These apply to **all user-facing text**:
+
+- **Always wrap messages in the translate function** for localization.
+- In general, uses **sentence case**.
+- Use **Title Case** only for command names, buttons, menus, headers, window titles and group titles.
+- Don’t address the user directly (“Click this button to…”). Use third-person present tense instead.
+- Don't add an extra space at the end of a string.
+- Avoid acronyms and only use commonly known like `CAD` or `ISO`.
+- Use standard numerals (`0, 1, 2,…`) not words.
 - Keep terminology consistent with existing FreeCAD concepts.
-- Avoid programmer jargon in favor of simpler terminology.
-- For user-facing strings add comments as needed to help provide context for translators `//:
-Sketcher: Command name for new line`. [More info in Qt
-  docs](https://doc.qt.io/qt-6/i18n-source-translation.html#add-comments-for-translators).
-- Use **third-person present tense** in tooltips: `Creates`, `Adds`, `Inserts`. Write complete
-  sentences where appropriate.
-- Tooltips should describe the action and required context. E.g., `Adds a new sketch to the active
-body`, not just "Add sketch".
-- Avoid step-by-step instructions in tooltips. Focus on outcome: `Inserts a dimension for the
-selected lines`, not "Select one or more lines…".
-- Avoid stating the obvious: "If checked by the user, the view is updated automatically", use
-  `Updates view automatically`.
-- Don't address the user directly: say what the command does, not "Click this button…".
-- Avoid direct source-code references in the UI, instead of "This feature only works with PartDesign
-  bodies" use `This feature only works with Part Design bodies`
+- Avoid programmer jargon; use terms users expect.
+- For optional plurality use plural language, write naturally and do not account for the singular if it is not possible to dynamically adjust the text for the context: `Creates holes based on the selected profiles` (not “hole(s)”).
+- **Do not use periods** on short UI elements like buttons or labels. Use periods only in full-sentence tooltips or longer descriptive text.
+- Do not add a colon or space at the end of labels that precede user input or interactive elements: Instead of "X direction: "" write `X direction` without additinal spaces.
+- **Ellipsis (…) usage:**
+  - In general, limit the use of ellipsis. Use an ellipsis **only** when the action requires further user input, where the ellipsis stands for the missing part and the command or context would benefit from it:
+    - Example: `Export As…` → asks for a file type/name.
+    - Example: `Save As…` → asks for a file name.
+  - Do **not** use ellipses merely because an action opens a dialog:
+    - Bad: `Unit Converter…` (no further text to complete the phrase)
+  - Always use the single ellipsis character `…` (not three dots `...`) and no spaces before or after it.
+  - Do not use an ellipsis as the only text on a command or button.
+- Add translator comments in source as needed and to provide context for translators (e.g. "close" can have multiple meanings):
+  ```cpp
+  //: Sketcher: Command name for new line
+  ```
+  See [Qt translation documentation](https://doc.qt.io/qt-6/i18n-source-translation.html#add-comments-for-translators).
 
-### UI Text Style
+### 2. Command and Menu Guidelines
 
-Use **Title Case** only for command names, buttons, menu items, and group titles. All other text
-should use normal **sentence case**.
+These apply to **command names, (context)menu action entries, buttons and headers**:
 
-**Do not use periods** on short UI elements like buttons or labels. Use them only in full-sentence
-tooltips or descriptive text.
+- Use **Title Case** (see the section below how to write in title case)
+- Use short, descriptive terms. Prefer single nouns when possible.
+  Example: `Additive Cube`, not “Create new Additive Cube”.
+- Favor unique noun-first naming:
+  Example: `Horizontal Constraint`, not “Constrain Horizontal”.
+  *Clarification:* The **full phrase** should be unique and start with the most important noun or the word that differentiates similar named commands.
+  If a noun like “Close” could be ambiguous (homonym), consider alternatives or clarify with context in tooltips.
+- Avoid unnecessary verbs unless clarity requires them. Instead of "Create new sketch" write `New Sketch`. Use verbs when it helps clarification, e.g. `Insert Image`.
+- Refer to the item always by the same name (e.g. use the command name in the task dialog header). This should also be consistent with translations.
+- Other UI elements (e.g. drop down menus) should use sentence case.
 
-**Only use ellipsis (…)** at the end of menu items or commands when the action requires further
-user input which is abbreviated by the ellipsis. For example, `Export As…` will ask about the
-extension to export (e.g. "Export as PDF"). Do not use ellipsis only because the action opens an
-additional dialog: "Unit Converter…" is an example of bad ellipsis use because there is no user input that can
-be used to finish the name of that label.
+### 3. Tooltip and Descriptive Guidelines
 
-**When using ellipsis (…)** do not use three periods "..." instead of the ellipsis character `…` for
-consistency and do not place a space in front or after the ellipsis. Do not use a single ellipsis as command
-or button text.
+Tooltips and explaining decriptive texts have distinct requirements and should be treated separately:
 
-Do not put a colon or space at the end of labels that are followed by required user input (e.g.
-QLabel for input box, button, dropdown, or checkbox) or headers. Instead of "X direction: " write `X
-direction`
+- Use **third-person present tense** and start with an action verb: `Creates`, `Adds`, `Inserts`.
+- Prefer complete sentences for long tooltips; short hints (one sentence) can omit the period:
+  - Short hint: `Toggles the visibility of the active sketch`
+  - Full tooltip: `Constrains new geometry automatically. It is recommended to leave it enabled for most workflows.`
+- Tooltips should describe the action and context, not step-by-step instructions:
+  - Good: `Inserts a dimension for the selected lines`
+  - Avoid: “Select one or more lines and click this button…”
+- Avoid stating the obvious:
+  Use `Updates view automatically`, not “If checked by the user, the view is updated automatically.”
+- Avoid direct references to source-code concepts:
+  Use `This feature only works with Part Design bodies`, not “This feature only works with PartDesign bodies.”
+- Do not add unnecessary information or list multiple steps like "Select one or more line(s) click this button, add dimension". Better: `Insert dimension for the selected lines`.
 
-### How to Implement Title Case
+### 4. Input Hints Guidelines
+
+**Input Hints** are displayed in the status bar to provide users with hints for available actions. They typically combine key sequences with short action descriptions.
+
+![Input Hints Preview](./assets/input-hints-preview.png)
+
+Hints consist of:
+- A message with placeholders (`%1`, `%2`, …) for key sequences.
+- Key sequences, which may include single keys, modifiers (e.g. Shift), or combinations.
+  Example:
+  - Single: `[M] change mode`
+  - Multiple: `[U]/[J] increase/decrease number of sides`
+  - Combined: `[Shift][M]`
+
+**Guidelines for writing Input Hints:**
+
+- **Start with the input, then a lowercase action**. Input hints are not sentences. Do not add a period at the end.
+   Example: `%1 pick radius`.
+- **Keep hints as short as possible**. Avoid redundancy when the context is clear.
+   Example: `%1 pick arc center` instead of "%1 pick center of an arc".
+- **Order inputs consistently**:
+   - Modifiers first (Ctrl, Alt, Shift),
+   - Then mouse inputs,
+   - Then normal keys.
+- **Order actions by frequency of use**: common actions first.
+- **Be specific**:
+   Example: Instead of "change mode", prefer a dynamic hint that shows the next mode name, e.g. `straight segment`.
+- **Combine similar actions when possible**:
+   Example: `%1/%2 decrease/increase side`, `%1, %2 or %3 constrain axis`.
+- **Keep the list short**: ideally no more than 6 hints, focusing on the most common actions.
+- **Avoid redundant hints**:
+   - Do not show general navigation commands during active tools.
+   - Do not show hints for actions that are currently unavailable.
+   - Do not show hints for commands which are always possible (e.g. Save Document)
+- **Maintain consistency when hints change dynamically**:
+    - Keep common hints visible across tool states.
+    - If an action disappears, that indicates it is no longer available.
+
+### 5. How to Implement Title Case
 
 In title case, capitalize the following words:
 
-- the first word of the title or heading, even if it is a minor word such as "The" or "A"
-- major words, including the second part of hyphenated major words (e.g., "Self-Report", not
-  "Self-report")
-- words of four letters or more (e.g., "With", "Between", "From")
+- the first word of the title or heading, even if it is a minor word such as "The" or "A".
+- major words, including the second part of hyphenated major words (e.g., "Self-Report", not "Self-report").
+- words of four letters or more (e.g., "With", "Between", "From").
 - capitalize the last word in the label, regardless of the part of speech.
+
 
 Lowercase only minor words that are three letters or fewer:
 
@@ -141,54 +192,33 @@ Lowercase only minor words that are three letters or fewer:
 - articles (a, an, the)
 - short prepositions (e.g., as, at, by, for, in, of, off, on, per, to, up, via)
 
-More information on APA guidelines for [Title
-Case](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case) and [Sentence
-case](https://apastyle.apa.org/style-grammar-guidelines/capitalization/sentence-case).
+More information on APA guidelines for [Title Case](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case) and [Sentence case](https://apastyle.apa.org/style-grammar-guidelines/capitalization/sentence-case).
 
-### Examples
 
-- Tooltip: `Constrains new geometry automatically. It is recommended to leave it enabled for most
-workflows.` - Complete sentences end with a period.
-- Hint: `Toggles the visibility of the active sketch` - No period at the end
-- Command: `New File` - This is just a short label. A tooltip for that command button would be
-  "Creates a new file".
-- Command: `Save As…` - Save under what name?
-- Command: `Addon Manager` - This is not a simple action, so no ellipsis.
+### 6. Examples
 
-The technical details of the proposed change.
+- Command: `New File` → Tooltip: `Creates a new file`
+- Command: `Save As…` → Tooltip: `Saves the document under a new name or filetype`
+- Tooltip: `Constrains new geometry automatically. It is recommended to leave it enabled for most workflows.`
+- Descriptive text: `Toggles the visibility of the active sketch`
+- Input hint: `%1 cancel`
 
-### Impact on existing features / subsystems
+### Impact
 
-No impact on core functionality. Translations will be rendered out of date and new strings need to
-be submitted on Crowdin. Similar (previous) translations are suggested on the new strings on Crowdin
-but we advice to wait with the translations, until all strings in main are changed. @sifabiancic is
-planning to create similar guidelines for different languages with the translator community, a
-discussion on Crowdin was already started, to make the translations consistent as well.
+No change to functionality. Translators will need to update strings after these standards are applied.
 
-### Backwards Compatibility
+## Notes
 
-Not applicable, only user-facing text is updated.
-
-## Open Issues
-
-None known.
-
-## Rejected Ideas
-
-Sentence case for all strings was analyzed and rejected. This decision was made to have a unified UI
-experience across the different OS and with other CAD or FOSS applications (English as base
-language).
-
-## Further Work
-
-As further work it is possible to create linter rules that would perform automatic checks over
-codebase to help with keeping consistency.
+- Guidelines are now **organized into clear sections**: general rules, tooltip rules, input hints, and style rules.
+- Additional examples will be added over time to clarify edge cases like homonyms and noun-first naming.
 
 ## Changelog
-- [1.0] - 2025-07-08 - Initial Proposed Version
-- 1.0.1 (current) - 2025-08-01 - Clarified ellipsis usage policy
+- [1.0] – 2025-07-08 – Initial proposed version
+- [1.0.1] – 2025-08-01 – Clarified ellipsis usage
+- **1.0.2** – 2025-08-02 – Structured guidelines into general vs. tooltip sections, added input hints guidelines, and retained full ellipsis rule
 
-## References (optional)
+
+## References
 
 1. <span name=jakobs-law>Jakob's Law</span>: https://lawsofux.com/jakobs-law/
 2. <span name=nielsens-4th>Nielsen's 4th heuristic</span>: https://www.nngroup.com/articles/ten-usability-heuristics/
@@ -201,3 +231,4 @@ codebase to help with keeping consistency.
 All FEPs are explicitly [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/).
 
 [1.0]: https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/tree/18cf4fa481a00950c830bae453f76fd5f28d0a97/FEPs/FEP-0007-consistent-language
+[1.0.1]: https://github.com/kadet1090/FreeCAD-Enhancement-Proposals/tree/e2b2a01016f2b85a44e245c9abf41ccd44201978/FEPs/FEP-0007-consistent-language
