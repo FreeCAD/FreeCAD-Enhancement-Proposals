@@ -7,6 +7,7 @@ This repository contains FreeCAD Enhancement Proposals (FEPs) that are used to d
 ### Draft
 ### Active
  - [FEP-0001: FEP Process](./FEPs/FEP-0001-process) - Definition of new FreeCAD Enhancement Process
+ - [FEP-0007: FEP Process](./FEPs/FEP-0007-consistent-language) - Consistent language across FreeCAD
 ### Accepted (awaiting implementation)
 ### Implemented
 ### Rejected
