@@ -93,6 +93,10 @@ New Maintainers are appointed by the current Maintainers through full consensus.
 selected from active contributors who have been engaged with the community for a significant time,
 review PRs and issues, participate in project meetings, and adhere to the Code of Conduct.
 
+### Authority and Accountability
+
+Maintainers hold the **sole authority** to make decisions on behalf of the Project. Maintainers operate on a consensus basis whenever possible, and a rough consensus basis when full consensus cannot be achieved. All decisions from a Maintainer should be interpreted as a decision on behalf of the whole body of Maintainers. However, mistakes can happen, and decisions may need to be revisited. If a member of the FreeCAD community feels that a mistake has been made (for example, a PR merged when it shouldn't have been, or closed when it should have been merged), they should reach out to a member of the Maintainers team to request reconsideration. Maintainers have the responsibility to take these requests into consideration a part of their larger responsibility to the health of the project as a whole.
+
 ## Working Groups
 
 A **Working Group** is a team of community members (not necessarily developers) who work together
@@ -100,8 +104,11 @@ toward a defined set of goals. Working Groups are typically permanent and cover 
 interest, such as UI/UX, infrastructure, code quality, or CAD industry practices. Groups may focus
 on development, infrastructure, policies, or other project-related topics.
 
-Working Groups do not hold any special decision-making powers unless explicitly delegated by the
-Maintainers. Their primary function is to act as advisory bodies.
+The purpose of Working Groups is to provide a more organized venue for discussion and to ensure that such discussions yield useful outcomes. Each Working Group must conduct a genuine, documented discussion process. Working Groups must not be used solely to confer legitimacy on a predetermined decision.
+
+Working Groups have no special decision-making authority unless explicitly delegated by the Maintainers; even in such cases, responsibility rests with the Maintainers, who grant and oversee that authority. Their primary function is to act as an advisory body. Working Groups shall not be held responsible for any decisions.
+
+Working Group statements do not carry any special status over other community views. Maintainers should treat them as such when making decisions. If Maintainers cite a Working Group’s position as a rationale for a decision, the legitimacy of that decision derives from the quality and breadth of the group’s discussion—not from the mere existence of a Working Group statement.
 
 ### Structure of a Working Group
 
@@ -118,7 +125,7 @@ appoint a replacement.
 #### Membership and Internal Structure
 
 The Chair determines the rules for membership, which must be non-discriminatory and allow anyone to
-request to join. Specific expertise may be required to become a member. Community members may belong
+request to join. These rules must be accessible to everyone and the desired communication link for the application must be clearly stated. Specific expertise may be required to become a member. Community members may belong
 to multiple Working Groups.
 
 New members of the working group are appointed by the Chair. Community member may request membership by
@@ -146,7 +153,9 @@ will summarize the prevailing opinion using the “rough consensus” rule [[1]]
 
 Any official group statement must be posted on GitHub (as a comment on a PR/issue, a new issue, or
 an FEP). Statements must clearly represent the group's position, not an individual opinion, and
-should include a summary of the discussion and a link to the full public conversation.
+should include a summary of the discussion and a link to the full public conversation. Group statements that are not posted on GitHub shall not be cited as justification for any decision. Decisions must not be made concurrently with the publication of an official group statement. There must be a reasonable interval between an official group statement and any related decision, during which community members who are not part of the group can participate in the discussion.
+
+Only the Chairperson or a Co-Chair may speak on behalf of the Group. If a member makes a statement purporting to represent the Group, confirmation may be requested from the Chairperson or the Co-Chairs. Unless it is expressly stated that the speaker is acting on behalf of the Group, all statements are deemed to be made in a personal capacity.
 
 ### Creating a New Working Group
 
