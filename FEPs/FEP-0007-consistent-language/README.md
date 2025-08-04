@@ -3,7 +3,7 @@
 | FEP-0007       |                                                                                                                                           |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | Type           | Informational                                                                                                                             |
-| Status         | Draft                                                                                                                                     |
+| Status         | Active                                                                                                                                    |
 | Author(s)      | @maxwxyz (DWG), @obelisk79 (DWG), @tigert, @ryankembrey, @kadet1090 (DWG)                                                                 |
 | Version        | 1.0.2                                                                                                                                     |
 | Created        | 2025-07-08                                                                                                                                |
