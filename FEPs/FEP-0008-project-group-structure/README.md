@@ -155,7 +155,7 @@ Any official group statement must be posted on GitHub (as a comment on a PR/issu
 an FEP). Statements must clearly represent the group's position, not an individual opinion, and
 should include a summary of the discussion. In case of group not being able to reach full consensus
 over the matter, the summary must contain information about concerns raised within discussion.
-Additionally, if possible a link to the full public conversation shall be posted along the summary. 
+Additionally, if possible a link to the full public conversation shall be posted along the summary.
 
 Group statements that are not posted on GitHub shall not be cited as justification for any decision.
 Decisions must not be made concurrently with the publication of an official group statement. There
