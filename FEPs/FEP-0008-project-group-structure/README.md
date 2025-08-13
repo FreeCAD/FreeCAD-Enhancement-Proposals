@@ -147,7 +147,7 @@ participation without barriers such as payment or special permissions. The metho
 transparent as possible, ideally allowing read-only access without requiring an account.
 
 Decisions (such as policy proposals, feature opinions, or issue feedback) must involve all group
-members and, where appropriate, input from the wider community to avoid echo chambers. The Chair is
+members and, where appropriate, input from the wider community to avoid missing on potentially important feedback. The Chair is
 responsible for seeking compromise and consensus. If full consensus cannot be reached, the Chair
 will summarize the prevailing opinion using the “rough consensus” rule [[1]](#rough-consensus).
 
