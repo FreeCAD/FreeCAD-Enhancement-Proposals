@@ -4,7 +4,7 @@
 | ---------- | ----------------------------------------------- |
 | Type       | Process                                         |
 | Status     | Draft                                           |
-| Author(s)  | Kacper Donat @kadet1090 (maintainer, DWG, CQWG) |
+| Author(s)  | Kacper Donat @kadet1090 (maintainer, DWG, CQWG), Turan Furkan Topak @Reqrefusion |
 | Version    | 0.1                                             |
 | Created    | 2025-07-27                                      |
 | Updated    | TBD                                             |
@@ -106,6 +106,10 @@ on development, infrastructure, policies, or other project-related topics.
 
 The purpose of Working Groups is to provide a more organized venue for discussion and to ensure that such discussions yield useful outcomes. Each Working Group must conduct a genuine, documented discussion process. Working Groups must not be used solely to confer legitimacy on a predetermined decision.
 
+Because Working Groups serve primarily as venues for discussion, their positions may evolve over time and may not always be internally uniform. When circumstances change, a group may support an approach that differs from a prior conclusion, while still maintaining and documenting the earlier position for context. This flexibility is expected and—when transparent and well-reasoned—encouraged to improve discussion quality.
+
+Adopting any position recommended by a Working Group can involve technical trade-offs or risks. Working Groups and their members act in an advisory capacity only and are not responsible for technical issues or other consequences arising from any subsequent decisions or implementations.
+
 Working Groups have no special decision-making authority unless explicitly delegated by the Maintainers; even in such cases, responsibility rests with the Maintainers, who grant and oversee that authority. Their primary function is to act as an advisory body. Working Groups shall not be held responsible for any decisions.
 
 Working Group statements do not carry any special status over other community views. Maintainers should treat them as such when making decisions. If Maintainers cite a Working Group’s position as a rationale for a decision, the legitimacy of that decision derives from the quality and breadth of the group’s discussion—not from the mere existence of a Working Group statement.
@@ -147,7 +151,7 @@ participation without barriers such as payment or special permissions. The metho
 transparent as possible, ideally allowing read-only access without requiring an account.
 
 Decisions (such as policy proposals, feature opinions, or issue feedback) must involve all group
-members and, where appropriate, input from the wider community to avoid echo chambers. The Chair is
+members and, where appropriate, input from the wider community to avoid missing on potentially important feedback. The Chair is
 responsible for seeking compromise and consensus. If full consensus cannot be reached, the Chair
 will summarize the prevailing opinion using the “rough consensus” rule [[1]](#rough-consensus).
 
