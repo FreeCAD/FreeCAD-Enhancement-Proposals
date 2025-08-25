@@ -4,7 +4,7 @@
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | Type           | Informational                                                                                                                             |
 | Status         | Active                                                                                                                                    |
-| Author(s)      | @maxwxyz (DWG), @obelisk79 (DWG), @tigert, @ryankembrey, @kadet1090 (DWG)                                                                 |
+| Author(s)      | @maxwxyz (DWG), @obelisk79 (DWG), @tigert (DWG), @ryankembrey, @kadet1090 (DWG)                                                                 |
 | Version        | 1.0.2                                                                                                                                     |
 | Created        | 2025-07-08                                                                                                                                |
 | Updated        | 2025-08-02                                                                                                                                |
