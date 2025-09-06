@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FEP-00XX — PartDesign Multibody: direct cross-Body references in a unified Part coordinate system
 
 **Status:** Draft
@@ -212,3 +213,19 @@ Let legacy placements be `T₁` for Body `B₁` and `T₂` for Body `B₂`.
 - **Outcome:** world geometry unchanged; Bodies share one frame.
 
 ---
+=======
+# FreeCAD Enhancement Proposals
+
+This repository contains FreeCAD Enhancement Proposals (FEPs) that are used to discuss any substantial changes to FreeCAD.
+
+## FEPs
+### Proposed
+### Draft
+### Active
+ - [FEP-0001: FEP Process](./FEPs/FEP-0001-process) - Definition of new FreeCAD Enhancement Process
+ - [FEP-0007: FEP Process](./FEPs/FEP-0007-consistent-language) - Consistent language across FreeCAD
+### Accepted (awaiting implementation)
+### Implemented
+### Rejected
+### Withdrawn
+>>>>>>> 18259d3 (Moved proposal in dedicated FEPs subfolder)
