@@ -4,12 +4,14 @@
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | Type           | Informational                                                                                                                             |
 | Status         | Active                                                                                                                                    |
-| Author(s)      | @maxwxyz (DWG), @obelisk79 (DWG), @tigert (DWG), @ryankembrey, @kadet1090 (DWG)                                                                 |
+| Author(s)      | @wsteffe
+   |
 | Version        | 1.0.2                                                                                                                                     |
 | Created        | 2025-09-05                                                                                                                                |
 | Updated        | 2025-09-05                                                                                                                                |
-| Discussion     | https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/pull/26 |
-| Implementation | https://github.com/FreeCAD/FreeCAD/pull/23610                                                        |
+| Discussion     | https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/pull/26
+   |
+| Implementation | https://github.com/FreeCAD/FreeCAD/pull/23610
 
 
 ---
