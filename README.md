@@ -12,6 +12,7 @@ This repository contains FreeCAD Enhancement Proposals (FEPs) that are used to d
  - [FEP-0006: Materials Editor](https://github.com/davesrocketshop/FreeCAD-Enhancement-Proposals/tree/FEP-Materials-Editor/FEPs/FEP-0006-materials-editor)
  - [FEP-0008: Group Structure](https://github.com/kadet1090/FreeCAD-Enhancement-Proposals/blob/groups-in-freecad/FEPs/FEP-0008-project-group-structure/README.md)
  - [FEP-0009: PartDesign Multibody](https://github.com/wsteffe/FreeCAD-Enhancement-Proposals/tree/FEP-00XX-partdesign-multibody-unified-cs/FEPs/FEP-0008-partdesign-multibody-unified-cs)
+ - [FEP-0010: Variant Parts](https://github.com/pieterhijma/FreeCAD-Enhancement-Proposals/tree/variant-parts/FEPs/FEP-0010-variant-parts)
 ### Active
  - [FEP-0001: FEP Process](./FEPs/FEP-0001-process) - Definition of new FreeCAD Enhancement Process
  - [FEP-0007: FEP Process](./FEPs/FEP-0007-consistent-language) - Consistent language across FreeCAD
