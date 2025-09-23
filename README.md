@@ -15,7 +15,7 @@ This repository contains FreeCAD Enhancement Proposals (FEPs) that are used to d
  - [FEP-0010: Variant Parts](https://github.com/pieterhijma/FreeCAD-Enhancement-Proposals/tree/variant-parts/FEPs/FEP-0010-variant-parts)
 ### Active
  - [FEP-0001: FEP Process](./FEPs/FEP-0001-process) - Definition of new FreeCAD Enhancement Process
- - [FEP-0007: FEP Process](./FEPs/FEP-0007-consistent-language) - Consistent language across FreeCAD
+ - [FEP-0007: Consistent Language Across FreeCAD](./FEPs/FEP-0007-consistent-language) - Consistent language across FreeCAD
 ### Accepted (awaiting implementation)
 ### Implemented
 ### Rejected
