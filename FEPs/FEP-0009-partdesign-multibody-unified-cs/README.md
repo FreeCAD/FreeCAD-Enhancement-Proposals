@@ -84,6 +84,15 @@ One alternative discussed in the forum is the automatic creation or injection of
 - **Automatic / Implicit SubShapeBinders**: rejected because it introduces hidden dependencies and ambiguous transformations. As discussed in the Rationale, implicit binders obscure the model tree, complicate recompute ordering, and reduce user control.
 - **Replace Body with a new container type**: rejected because it would break backward compatibility and require major restructuring of both code and user workflows, with no clear advantage over simply disabling `Body.Placement`.
 
+## Future Work
+
+The current proposal deliberately enables cross-Body references but keeps the restriction on cross-Part references.  
+In principle, the same approach might be extended to Parts and SubParts if their coordinate systems were 
+chained consistently through their `Origin` frames, instead of bypassing them as happens today.  
+
+At present, changing a `Part.Placement` can lead to incorrect positioning of externally linked objects, while changing the `Part.Origin.Placement` does not cause this issue. This suggests that the root of the problem lies in how placements are chained and applied to external links.  
+
+A more detailed investigation would be needed to determine whether revising the coordinate system chaining of Part/SubPart containers could allow safe cross-Part references in the future. For now, the proposal keeps the existing boundary: cross-Part references remain possible only via `SubShapeBinder`.  
 
 
 ## References
