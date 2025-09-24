@@ -86,13 +86,13 @@ One alternative discussed in the forum is the automatic creation or injection of
 
 ## Future Work
 
-The current proposal deliberately enables cross-Body references but keeps the restriction on cross-Part references.  
-In principle, the same approach might be extended to Parts and SubParts if their coordinate systems were 
-chained consistently through their `Origin` frames, instead of bypassing them as happens today.  
+The current proposal deliberately enables cross-Body references but keeps the restriction on cross-Part references.
+In principle, the same approach might be extended to Parts and SubParts if their coordinate systems were
+chained consistently through their `Origin` frames, instead of bypassing them as happens today.
 
-At present, changing a `Part.Placement` can lead to incorrect positioning of externally linked objects, while changing the `Part.Origin.Placement` does not cause this issue. This suggests that the root of the problem lies in how placements are chained and applied to external links.  
+At present, changing a `Part.Placement` can lead to incorrect positioning of externally linked objects, while changing the `Part.Origin.Placement` does not cause this issue. This suggests that the root of the problem lies in how placements are chained and applied to external links.
 
-A more detailed investigation would be needed to determine whether revising the coordinate system chaining of Part/SubPart containers could allow safe cross-Part references in the future. For now, the proposal keeps the existing boundary: cross-Part references remain possible only via `SubShapeBinder`.  
+A more detailed investigation would be needed to determine whether revising the coordinate system chaining of Part/SubPart containers could allow safe cross-Part references in the future. For now, the proposal keeps the existing boundary: cross-Part references remain possible only via `SubShapeBinder`.
 
 
 ## References
