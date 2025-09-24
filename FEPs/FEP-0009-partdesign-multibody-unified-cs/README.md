@@ -84,15 +84,24 @@ One alternative discussed in the forum is the automatic creation or injection of
 - **Automatic / Implicit SubShapeBinders**: rejected because it introduces hidden dependencies and ambiguous transformations. As discussed in the Rationale, implicit binders obscure the model tree, complicate recompute ordering, and reduce user control.
 - **Replace Body with a new container type**: rejected because it would break backward compatibility and require major restructuring of both code and user workflows, with no clear advantage over simply disabling `Body.Placement`.
 
+
 ## Future Work
 
-The current proposal deliberately enables cross-Body references but keeps the restriction on cross-Part references.
-In principle, the same approach might be extended to Parts and SubParts if their coordinate systems were
-chained consistently through their `Origin` frames, instead of bypassing them as happens today.
+### Near Term
+1. **Fix Transform Manipulator anchoring**  
+   When the Transform tool is applied to a Body, its manipulator is currently anchored to the Body’s `Placement`. Since `Body.Placement` is now disabled in the GUI, the manipulator should instead be anchored to the `Body.Origin`.  
+   Without this change, the behavior is visually confusing: if a Body is transformed once and moved far from its original location, a second transform will show the manipulator anchored at the old origin (far away from the geometry).  
 
-At present, changing a `Part.Placement` can lead to incorrect positioning of externally linked objects, while changing the `Part.Origin.Placement` does not cause this issue. This suggests that the root of the problem lies in how placements are chained and applied to external links.
+2. **Prevent invalid cross-Part links when moving Bodies**  
+   At present, FreeCAD allows moving Bodies between different Parts. This should be disallowed if the move would create invalid cross-Part references.  
+   For example:  
+   - *Problematic case*: `Body1` and `Body2` are in `Part1` with `Body1` referencing `Body2`. If only `Body1` is moved to `Part2`, a cross-Part link is created.  
+   - *Valid case*: both `Body1` and `Body2` are moved together to `Part2`; no cross-Part link is generated.
 
-A more detailed investigation would be needed to determine whether revising the coordinate system chaining of Part/SubPart containers could allow safe cross-Part references in the future. For now, the proposal keeps the existing boundary: cross-Part references remain possible only via `SubShapeBinder`.
+### Long Term
+- **Investigate coordinate chaining through Origins for Part/SubPart**  
+  If Part and SubPart placements were consistently chained through their `Origin` frames (instead of bypassing them), it might become possible to allow safe cross-Part references in the future.  
+  At present, changing a `Part.Placement` can cause incorrect positioning of externally linked objects, while changing `Part.Origin.Placement` does not. This suggests a structural issue in placement chaining that deserves further study.
 
 
 ## References
