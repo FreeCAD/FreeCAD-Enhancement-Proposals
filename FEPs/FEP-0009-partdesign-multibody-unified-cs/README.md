@@ -88,19 +88,19 @@ One alternative discussed in the forum is the automatic creation or injection of
 ## Future Work
 
 ### Near Term
-1. **Fix Transform Manipulator anchoring**  
-   When the Transform tool is applied to a Body, its manipulator is currently anchored to the Body’s `Placement`. Since `Body.Placement` is now disabled in the GUI, the manipulator should instead be anchored to the `Body.Origin`.  
-   Without this change, the behavior is visually confusing: if a Body is transformed once and moved far from its original location, a second transform will show the manipulator anchored at the old origin (far away from the geometry).  
+1. **Fix Transform Manipulator anchoring**
+   When the Transform tool is applied to a Body, its manipulator is currently anchored to the Body’s `Placement`. Since `Body.Placement` is now disabled in the GUI, the manipulator should instead be anchored to the `Body.Origin`.
+   Without this change, the behavior is visually confusing: if a Body is transformed once and moved far from its original location, a second transform will show the manipulator anchored at the old origin (far away from the geometry).
 
-2. **Prevent invalid cross-Part links when moving Bodies**  
-   At present, FreeCAD allows moving Bodies between different Parts. This should be disallowed if the move would create invalid cross-Part references.  
-   For example:  
-   - *Problematic case*: `Body1` and `Body2` are in `Part1` with `Body1` referencing `Body2`. If only `Body1` is moved to `Part2`, a cross-Part link is created.  
+2. **Prevent invalid cross-Part links when moving Bodies**
+   At present, FreeCAD allows moving Bodies between different Parts. This should be disallowed if the move would create invalid cross-Part references.
+   For example:
+   - *Problematic case*: `Body1` and `Body2` are in `Part1` with `Body1` referencing `Body2`. If only `Body1` is moved to `Part2`, a cross-Part link is created.
    - *Valid case*: both `Body1` and `Body2` are moved together to `Part2`; no cross-Part link is generated.
 
 ### Long Term
-- **Investigate coordinate chaining through Origins for Part/SubPart**  
-  If Part and SubPart placements were consistently chained through their `Origin` frames (instead of bypassing them), it might become possible to allow safe cross-Part references in the future.  
+- **Investigate coordinate chaining through Origins for Part/SubPart**
+  If Part and SubPart placements were consistently chained through their `Origin` frames (instead of bypassing them), it might become possible to allow safe cross-Part references in the future.
   At present, changing a `Part.Placement` can cause incorrect positioning of externally linked objects, while changing `Part.Origin.Placement` does not. This suggests a structural issue in placement chaining that deserves further study.
 
 
