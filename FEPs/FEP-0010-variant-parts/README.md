@@ -41,10 +41,10 @@ modeler" prominently on the website), yet, the kind of parametric design
 introduced by this proposal is currently a weakness of FreeCAD.
 
 FreeCAD has functionality that comes close to true variant parts with various
-techniques.  However, all these options have their issues.  A first option is
-creating **copies of parts**.  However, with this technique, it is not clear
-which parameters are designated for variants and a change to all instances of
-the variant is not possible.
+techniques.  However, all these options have their issues [[1](#ref1)].  A
+first option is creating **copies of parts**.  However, with this technique, it
+is not clear which parameters are designated for variants and a change to all
+instances of the variant is not possible.
 
 A second option is **copy-on-change links**.  However, this technique is not
 user friendly and it makes use of hidden references.  Propagating a change to
@@ -71,9 +71,127 @@ other than tracked copy-on-change links, subshape binders can only reference
 shapes.  This means that the document object subtree is not available to users
 to make use of, something that is possible with regular links.
 
+
+
 ## Rationale
 
-Why particular decisions were made in the proposal.
+Various design directions have been investigated and considered.  We first list
+the various directions and explain below why the current direction is chosen.
+
+### Keep current functionality
+
+Keeping the current functionality in essence not doing anything and use
+subshapebinders if only shapes need to be references, and tracking
+copy-on-change links for link behavior.  However, this is not considered
+because these techniques have various limitations: Designs that use these
+techniques are brittle because of the complex administration and two separate
+ways of doing dependency checks (the regular mechanism and the special
+mechanism for hidden references).  Additionally, these techniques are not user
+friendly.
+
+### Granularity dependency checking
+
+Improved dependency checking can remove the need for using hidden references by
+introducing **exposed properties** that define for users what properties can be
+used to vary parts.  Two directions are considered: **Fine-grained dependency
+checking** is a re-implementation of FreeCAD's dependency checking that defines
+relations between objects based on the properties.  **Current dependency check
+with special cases** adds exceptions for properties that are exposed but keeps
+the overall logic.
+
+#### Fine-grained dependency checking
+
+This is a reimplementation of dependency checking where dependencies are not
+recorded between document objects, but between the properties of document
+objects.  This allows us to avoid circular dependencies for exposed properties
+and it allows improved recomputation where a property change only causes the
+document objects that depend on that property and not all document objects that
+depend on any property.
+
+#### Current dependency check with special cases
+
+This enhances the current dependency check and creates exceptions for exposed
+properties to prevent cyclic dependencies.  A drawback of this direction is
+that the dependency code becomes even more complex and it does not help with
+the improved recomputation efficiency that fine-grained dependency checks
+offer.
+
+### Shape-based vs. subtree-based variants
+
+Variants that are **shape-based**, do not expose the subtree of document
+objects to the user, whereas **subtree-based** variants do.
+
+#### Shape-based variants
+
+Creating a variant of a part results in a flat part without subtree with only
+a shape.  A benefit of this approach is that the implementation is relatively
+simple.  However, this implementation cannot handle, more complex parts such as
+assemblies and it is necessary to introduce the new concept of a variant part.
+For example, creating a variant of an assembly cannot show its origin or local
+coordinate systems because the subtree of the assembly is not incorporated.
+
+#### Subtree-based variants
+
+Creating a variant of a part provides the complete subtree of the part to the
+user.  This allows us to make use of the logic of links, it provides users with
+the familiar interface of links, and this solution can handle complex parts.  A
+drawback is that the implementation needs to be integrated with FreeCAD's links
+system.
+
+### Copy-based vs. intercept-based variants
+
+To create a variant, it is always necessary to duplicate some properties.
+**Copy-based** variants maintain a full copy of the variant part whereas
+**intercept-based** variants keep the duplication to a minimum and intercept
+property access.
+
+#### Copy-based variants
+
+Copy-based variants maintain a full copy of the variant part and maintain an
+administration to give the user the illusion that there is no copy.  To ensure
+that the correct dependencies are captured, an extensive administration is
+required may go out of sync and causes problems as a result.  Another risk is
+that document objects are user defined (for example, in an addon) and it may be
+the case that the administration is not capable of fully capturing what is
+required to copy.
+
+#### Intercept-based variants
+
+This direction aims to minimize what is copied.  Instead, it intercepts
+property accesses and redirects these to temporary data structures.  A benefit
+of this system is that it gives FreeCAD support for variants at a very low
+level and only one mechanism is needed.  Additionally, this system has the
+potential to be used for concurrency because reads and writes can be captured
+temporarily.  A drawback of this approach is that each property type with each
+property access needs to be touched.
+
+### Chosen directions
+
+Keeping the current functionality is not a viable option in my opinion because
+virtually no users seem to make use of the current mechanisms.  The mechanisms
+are not user friendly and often provide results in designs that are hard to
+analyze and understand.
+
+The chosen direction is fine-grained dependency checking with subtree-based and
+intercept-based variants.  Fine-grained dependency checking is chosen because
+dependency checking will improve in general with:
+
+1. a means to refer to properties of parent document objects without triggering
+   cyclic dependencies,
+2. one mechanism for dependency checking (as opposed to two in the current
+   implementation), and
+3. remove unnecessary recomputes.
+
+Subtree-based variants are chosen, because users are already familiar with the
+link interface, it can handle complex parts, and the already complex link
+logic will go through a new code-review cycle.
+
+The direction of intercept-based variants is chosen because this mechanism
+allows us to bring FreeCAD variants as core functionality that acts at a low
+level instead of logic that is built on top of existing logic and has to
+circumvent limitations of the current system.  An additional benefit is that
+only one mechanism is needed and complex administration problems for
+maintaining copies are avoided.
 
 ## Specification
 
@@ -125,7 +243,7 @@ Any substantial changes to the FEP should be recorded in this section - latest c
 
 ## References (optional)
 
-Any references used in the design of the FEP, forum discussions etc.
+1. <span name=ref1>Forum post with videos of the 4 alternatives</span>: <https://forum.freecad.org/viewtopic.php?p=786692&sid=3e7a311d0f05b2f10697de4128d9b33f#p786692>
 
 ## License / Copyright
 
