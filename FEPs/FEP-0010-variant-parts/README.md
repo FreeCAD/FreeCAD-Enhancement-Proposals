@@ -30,10 +30,10 @@ parametric part with the following properties:
 
 In FreeCAD, it is virtually impossible to create parts with these properties.
 As a result, in FreeCAD, parametric design is limited, it is not possible to
-reuse or exchange parts independently and as such, parametric parts are not
-modular.  This modularity in parametric designs is important because as FreeCAD
-is an open source application, seamless sharing and exchange of parts should be
-central to FreeCAD's mission.
+reuse or exchange parts independently, and as such, parametric parts are not
+modular.  This modularity in parametric designs is important because since
+FreeCAD is an open source application, seamless sharing and exchange of parts
+should be central to FreeCAD's mission.
 
 Another reason why this functionality is important is because parametric design
 is at the heart of FreeCAD (it uses the subtitle "Your own 3D parametric
@@ -71,7 +71,9 @@ other than tracked copy-on-change links, subshape binders can only reference
 shapes.  This means that the document object subtree is not available to users
 to make use of, something that is possible with regular links.
 
-
+All in all, FreeCAD currently has limited support for variant parts, a
+capability that should be prioritized given its open-source nature and its goal
+to be a parametric modeler.
 
 ## Rationale
 
@@ -195,28 +197,170 @@ maintaining copies are avoided.
 
 ## Specification
 
-The technical details of the proposed change.
+In this section we provide the specification for variant parts by means of
+exposed properties, property intercepts, and based on subtrees.  The exposed
+properties have the following goals:
+1. Allow users to avoid cyclic dependencies without requiring the use of hidden
+   references.
+2. Capture the design intent for parametric design.
+3. Avoid unnecessary recomputes.  If the exposed properties are realized using
+   fine-grained dependency checking, we can avoid unnecessary recomputes in
+   some cases.
+
+Property intercepts allows us to act at a very low level of property access,
+ensuring that variant parts is supported by FreeCAD's core and avoiding full
+copies that require complex administration.
+
+Subtree-based variants allow users to access the full subtree of the variants.
+This gives users variants of complex parts with the familiar interface of
+links.
+
+We first provide the specification from the user point-of-view and from the
+developer perspective, then we describe the impact on existing subsystems, and
+finally we discuss backward compatibility issues.
+
+### User Perspective
+
+The user obtains a new type of property, namely **exposed properties**,
+properties that have a status flag "exposed".  Marking properties as exposed in
+obj $o$ ensures that these properties can be referenced within objects that are
+dependent on $o$ without introducing cyclic dependencies.  You can consider
+those properties to be outside of the object.  This eliminates the use of
+hidden references for the purpose of creating variants.
+
+The set of exposed properties define what I call the **Application Geometry Interface**,
+the interface for geometry that defines how a part should be
+parameterized.  The Application Geometry Interface captures design intent in
+the context of parametric design.
+
+In addition, links become aware of exposed properties.  The exposed properties
+are incorporated in the link and marked clearly as exposed properties.
+Changing one of the exposed properties automatically creates a variant of the
+object that is linked to.
+
+Finally, the user will experience improved recomputes where a change of
+property $p$ in an object $o$ does not trigger recomputes for all objects that
+depend on $o$, but only the ones that depend on $p$:
+
+Given $n$ objects $o_1 \dots o_n$ that depend an object $q$ by means of
+properties $p_1 \dots p_n$ in $q$ where $o_x$ only refers to $p_x$ and $p_x$ is only
+referred to by $o_x$, then changing one property $p_x$ of the set $p_1 \dots
+p_n$ only recomputes $o_x$.
+
+### Developer perspective
+
+From the viewpoint of the developer, dependency checking is changed, FreeCAD
+acquires exposed properties, a new extension to document objects is introduced,
+and the link code is adapted to exposed properties.
+
+#### Dependency checking
+
+Dependency checking obtains a new implementation where the dependencies are not
+only based on relations between objects, but the relations are labeled with the
+property that causes the dependency.  This results in fine-grained dependency
+checking that can prevent unnecessary recomputes.  The already existing logic
+for defining the relations can be reused, but the dependency graph itself
+contains more information.  The recompute logic is changed to incorporate this
+new information and only recomputes objects that depend on the property change.
+
+For dependency graph $G = (V, E)$ of a set of documents, the set of vertices $V$
+is defined by:
+1. All properties that inherit from `App::LinkBase` and
+2. special vertex "HEAD" that represents an object in its entirety.
+
+The set of directed edges $E \subseteq \lbrace (x, y) \mid (x, y) \in V^2 \text{ and } x \neq y \rbrace$ is defined by the following relation:
+1. If $x \in V$ and $y \in V$ and $x$ links to $y$, then $(x, y) \in E$.
+2. If $x \in V$ and $y \in V$, $x = \text{ HEAD}$, $x$ represents object $o$, and $y$
+   is a property of $o$, then $(x, y) \in E$.
+
+In FreeCAD $G$ should be acyclic to be able to do recomputes and a cycle is
+considered an erroneous state.
+
+#### Exposed properties
+
+Properties obtain a new status flag "Exposed" which indicates that a property
+can be considered outside of the object it is defined in.  More formally, we
+sligtly adapt the second condition to the $E$ relation defined above:
+
+If $x \in V$ and $y \in V$, $x = \text{ HEAD}$, $x$ represents object $o$, and $y$
+is a property of $o$, then $(x, y) \in E$ **unless $y$ is exposed**.  This
+allows objects that depend on $o$ to link to $y$ without introducing cycles.
+
+An example of a dependency graph is listed below from [[2](#ref2)]: The blue
+property is an exposed property and since HEAD does not have an edge to
+property Length, it is possible to link to Length from VarSet which depends on
+Part.
+
+![](./assets/FEP-0010-property-deps.png)
+
+
+#### Variant Extension
+
+FreeCAD will obtain a new extension for object called the Variant Extension.
+The extension manages the contexts for property intercepts and triggers a
+recompute of the object that acts as source of the variant.  The contexts are
+pushed onto a stack to ensure that variants can contain other variants, for
+example, in an assembly.
+
+#### Property Intercepts
+
+At the lowest level, before a read or write to a property is stored in the
+internal data structure of the property, the property intercept system will
+check whether there is a variant context on the stack.  If this is the case,
+the reads and writes will happen to that context.
+
+This allows us to do a recompute on an object that acts as source for the
+variant part and use all of its logic to compute a new shape or outcome for the
+variant.
+
+#### Link
+
+`App::Link` will inherit from the variant extension and needs to be adapted to
+take exposed properties into account.
 
 ### Impact on existing features / subsystems
 
-Any remarks about how the proposal will impact existing features or subsystem within the FreeCAD.
+There is impact on document recomputes, property access, and the link system.
+
+#### Document recomputes
+
+Document recomputes will obtain an alternative implementation.  This will
+happen in three phases.  First, there will be a runtime check based on a
+preference that allows users to turn on the new document recomputes.  A second
+phase will be a compile-time check for the new document recomputes.  The third
+and final phase removes the old mechanism.
+
+The dependency tree will have more fine-grained information, recording links
+between properties.  On a property change, only the objects that depend on the
+property are recomputed.  Most likely, no API change is necessary, just
+implementation.
+
+#### Property intercepts
+
+This is a change that needs to be made once for each property access, for each
+type of property.  Before a property is written or read, it is necessary to
+check whether a context is available and if the case, the property access needs
+to be redirected to this context.
+
+Since these intercepts work at a very low level, no API change is needed.
+
+#### Links
+
+The `App::Link` system needs to be adapted to support exposed properties.
+Links already adopt the properties of the object they link to.  Links need to
+be aware of exposed properties and trigger a recompute via the variant
+extension.  The link system is complex code, but with these changes to it, the
+link system will get more code review and the inner workings become more known
+within the FreeCAD developer community.
 
 ### Backwards Compatibility (only for Core Changes)
 
-Any remarks about how the proposed change will affect the backwards compatibility for files, addons and workflows.
-
-## Open Issues (optional)
-
-Issues that are not yet answered in terms of specification. Proposal cannot proceed into Proposed state unless all
-questions are answered.
-
-## Rejected Ideas (optional)
-
-List of ideas that were rejected at discussion stage with rationale on why they were rejected.
-
-## Alternatives (optional)
-
-Discussion about alternative approaches considered during the design or the discussion.
+Since this proposal will only add functionality, backward compatibility is not
+affected.  Fine-grained recomputation on older documents will only make the
+recomputation more efficient, pruning out unnecessary recomputations that could
+have been omitted in older FreeCAD versions as well.  In other words, the
+result of the old recomputation and the new fine-grained recomputation is
+equivalent.
 
 ## Implementation (only for Core Changes)
 
@@ -244,6 +388,7 @@ Any substantial changes to the FEP should be recorded in this section - latest c
 ## References (optional)
 
 1. <span name=ref1>Forum post with videos of the 4 alternatives</span>: <https://forum.freecad.org/viewtopic.php?p=786692&sid=3e7a311d0f05b2f10697de4128d9b33f#p786692>
+2. <span name=ref1>Forum post with new dependency representation</span>: <https://forum.freecad.org/viewtopic.php?p=795719#p795719>
 
 ## License / Copyright
 
