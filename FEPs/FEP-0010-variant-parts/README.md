@@ -1,15 +1,15 @@
 # FEP-0010 Variant Parts
 
-| FEP-0010       |                           |
-|----------------|---------------------------|
-| Type           | Core Change               |
-| Status         | Draft                     |
-| Author(s)      | Pieter Hijma @pieterhijma |
-| Version        | 0.1                       |
-| Created        | 2025-09-23                |
-| Updated        | 2025-10-01                |
-| Discussion     | TBD                       |
-| Implementation | n/a                       |
+| FEP-0010       |                                                                                                                  |
+|----------------|------------------------------------------------------------------------------------------------------------------|
+| Type           | Core Change                                                                                                      |
+| Status         | Draft                                                                                                            |
+| Author(s)      | Pieter Hijma @pieterhijma                                                                                        |
+| Version        | 0.1                                                                                                              |
+| Created        | 2025-09-23                                                                                                       |
+| Updated        | 2025-10-01                                                                                                       |
+| Discussion     | [💬 Discussion FEP-0010: Variant Parts](https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/discussions/31) |
+| Implementation | n/a                                                                                                              |
 
 This proposal introduces variant parts to FreeCAD.  Variant parts are parts
 with with a clear interface that communicate to users what the designer of the
@@ -84,7 +84,7 @@ the various directions and explain below why the current direction is chosen.
 ### Keep current functionality
 
 Keeping the current functionality in essence not doing anything and use
-subshapebinders if only shapes need to be references, and tracking
+subshape binders if only shapes need to be references, and tracking
 copy-on-change links for link behavior.  However, this is not considered
 because these techniques have various limitations: Designs that use these
 techniques are brittle because of the complex administration and two separate
@@ -104,7 +104,7 @@ the overall logic.
 
 #### Fine-grained dependency checking
 
-This is a reimplementation of dependency checking where dependencies are not
+This is a re-implementation of dependency checking where dependencies are not
 recorded between document objects, but between the properties of document
 objects.  This allows us to avoid circular dependencies for exposed properties
 and it allows improved recomputation where a property change only causes the
@@ -282,7 +282,7 @@ considered an erroneous state.
 
 Properties obtain a new status flag "Exposed" which indicates that a property
 can be considered outside of the object it is defined in.  More formally, we
-sligtly adapt the second condition to the $E$ relation defined above:
+slightly adapt the second condition to the $E$ relation defined above:
 
 If $x \in V$ and $y \in V$, $x = \text{ HEAD}$, $x$ represents object $o$, and $y$
 is a property of $o$, then $(x, y) \in E$ **unless $y$ is exposed**.  This
@@ -298,7 +298,7 @@ Part.
 
 #### Variant Extension
 
-FreeCAD will obtain a new extension for object called the Variant Extension.
+FreeCAD will obtain a new extension for objects called the Variant Extension.
 The extension manages the contexts for property intercepts and triggers a
 recompute of the object that acts as source of the variant.  The contexts are
 pushed onto a stack to ensure that variants can contain other variants, for
@@ -367,11 +367,11 @@ equivalent.
 
 ## Rejected Ideas
 
-An early specification with implementation exists for the idea of variant parts
-in PR #12532 .  The **specification** focused on VarSets having a central role
-in defining the application programming interface in combination with
-`App::Part`.  Both these objects would become "special" to support variants.
-The specification of this is listed in issue #12531 [[5](#ref5)].  This idea is
+An early specification with implementation exists for the idea of variant
+parts.  The **specification** focused on VarSets having a central role in
+defining the application programming interface in combination with `App::Part`.
+Both these objects would become "special" to support variants.  The
+specification of this is listed in issue #12531 [[5](#ref5)].  This idea is
 rejected because it is not general enough.  Only `App::Part` objects with an
 exposed VarSet would become variants, while there are many other valid objects
 that may need to be variants.  An example is a simple cube that cannot contain
@@ -381,7 +381,7 @@ The **implementation** is proposed in PR #12532 [[6](#ref6)].  This
 implementation has been built on top of the existing logic of hidden
 references, rewriting expressions, and redirecting property access with adding
 special cases to object identifiers.  This implementation brought to light that
-hidden references do not truely prevent cyclic dependencies as this proposal
+hidden references do not truly prevent cyclic dependencies as this proposal
 does, but it merely uses multiple dependency check mechanisms to effectively
 hide the fact that there are still cyclic dependencies.  Because of these
 limitations, this implementation is rejected.
@@ -497,9 +497,9 @@ already very similar to marking properties for different purposes.
 This implementation will obtain a test-suite for each of these different topics
 as well.
 
-## Changelog (once more versions are released)
+## Changelog
 
-Any substantial changes to the FEP should be recorded in this section - latest changes should be on top:
+<!-- Any substantial changes to the FEP should be recorded in this section - latest changes should be on top: -->
 
 ### 0.1 - 2025-10-01
 
