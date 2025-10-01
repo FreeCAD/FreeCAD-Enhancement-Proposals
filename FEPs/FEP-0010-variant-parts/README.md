@@ -365,12 +365,34 @@ have been omitted in older FreeCAD versions as well.  In other words, the
 result of the old recomputation and the new fine-grained recomputation is
 equivalent.
 
+## Rejected Ideas
+
+An early specification with implementation exists for the idea of variant parts
+in PR #12532 .  The **specification** focused on VarSets having a central role
+in defining the application programming interface in combination with
+`App::Part`.  Both these objects would become "special" to support variants.
+The specification of this is listed in issue #12531 [[5](#ref5)].  This idea is
+rejected because it is not general enough.  Only `App::Part` objects with an
+exposed VarSet would become variants, while there are many other valid objects
+that may need to be variants.  An example is a simple cube that cannot contain
+a VarSet inside.
+
+The **implementation** is proposed in PR #12532 [[6](#ref6)].  This
+implementation has been built on top of the existing logic of hidden
+references, rewriting expressions, and redirecting property access with adding
+special cases to object identifiers.  This implementation brought to light that
+hidden references do not truely prevent cyclic dependencies as this proposal
+does, but it merely uses multiple dependency check mechanisms to effectively
+hide the fact that there are still cyclic dependencies.  Because of these
+limitations, this implementation is rejected.
+
 ## Implementation
 
 A proof-of-concept has been created in the context of the FPA program "Research
-Variant Parts", the results of which are listed on the forum [[5](#ref5)].
+Variant Parts", the results of which are listed on the forum [[7](#ref7)].
 This proposal is a direct result of that project.  Other than what is proposed
-here, the proof-of-concept in PRs #18412, #19733, and #19735 [[6](#ref6), [7](#ref7), [8](#ref8)] has:
+here, the proof-of-concept in PRs #18412, #19733, and #19735 [[8](#ref8),
+[9](#ref9), [10](#ref10)] has:
 - the current dependency check with special cases as opposed to fine-grained dependency checks,
 - shape-based variants instead of subtree-based variants, and
 - property intercept has only been partially implemented (not for all
@@ -403,7 +425,7 @@ composed of adding property intercept, the variant extension, and incorporating
 the variant extension into `App::Link`.
 
 More background on **intercepting property access** can be found on the forum
-[[9](#ref9)].  A typical property access for a float property is listed below:
+[[11](#ref11)].  A typical property access for a float property is listed below:
 
 ```c++
 void PropertyFloat::setValue(double lValue)
@@ -448,7 +470,7 @@ change is local to the FreeCAD source and will work for any document object
 defined in any external workbench.
 
 The **variant extension** will be roughly like the one introduced in PR #19733
-[[7](#ref7)] in the form of `App::VariantExtension`.  On execution of a variant
+[[9](#ref9)] in the form of `App::VariantExtension`.  On execution of a variant
 extension, the extension will obtain a topologically sorted outlist of the
 object $o$ of which this is a variant.  For each of these objects, a context
 will be created and pushed onto the stack for property intercept.  Then the
@@ -489,11 +511,13 @@ Any substantial changes to the FEP should be recorded in this section - latest c
 2. <span name=ref2>Forum post with videos of the 4 alternatives</span>: <https://forum.freecad.org/viewtopic.php?p=786692&sid=3e7a311d0f05b2f10697de4128d9b33f#p786692>
 3. <span name=ref3>Forum post with video on an interface for geometry</span>: <https://forum.freecad.org/viewtopic.php?p=788072#p788072>
 4. <span name=ref4>Forum post with new dependency representation</span>: <https://forum.freecad.org/viewtopic.php?p=795719#p795719>
-5. <span name=ref5>Forum post with the results of "Research Variant Parts"</span>: <https://forum.freecad.org/viewtopic.php?p=814501#p814501>
-6. <span name=ref6>PR #18412, Core: Allow exposing properties</span>: <https://github.com/FreeCAD/FreeCAD/pull/18412>
-7. <span name=ref7>PR #19733, Core: Compute shapes for variants</span>: <https://github.com/FreeCAD/FreeCAD/pull/19733>
-8. <span name=ref8>PR #19735, Gui: Add Part variant logic</span>: <https://github.com/FreeCAD/FreeCAD/pull/19735>
-9. <span name=ref9>Forum post with background on property intercept</span>: <https://forum.freecad.org/viewtopic.php?p=812491#p812491>
+5. <span name=ref5>Specification of exposing properties VarSets in App::Part</span> <https://github.com/FreeCAD/FreeCAD/issues/12531>
+6. <span name=ref6>PR #12532: Core: Enable exposing VarSets in App::Part</span>
+7. <span name=ref7>Forum post with the results of "Research Variant Parts"</span>: <https://forum.freecad.org/viewtopic.php?p=814501#p814501>
+8. <span name=ref8>PR #18412, Core: Allow exposing properties</span>: <https://github.com/FreeCAD/FreeCAD/pull/18412>
+9. <span name=ref9>PR #19733, Core: Compute shapes for variants</span>: <https://github.com/FreeCAD/FreeCAD/pull/19733>
+10. <span name=ref10>PR #19735, Gui: Add Part variant logic</span>: <https://github.com/FreeCAD/FreeCAD/pull/19735>
+11. <span name=ref11>Forum post with background on property intercept</span>: <https://forum.freecad.org/viewtopic.php?p=812491#p812491>
 
 ## License / Copyright
 
