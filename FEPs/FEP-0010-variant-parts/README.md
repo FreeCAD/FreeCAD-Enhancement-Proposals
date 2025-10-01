@@ -7,7 +7,7 @@
 | Author(s)      | Pieter Hijma @pieterhijma |
 | Version        | 0.1                       |
 | Created        | 2025-09-23                |
-| Updated        | 2025-09-23                |
+| Updated        | 2025-10-01                |
 | Discussion     | TBD                       |
 | Implementation | n/a                       |
 
@@ -31,9 +31,9 @@ parametric part with the following properties:
 In FreeCAD, it is virtually impossible to create parts with these properties.
 As a result, in FreeCAD, parametric design is limited, it is not possible to
 reuse or exchange parts independently, and as such, parametric parts are not
-modular.  This modularity in parametric designs is important because since
-FreeCAD is an open source application, seamless sharing and exchange of parts
-should be central to FreeCAD's mission.
+modular (see these videos [[1](#ref1)]).  This modularity in parametric designs
+is important because since FreeCAD is an open source application, seamless
+sharing and exchange of parts should be central to FreeCAD's mission.
 
 Another reason why this functionality is important is because parametric design
 is at the heart of FreeCAD (it uses the subtitle "Your own 3D parametric
@@ -41,10 +41,11 @@ modeler" prominently on the website), yet, the kind of parametric design
 introduced by this proposal is currently a weakness of FreeCAD.
 
 FreeCAD has functionality that comes close to true variant parts with various
-techniques.  However, all these options have their issues [[1](#ref1)].  A
-first option is creating **copies of parts**.  However, with this technique, it
-is not clear which parameters are designated for variants and a change to all
-instances of the variant is not possible.
+techniques.  However, all these options have their issues, as explained in a
+forum topic with videos [[2](#ref2)].  A first option is creating **copies of parts**.
+However, with this technique, it is not clear which parameters are
+designated for variants and a change to all instances of the variant is not
+possible.
 
 A second option is **copy-on-change links**.  However, this technique is not
 user friendly and it makes use of hidden references.  Propagating a change to
@@ -228,7 +229,7 @@ dependent on $o$ without introducing cyclic dependencies.  You can consider
 those properties to be outside of the object.  This eliminates the use of
 hidden references for the purpose of creating variants.
 
-The set of exposed properties define what I call the **Application Geometry Interface**,
+The set of exposed properties define what I call the **Application Geometry Interface** [[3](#ref3)],
 the interface for geometry that defines how a part should be
 parameterized.  The Application Geometry Interface captures design intent in
 the context of parametric design.
@@ -244,8 +245,8 @@ depend on $o$, but only the ones that depend on $p$:
 
 Given $n$ objects $o_1 \dots o_n$ that depend an object $q$ by means of
 properties $p_1 \dots p_n$ in $q$ where $o_x$ only refers to $p_x$ and $p_x$ is only
-referred to by $o_x$, then changing one property $p_x$ of the set $p_1 \dots
-p_n$ only recomputes $o_x$.
+referred to by $o_x$, then changing one property $p_x$ of the set
+$p_1 \dots p_n$ only recomputes $o_x$.
 
 ### Developer perspective
 
@@ -268,7 +269,8 @@ is defined by:
 1. All properties that inherit from `App::LinkBase` and
 2. special vertex "HEAD" that represents an object in its entirety.
 
-The set of directed edges $E \subseteq \lbrace (x, y) \mid (x, y) \in V^2 \text{ and } x \neq y \rbrace$ is defined by the following relation:
+The set of directed edges $E \subseteq \lbrace (x, y) \mid (x, y) \in V^2 \text{ and } x \neq y \rbrace$
+is defined by the following relation:
 1. If $x \in V$ and $y \in V$ and $x$ links to $y$, then $(x, y) \in E$.
 2. If $x \in V$ and $y \in V$, $x = \text{ HEAD}$, $x$ represents object $o$, and $y$
    is a property of $o$, then $(x, y) \in E$.
@@ -286,7 +288,7 @@ If $x \in V$ and $y \in V$, $x = \text{ HEAD}$, $x$ represents object $o$, and $
 is a property of $o$, then $(x, y) \in E$ **unless $y$ is exposed**.  This
 allows objects that depend on $o$ to link to $y$ without introducing cycles.
 
-An example of a dependency graph is listed below from [[2](#ref2)]: The blue
+An example of a dependency graph is listed below from [[4](#ref4)]: The blue
 property is an exposed property and since HEAD does not have an edge to
 property Length, it is possible to link to Length from VarSet which depends on
 Part.
@@ -320,7 +322,8 @@ take exposed properties into account.
 
 ### Impact on existing features / subsystems
 
-There is impact on document recomputes, property access, and the link system.
+There is impact on document recomputes, property access, and the link system,
+all discussed below.
 
 #### Document recomputes
 
@@ -365,8 +368,9 @@ equivalent.
 ## Implementation
 
 A proof-of-concept has been created in the context of the FPA program "Research
-Variant Parts".  This proposal is a direct result of that project.  Other than
-what is proposed here, the proof-of-concept has:
+Variant Parts", the results of which are listed on the forum [[5](#ref5)].
+This proposal is a direct result of that project.  Other than what is proposed
+here, the proof-of-concept in PRs #18412, #19733, and #19735 [[6](#ref6), [7](#ref7), [8](#ref8)] has:
 - the current dependency check with special cases as opposed to fine-grained dependency checks,
 - shape-based variants instead of subtree-based variants, and
 - property intercept has only been partially implemented (not for all
@@ -399,7 +403,7 @@ composed of adding property intercept, the variant extension, and incorporating
 the variant extension into `App::Link`.
 
 More background on **intercepting property access** can be found on the forum
-[[#ref3](ref-3)].  A typical property access for a float property is listed below:
+[[9](#ref9)].  A typical property access for a float property is listed below:
 
 ```c++
 void PropertyFloat::setValue(double lValue)
@@ -444,7 +448,7 @@ change is local to the FreeCAD source and will work for any document object
 defined in any external workbench.
 
 The **variant extension** will be roughly like the one introduced in PR #19733
-[[4](ref-4)] in the form of `App::VariantExtension`.  On execution of a variant
+[[7](#ref7)] in the form of `App::VariantExtension`.  On execution of a variant
 extension, the extension will obtain a topologically sorted outlist of the
 object $o$ of which this is a variant.  For each of these objects, a context
 will be created and pushed onto the stack for property intercept.  Then the
@@ -481,8 +485,15 @@ Any substantial changes to the FEP should be recorded in this section - latest c
 
 ## References (optional)
 
-1. <span name=ref1>Forum post with videos of the 4 alternatives</span>: <https://forum.freecad.org/viewtopic.php?p=786692&sid=3e7a311d0f05b2f10697de4128d9b33f#p786692>
-2. <span name=ref2>Forum post with new dependency representation</span>: <https://forum.freecad.org/viewtopic.php?p=795719#p795719>
+1. <span name=ref1>Two videos explaining modularity problems in FreeCAD designs</span>: <https://github.com/FreeCAD/FreeCAD/pull/12532#issuecomment-1956491941>
+2. <span name=ref2>Forum post with videos of the 4 alternatives</span>: <https://forum.freecad.org/viewtopic.php?p=786692&sid=3e7a311d0f05b2f10697de4128d9b33f#p786692>
+3. <span name=ref3>Forum post with video on an interface for geometry</span>: <https://forum.freecad.org/viewtopic.php?p=788072#p788072>
+4. <span name=ref4>Forum post with new dependency representation</span>: <https://forum.freecad.org/viewtopic.php?p=795719#p795719>
+5. <span name=ref5>Forum post with the results of "Research Variant Parts"</span>: <https://forum.freecad.org/viewtopic.php?p=814501#p814501>
+6. <span name=ref6>PR #18412, Core: Allow exposing properties</span>: <https://github.com/FreeCAD/FreeCAD/pull/18412>
+7. <span name=ref7>PR #19733, Core: Compute shapes for variants</span>: <https://github.com/FreeCAD/FreeCAD/pull/19733>
+8. <span name=ref8>PR #19735, Gui: Add Part variant logic</span>: <https://github.com/FreeCAD/FreeCAD/pull/19735>
+9. <span name=ref9>Forum post with background on property intercept</span>: <https://forum.freecad.org/viewtopic.php?p=812491#p812491>
 
 ## License / Copyright
 
