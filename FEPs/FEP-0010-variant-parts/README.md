@@ -353,7 +353,7 @@ extension.  The link system is complex code, but with these changes to it, the
 link system will get more code review and the inner workings become more known
 within the FreeCAD developer community.
 
-### Backwards Compatibility (only for Core Changes)
+### Backwards Compatibility
 
 Since this proposal will only add functionality, backward compatibility is not
 affected.  Fine-grained recomputation on older documents will only make the
@@ -362,33 +362,127 @@ have been omitted in older FreeCAD versions as well.  In other words, the
 result of the old recomputation and the new fine-grained recomputation is
 equivalent.
 
-## Implementation (only for Core Changes)
+## Implementation
 
-Further discussion about implementation details, with link to implementation (if available) or any other way
-proving that implementation is feasible and someone is willing to carry the implementation effort.
+A proof-of-concept has been created in the context of the FPA program "Research
+Variant Parts".  This proposal is a direct result of that project.  Other than
+what is proposed here, the proof-of-concept has:
+- the current dependency check with special cases as opposed to fine-grained dependency checks,
+- shape-based variants instead of subtree-based variants, and
+- property intercept has only been partially implemented (not for all
+  properties).
 
-## FAQ (optional)
+The implementation of this proposal will happen in two phases.  The first phase
+will focus on fine-grained recomputation and adding exposed properties.  The
+second phase will focus on adding property intercept, the variant extension,
+and adapting `App::Link`.
 
-Frequently Asked Questions ans answers to them, based on author
+### Phase 1: Fine-grained recomputation
 
-## Further Work (optional)
+The implementation will start with a simple test with a VarSet that has two
+properties `sizeCube1` and `sizeCube2` that drive the sizes of two simple cubes
+respectively.  Then changing the property `sizeCube1` should only cause the
+first cube to be marked for recomputation and not the second.  This test
+currently fails in FreeCAD.  Currently, recomputation has no tests in FreeCAD.
+With this implementation, a test suite will be provided.
 
-Discussion on further work related to the FEP that can be done.
+For exposed properties, the flag `App::Property::Status::User4` will be changed
+to `App::Property::Status::Exposed`.  Please note that `User1`, `User2`, and
+`User3` are already in use for various purposes.  The exposed properties will
+be incorporated into the recomputation logic and tests will be provided for
+this as well.
+
+### Phase 2: Adding variant links
+
+The second phase will add the logic for acquiring variant links.  This is
+composed of adding property intercept, the variant extension, and incorporating
+the variant extension into `App::Link`.
+
+More background on **intercepting property access** can be found on the forum
+[[#ref3](ref-3)].  A typical property access for a float property is listed below:
+
+```c++
+void PropertyFloat::setValue(double lValue)
+{
+    aboutToSetValue();
+    _dValue = lValue;
+    hasSetValue();
+}
+
+double PropertyFloat::getValue() const
+{
+    return _dValue;
+}
+```
+
+With property intercepts, this will become:
+
+```c++
+void PropertyFloat::setValue(double lValue)
+{
+    if (!setInContext<PropertyFloat>(&PropertyFloat::setValue, lValue)) {
+        aboutToSetValue();
+        _dValue = lValue;
+        hasSetValue();
+    }
+}
+
+double PropertyFloat::getValue() const
+{
+    try {
+        return getFromContext<PropertyFloat, double>(&PropertyFloat::getValue);
+    }
+    catch (const NoContextException& e) {
+        return _dValue;
+    }
+}
+```
+
+Most property access functions need this same change.  A very strong benefit of
+this approach is that since property types can only be defined in C++, this
+change is local to the FreeCAD source and will work for any document object
+defined in any external workbench.
+
+The **variant extension** will be roughly like the one introduced in PR #19733
+[[4](ref-4)] in the form of `App::VariantExtension`.  On execution of a variant
+extension, the extension will obtain a topologically sorted outlist of the
+object $o$ of which this is a variant.  For each of these objects, a context
+will be created and pushed onto the stack for property intercept.  Then the
+object $o$ and its dependencies will be executed in these contexts.  The
+contexts will be popped of the stack and the variant link has been computed.
+
+Different from PR #19733 that introduced a `Part::Variant` that extended
+`App::VariantExtension` and that only supported shape-based variants, in the
+proposed implementation, **`App::Link`** will extend `App::VariantExtension`
+and instead of property `Support` in `App::VariantExtension` of type
+`App::PropertyXLink`, the variant extension will make use of property
+`LinkedObject` of type `App::PropertyXLink` in `App::Link`.
+
+In PR #19733, the `Part::Variant` would adopt the exposed properties.  In the
+proposed implementation that is not necessary any longer because `App::Link`
+already adopts the properties of the linked object.  However, `App::Link` must
+treat those properties in a different way.
+
+The user interface of FreeCAD requires almost no change.  Linking to an object
+with exposed properties will automatically become a variant link, so the only
+change to the FreeCAD user interface is marking properties as exposed.  This is
+already very similar to marking properties for different purposes.
+
+This implementation will obtain a test-suite for each of these different topics
+as well.
 
 ## Changelog (once more versions are released)
 
 Any substantial changes to the FEP should be recorded in this section - latest changes should be on top:
 
-### 0.x - 2025-02-15
+### 0.1 - 2025-10-01
 
-- First Change
-- Second Change
-- ...
+- Initial version
 
 ## References (optional)
 
 1. <span name=ref1>Forum post with videos of the 4 alternatives</span>: <https://forum.freecad.org/viewtopic.php?p=786692&sid=3e7a311d0f05b2f10697de4128d9b33f#p786692>
-2. <span name=ref1>Forum post with new dependency representation</span>: <https://forum.freecad.org/viewtopic.php?p=795719#p795719>
+2. <span name=ref2>Forum post with new dependency representation</span>: <https://forum.freecad.org/viewtopic.php?p=795719#p795719>
 
 ## License / Copyright
 
