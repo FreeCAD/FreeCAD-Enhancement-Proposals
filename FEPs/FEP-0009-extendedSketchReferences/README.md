@@ -29,7 +29,7 @@ Multibody modeling workflows expect that features in one Body can reference geom
 ### Expected Results
 
 - **No UI regression**: There isn't any new limitation or change in the GUI for any operation allowed in upstream.
-- **Backwards compatibility**: Existing files open and behave as before; references created with older versions remain valid. 
+- **Backwards compatibility**: Existing files open and behave as before; references created with older versions remain valid.
    Documents created under prior restrictions can now create new cross-Body and cross-Part sketch references.
 
 ### Implementation
