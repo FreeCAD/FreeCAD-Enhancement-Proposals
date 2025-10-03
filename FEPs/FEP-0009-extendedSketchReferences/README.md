@@ -14,16 +14,13 @@
 ---
 
 ## Motivation
-- **Design limitation**: multibody modeling expects that bodies can freely reference geometry within a part; the current model hampers this.
-
-Multibody modeling workflows expect that features in one Body can reference geometry defined in another Body of the same project. Historically, this was restricted, forcing users toward patterns resembling multi-Part assemblies and manual proxy objects. The change proposed here lifts those restrictions for sketches (External Geometry and Attachment Support), thereby enabling more natural design intent propagation across Bodies and, **optionally**, across Parts within the same document.
+- **Design limitation**: Multibody modeling workflows expect that features in one Body can reference geometry defined in another Body of the same project. Historically, this was restricted, forcing users toward patterns resembling multi-Part assemblies and manual proxy objects. The change proposed here lifts those restrictions for sketches (External Geometry and Attachment Support), thereby enabling more natural design intent propagation across Bodies and, **optionally**, across Parts within the same document.
 
 ## Specification
 
 ### Scope of references
 
-- **Within a Part (cross-Body)**: A sketch may reference External Geometry from, or attach to faces/edges/planes of, features living in other Bodies in the same Part.
-- **Across Parts (same document)**: The same sketch references are also permitted between Bodies that reside in *different* Parts within the same document.
+- **Across Bodies and Parts (same document)**: A sketch may reference External Geometry from, or attach to faces/edges/planes of, features living in other Bodies or other Parts.
 - **Across documents**: Out of scope; unchanged from upstream.
 
 ### Expected Results
@@ -48,7 +45,6 @@ Multibody modeling workflows expect that features in one Body can reference geom
 
 This design targets **maximum capability with minimal disruption**:
 
-- **Familiar placements, broader links**: Keeping `Body.Placement` intact preserves user muscle memory and macro compatibility, while the extended link scope delivers the requested cross-Body and cross-Part functionality.
 - **Predictable dependency graphs**: By avoiding implicit SubShapeBinder injection, dependency graphs remain explicit and auditable. Users who prefer proxies can continue to use SubShapeBinders deliberately.
 - **Incremental change**: The behavior outside of Sketcher External Geometry and Attachment Support is unchanged, reducing risk.
 
