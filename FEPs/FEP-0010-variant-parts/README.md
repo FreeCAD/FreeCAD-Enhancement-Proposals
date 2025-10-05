@@ -7,7 +7,7 @@
 | Author(s)      | Pieter Hijma @pieterhijma                                                                                        |
 | Version        | 0.1                                                                                                              |
 | Created        | 2025-09-23                                                                                                       |
-| Updated        | 2025-10-01                                                                                                       |
+| Updated        | 2025-10-05                                                                                                       |
 | Discussion     | [💬 Discussion FEP-0010: Variant Parts](https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/discussions/31) |
 | Implementation | n/a                                                                                                              |
 
@@ -29,16 +29,16 @@ parametric part with the following properties:
    propagate to all other instances.
 
 In FreeCAD, it is virtually impossible to create parts with these properties.
-As a result, in FreeCAD, parametric design is limited, it is not possible to
+As a result, in FreeCAD, parametric design is limited.  It is not possible to
 reuse or exchange parts independently, and as such, parametric parts are not
 modular (see these videos [[1](#ref1)]).  This modularity in parametric designs
 is important because since FreeCAD is an open source application, seamless
 sharing and exchange of parts should be central to FreeCAD's mission.
 
-Another reason why this functionality is important is because parametric design
-is at the heart of FreeCAD (it uses the subtitle "Your own 3D parametric
-modeler" prominently on the website), yet, the kind of parametric design
-introduced by this proposal is currently a weakness of FreeCAD.
+Another reason why this functionality is important, is because parametric
+design is at the heart of FreeCAD.  It uses the subtitle "Your own 3D
+parametric modeler" prominently on the website, yet, the kind of parametric
+design introduced by this proposal is currently a weakness of FreeCAD.
 
 FreeCAD has functionality that comes close to true variant parts with various
 techniques.  However, all these options have their issues, as explained in a
@@ -56,21 +56,21 @@ administration.
 
 An improvement is the technique of **tracked copy-on-change links**.  However,
 this has the same issues of copy-on-change links with an even more complex
-administration for variants, but with the benefit that it is possible to
-propagate changes to all instances.  However, these updates to the original
-part cause newly created document objects for each small change with new names
-and labels, potentially breaking geometry that was built on the tracked
-copy-on-change link.
+administration for variants, but with the benefit of propagating changes to all
+instances.  However, these updates to the original part cause newly created
+document objects for each small change with new names and labels, potentially
+breaking geometry that was built on the tracked copy-on-change link.
 
-Finally, **subshape binders** use a different way of storing the copy, namely
-in a hidden temporary document.  This has the benefit, that the copy is not
-stored inside the document and is generated each time, but the document is not
-fully hidden and sometimes, the user is confronted with a document that appears
-out of nowhere.  Additionally, this techniques is not user friendly and relies
-on hidden references, it has a complex administration for parts as well, and
-other than tracked copy-on-change links, subshape binders can only reference
-shapes.  This means that the document object subtree is not available to users
-to make use of, something that is possible with regular links.
+Finally, **copy-on-change subshape binders** use a different way of storing the
+copy, namely in a hidden temporary document.  This has the benefit, that the
+copy is not stored inside the FreeCAD file and is generated each time, but the
+temporary document is not fully hidden and sometimes, the user is confronted
+with a document of which the origin is not clear.  Additionally, this technique
+is not user friendly and relies on hidden references, it has a complex
+administration for parts as well, and other than tracked copy-on-change links,
+subshape binders can only reference shapes.  This means that the document
+object subtree is not available to users to make use of, something that is
+possible with regular links.
 
 All in all, FreeCAD currently has limited support for variant parts, a
 capability that should be prioritized given its open-source nature and its goal
@@ -83,8 +83,8 @@ the various directions and explain below why the current direction is chosen.
 
 ### Keep current functionality
 
-Keeping the current functionality in essence not doing anything and use
-subshape binders if only shapes need to be references, and tracking
+Keeping the current functionality is in essence leaving the current state exist
+and use subshape binders if only shapes need to be referenced, and tracking
 copy-on-change links for link behavior.  However, this is not considered
 because these techniques have various limitations: Designs that use these
 techniques are brittle because of the complex administration and two separate
@@ -98,48 +98,49 @@ Improved dependency checking can remove the need for using hidden references by
 introducing **exposed properties** that define for users what properties can be
 used to vary parts.  Two directions are considered: **Fine-grained dependency
 checking** is a re-implementation of FreeCAD's dependency checking that defines
-relations between objects based on the properties.  **Current dependency check
-with special cases** adds exceptions for properties that are exposed but keeps
-the overall logic.
+relations between objects based on the properties.  **Current dependency
+checking with special cases** adds exceptions for properties that are exposed
+but keeps the overall existing logic.
 
 #### Fine-grained dependency checking
 
 This is a re-implementation of dependency checking where dependencies are not
-recorded between document objects, but between the properties of document
+recorded between document objects, but between the *properties* of document
 objects.  This allows us to avoid circular dependencies for exposed properties
 and it allows improved recomputation where a property change only causes the
 document objects that depend on that property and not all document objects that
 depend on any property.
 
-#### Current dependency check with special cases
+#### Current dependency checking with special cases
 
-This enhances the current dependency check and creates exceptions for exposed
-properties to prevent cyclic dependencies.  A drawback of this direction is
-that the dependency code becomes even more complex and it does not help with
-the improved recomputation efficiency that fine-grained dependency checks
-offer.
+This enhances the current dependency check mechanism and creates exceptions for
+exposed properties to prevent cyclic dependencies.  A drawback of this
+direction is that the dependency code becomes even more complex and it does not
+have the additional benefit of improved recomputation efficiency that
+fine-grained dependency checks offer.
 
 ### Shape-based vs. subtree-based variants
 
-Variants that are **shape-based**, do not expose the subtree of document
-objects to the user, whereas **subtree-based** variants do.
+Variants that are **shape-based** do not expose the subtree of document objects
+to the user, whereas **subtree-based** variants do.
 
 #### Shape-based variants
 
-Creating a variant of a part results in a flat part without subtree with only
-a shape.  A benefit of this approach is that the implementation is relatively
-simple.  However, this implementation cannot handle, more complex parts such as
-assemblies and it is necessary to introduce the new concept of a variant part.
-For example, creating a variant of an assembly cannot show its origin or local
-coordinate systems because the subtree of the assembly is not incorporated.
+Creating a shape-based variant of a part results in a flat part with only a
+shape without any subtree.  A benefit of this approach is that the
+implementation is relatively simple.  However, this implementation cannot
+handle more complex parts such as assemblies and it is necessary to introduce a
+new concept of a variant part.  For example, creating a variant of an assembly,
+part, or body cannot show its origin or local coordinate systems because the
+subtree of the assembly is not incorporated.
 
 #### Subtree-based variants
 
-Creating a variant of a part provides the complete subtree of the part to the
-user.  This allows us to make use of the logic of links, it provides users with
-the familiar interface of links, and this solution can handle complex parts.  A
-drawback is that the implementation needs to be integrated with FreeCAD's links
-system.
+Creating a subtree-based variant of a part provides the complete subtree of the
+part to the user.  This allows us to make use of the logic of links, it
+provides users with the familiar interface of links, and this solution can
+handle complex parts.  A drawback is that the implementation needs to be
+integrated with FreeCAD's link system.
 
 ### Copy-based vs. intercept-based variants
 
@@ -153,10 +154,10 @@ property access.
 Copy-based variants maintain a full copy of the variant part and maintain an
 administration to give the user the illusion that there is no copy.  To ensure
 that the correct dependencies are captured, an extensive administration is
-required may go out of sync and causes problems as a result.  Another risk is
-that document objects are user defined (for example, in an addon) and it may be
-the case that the administration is not capable of fully capturing what is
-required to copy.
+required that may go out of sync and causes problems as a result.  Another risk
+is that document objects can be user-defined (for example, in an addon) and it
+may be the case that the administration is not capable of fully capturing what
+is required to copy.
 
 #### Intercept-based variants
 
@@ -172,8 +173,8 @@ property access needs to be touched.
 
 Keeping the current functionality is not a viable option in my opinion because
 virtually no users seem to make use of the current mechanisms.  The mechanisms
-are not user friendly and often provide results in designs that are hard to
-analyze and understand.
+are not user friendly and often result in designs that are hard to analyze and
+understand.
 
 The chosen direction is fine-grained dependency checking with subtree-based and
 intercept-based variants.  Fine-grained dependency checking is chosen because
@@ -198,8 +199,8 @@ maintaining copies are avoided.
 
 ## Specification
 
-In this section we provide the specification for variant parts by means of
-exposed properties, property intercepts, and based on subtrees.  The exposed
+In this section we provide the specification for variant parts with exposed
+properties, property intercepts, and providing the full subtree.  The exposed
 properties have the following goals:
 1. Allow users to avoid cyclic dependencies without requiring the use of hidden
    references.
@@ -235,18 +236,18 @@ parameterized.  The Application Geometry Interface captures design intent in
 the context of parametric design.
 
 In addition, links become aware of exposed properties.  The exposed properties
-are incorporated in the link and marked clearly as exposed properties.
-Changing one of the exposed properties automatically creates a variant of the
-object that is linked to.
+are incorporated in the link and marked clearly as exposed.  Changing one of
+the exposed properties automatically creates a variant of the object that is
+linked to.
 
 Finally, the user will experience improved recomputes where a change of
 property $p$ in an object $o$ does not trigger recomputes for all objects that
 depend on $o$, but only the ones that depend on $p$:
 
-Given $n$ objects $o_1 \dots o_n$ that depend an object $q$ by means of
-properties $p_1 \dots p_n$ in $q$ where $o_x$ only refers to $p_x$ and $p_x$ is only
-referred to by $o_x$, then changing one property $p_x$ of the set
-$p_1 \dots p_n$ only recomputes $o_x$.
+Given $n$ objects $o_1, \dots, o_n$ that depend an object $q$ by means of
+properties $p_1, \dots, p_n$ in $q$ where $x \in \lbrace 1,2,\dots,n \rbrace$ and
+$o_x$ only refers to $p_x$ and $p_x$ is only referred to by $o_x$, then
+changing one property $p_x$ of the set $\lbrace p_1, \dots, p_n \rbrace$ only recomputes $o_x$.
 
 ### Developer perspective
 
@@ -302,14 +303,14 @@ FreeCAD will obtain a new extension for objects called the Variant Extension.
 The extension manages the contexts for property intercepts and triggers a
 recompute of the object that acts as source of the variant.  The contexts are
 pushed onto a stack to ensure that variants can contain other variants, for
-example, in an assembly.
+example in an assembly.
 
 #### Property Intercepts
 
-At the lowest level, before a read or write to a property is stored in the
-internal data structure of the property, the property intercept system will
-check whether there is a variant context on the stack.  If this is the case,
-the reads and writes will happen to that context.
+At the lowest level, the property intercept system will check whether there is
+a variant context on the stack before a read or write to a property is stored
+in the internal data structure of the property.  If this is the case, the reads
+and writes will happen to that context.
 
 This allows us to do a recompute on an object that acts as source for the
 variant part and use all of its logic to compute a new shape or outcome for the
@@ -352,9 +353,9 @@ Since these intercepts work at a very low level, no API change is needed.
 The `App::Link` system needs to be adapted to support exposed properties.
 Links already adopt the properties of the object they link to.  Links need to
 be aware of exposed properties and trigger a recompute via the variant
-extension.  The link system is complex code, but with these changes to it, the
-link system will get more code review and the inner workings become more known
-within the FreeCAD developer community.
+extension.  The link system is complex code, but with the anticipated changes
+to it, the link system will get more code review and the inner workings become
+more known within the FreeCAD developer community.
 
 ### Backwards Compatibility
 
@@ -408,9 +409,10 @@ and adapting `App::Link`.
 The implementation will start with a simple test with a VarSet that has two
 properties `sizeCube1` and `sizeCube2` that drive the sizes of two simple cubes
 respectively.  Then changing the property `sizeCube1` should only cause the
-first cube to be marked for recomputation and not the second.  This test
-currently fails in FreeCAD.  Currently, recomputation has no tests in FreeCAD.
-With this implementation, a test suite will be provided.
+first cube to be marked for recomputation and not the second.  This test would
+currently fail in FreeCAD.  As of now, FreeCAD has not tests for recomputation,
+but this implementation will provide a test suite for recomputation and
+dependency checking.
 
 For exposed properties, the flag `App::Property::Status::User4` will be changed
 to `App::Property::Status::Exposed`.  Please note that `User1`, `User2`, and
@@ -471,20 +473,20 @@ defined in any external workbench.
 
 The **variant extension** will be roughly like the one introduced in PR #19733
 [[9](#ref9)] in the form of `App::VariantExtension`.  On execution of a variant
-extension, the extension will obtain a topologically sorted outlist of the
-object $o$ of which this is a variant.  For each of these objects, a context
-will be created and pushed onto the stack for property intercept.  Then the
-object $o$ and its dependencies will be executed in these contexts.  The
-contexts will be popped of the stack and the variant link has been computed.
+extension, the extension will obtain a topologically sorted outlist of object
+$o$ of which this is a variant.  For each of these objects, a context will be
+created and pushed onto the stack for property intercept.  Then the object $o$
+and its dependencies will be executed in these contexts.  The contexts will be
+popped of the stack and the variant link has been computed.
 
-Different from PR #19733 that introduced a `Part::Variant` that extended
-`App::VariantExtension` and that only supported shape-based variants, in the
-proposed implementation, **`App::Link`** will extend `App::VariantExtension`
-and instead of property `Support` in `App::VariantExtension` of type
-`App::PropertyXLink`, the variant extension will make use of property
-`LinkedObject` of type `App::PropertyXLink` in `App::Link`.
+PR #19733 introduced a `Part::Variant` that extended `App::VariantExtension`
+that only supported shape-based variants.  However, in the proposed
+implementation, **`App::Link`** will extend `App::VariantExtension`.  Instead
+of property `Support` in `App::VariantExtension` of type `App::PropertyXLink`,
+the variant extension will make use of property `LinkedObject` of type
+`App::PropertyXLink` in `App::Link`.
 
-In PR #19733, the `Part::Variant` would adopt the exposed properties.  In the
+In PR #19733, the `Part::Variant` adopts the exposed properties.  In the
 proposed implementation that is not necessary any longer because `App::Link`
 already adopts the properties of the linked object.  However, `App::Link` must
 treat those properties in a different way.
@@ -501,11 +503,11 @@ as well.
 
 <!-- Any substantial changes to the FEP should be recorded in this section - latest changes should be on top: -->
 
-### 0.1 - 2025-10-01
+### 0.1 - 2025-10-05
 
 - Initial version
 
-## References (optional)
+## References
 
 1. <span name=ref1>Two videos explaining modularity problems in FreeCAD designs</span>: <https://github.com/FreeCAD/FreeCAD/pull/12532#issuecomment-1956491941>
 2. <span name=ref2>Forum post with videos of the 4 alternatives</span>: <https://forum.freecad.org/viewtopic.php?p=786692&sid=3e7a311d0f05b2f10697de4128d9b33f#p786692>
