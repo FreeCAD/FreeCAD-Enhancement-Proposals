@@ -3,9 +3,9 @@
 | FEP-0010       |                                                                                                                  |
 |----------------|------------------------------------------------------------------------------------------------------------------|
 | Type           | Core Change                                                                                                      |
-| Status         | Draft                                                                                                            |
+| Status         | Proposed                                                                                                         |
 | Author(s)      | Pieter Hijma @pieterhijma                                                                                        |
-| Version        | 0.2                                                                                                              |
+| Version        | 1.0                                                                                                              |
 | Created        | 2025-09-23                                                                                                       |
 | Updated        | 2025-10-10                                                                                                       |
 | Discussion     | [💬 Discussion FEP-0010: Variant Parts](https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/discussions/31) |
@@ -509,8 +509,9 @@ as well.
 
 ## Changelog
 
-- 0.2 (current) - Add a more precise definition of the dependency graph
-- [0.1](https://github.com/pieterhijma/FreeCAD-Enhancement-Proposals/blob/5b686e4103d64a53aecc9dd7105af5e672c1d3d7/FEPs/FEP-0010-variant-parts/README.md) Initial version
+- 1.0 (current) - Moved the proposal to proposed
+- [0.2](https://github.com/pieterhijma/FreeCAD-Enhancement-Proposals/blob/ecac8462b89132fea5c6ad49ee2edbb1f9041380/FEPs/FEP-0010-variant-parts/README.md) - Add a more precise definition of the dependency graph
+- [0.1](https://github.com/pieterhijma/FreeCAD-Enhancement-Proposals/blob/5b686e4103d64a53aecc9dd7105af5e672c1d3d7/FEPs/FEP-0010-variant-parts/README.md) - Initial version
 
 ## References
 
