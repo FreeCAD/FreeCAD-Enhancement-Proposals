@@ -5,9 +5,9 @@
 | Type           | Core Change                                                                                                      |
 | Status         | Draft                                                                                                            |
 | Author(s)      | Pieter Hijma @pieterhijma                                                                                        |
-| Version        | 0.1                                                                                                              |
+| Version        | 0.2                                                                                                              |
 | Created        | 2025-09-23                                                                                                       |
-| Updated        | 2025-10-05                                                                                                       |
+| Updated        | 2025-10-10                                                                                                       |
 | Discussion     | [💬 Discussion FEP-0010: Variant Parts](https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/discussions/31) |
 | Implementation | n/a                                                                                                              |
 
@@ -267,14 +267,17 @@ new information and only recomputes objects that depend on the property change.
 
 For dependency graph $G = (V, E)$ of a set of documents, the set of vertices $V$
 is defined by:
-1. All properties that inherit from `App::LinkBase` and
-2. special vertex "HEAD" that represents an object in its entirety.
+1. All properties and special vertex "HEAD" that represents an object in its
+   entirety.
 
 The set of directed edges $E \subseteq \lbrace (x, y) \mid (x, y) \in V^2 \text{ and } x \neq y \rbrace$
 is defined by the following relation:
-1. If $x \in V$ and $y \in V$ and $x$ links to $y$, then $(x, y) \in E$.
+1. If $x \in V$, $x$ inherits from `App::PropertyLinkBase`, $y \in V$ and $x$ links to $y$, then $(x, y) \in E$.
 2. If $x \in V$ and $y \in V$, $x = \text{ HEAD}$, $x$ represents object $o$, and $y$
-   is a property of $o$, then $(x, y) \in E$.
+   is a property of $o$, then $(x, y) \in E$ with the following exceptions:
+   1. $y$ is an output property.
+3. If $x \in V$ and $y \in V$, $x = \text{ HEAD}$, $x$ represents object $o$,
+   and $y$ is an output property $o$, then $(y, x) in E$.
 
 In FreeCAD $G$ should be acyclic to be able to do recomputes and a cycle is
 considered an erroneous state.
@@ -282,12 +285,17 @@ considered an erroneous state.
 #### Exposed properties
 
 Properties obtain a new status flag "Exposed" which indicates that a property
-can be considered outside of the object it is defined in.  More formally, we
-slightly adapt the second condition to the $E$ relation defined above:
+can be considered outside of the object it is defined in.  To define this, we
+add a second exception to clause 2. of the $E$ relation defined above:
+ii. $y$ is an exposed property.
 
-If $x \in V$ and $y \in V$, $x = \text{ HEAD}$, $x$ represents object $o$, and $y$
-is a property of $o$, then $(x, y) \in E$ **unless $y$ is exposed**.  This
-allows objects that depend on $o$ to link to $y$ without introducing cycles.
+Although this is sufficient to properly define the relation for exposed
+properties, for the sake of clarity we can explicitly add the following clause
+without changing the relation:
+
+If $x \in V$ and $y \in V$, $x = \text{ HEAD}$, $x$ represents object $o$, $y$
+is a property of $o$, and $y$ is exposed, then $(x, y) \notin E$.  This allows
+objects that depend on $o$ to link to $y$ without introducing cycles.
 
 An example of a dependency graph is listed below from [[4](#ref4)]: The blue
 property is an exposed property and since HEAD does not have an edge to
@@ -501,11 +509,8 @@ as well.
 
 ## Changelog
 
-<!-- Any substantial changes to the FEP should be recorded in this section - latest changes should be on top: -->
-
-### 0.1 - 2025-10-05
-
-- Initial version
+- 0.2 (current) - Add a more precise definition of the dependency graph
+- [0.1](https://github.com/pieterhijma/FreeCAD-Enhancement-Proposals/blob/5b686e4103d64a53aecc9dd7105af5e672c1d3d7/FEPs/FEP-0010-variant-parts/README.md) Initial version
 
 ## References
 
