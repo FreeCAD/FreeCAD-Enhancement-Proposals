@@ -33,6 +33,79 @@ It is proposed that:
 * patch releases to supported versions made monthly
 * a feature release is designated as an LTS release annually
 
+The following plot depicts the automated branching schedule and milestone releases:
+
+```mermaid
+gantt
+    title Release and Support Schedule
+    dateFormat YYYY-MM-DD
+    section 2026
+        2026.04 (LTS) :2026-01-01, 2026-01-01,2027-03-31
+        2026.04.00 :milestone, 2026-01-01, 2026-01-01
+        2026.04.01 :milestone, 2026-02-01, 2026-02-01
+        2026.04.02 :milestone, 2026-03-01, 2026-03-01
+        2026.04.03 :milestone, 2026-04-01, 2026-04-01
+        2026.04.04 :milestone, 2026-05-01, 2026-05-01
+        2026.04.05 :milestone, 2026-06-01, 2026-06-01
+        2026.04.06 :milestone, 2026-07-01, 2026-07-01
+        2026.04.07 :milestone, 2026-08-01, 2026-08-01
+        2026.04.08 :milestone, 2026-09-01, 2026-09-01
+        2026.04.09 :milestone, 2026-10-01, 2026-10-01
+        2026.04.10 :milestone, 2026-11-01, 2026-11-01
+        2026.04.11 :milestone, 2026-12-01, 2026-12-01
+        2026.04.12 :milestone, 2027-01-01, 2027-01-01
+        2026.04.13 :milestone, 2027-02-01, 2027-02-01
+        2026.04.14 :milestone, 2027-03-01, 2027-03-01
+
+        2026.07 :2026-07-01, 2026-04-01,2026-07-01
+        2026.07.00 :milestone, 2026-04-01, 2026-04-01
+        2026.07.01 :milestone, 2026-05-01, 2026-05-01
+        2026.07.02 :milestone, 2026-06-01, 2026-06-01
+        2026.07.03 :milestone, 2026-07-01, 2026-07-01
+
+        2026.10 :2026-10-01, 2026-07-01,2026-10-01
+        2026.10.00 :milestone, 2026-07-01, 2026-07-01
+        2026.10.01 :milestone, 2026-08-01, 2026-08-01
+        2026.10.02 :milestone, 2026-09-01, 2026-09-01
+        2026.10.03 :milestone, 2026-10-01, 2026-10-01
+
+    section 2027
+        2027.01 :2027-01-01, 2026-10-01,2027-01-01
+        2027.01.00 :milestone, 2026-10-01, 2026-10-01
+        2027.01.01 :milestone, 2026-11-01, 2026-11-01
+        2027.01.02 :milestone, 2026-12-01, 2026-12-01
+        2027.01.03 :milestone, 2027-01-01, 2027-01-01
+
+        2027.04 (LTS) :2027-01-01, 2027-01-01,2028-03-31
+        2027.04.00 :milestone, 2027-01-01, 2027-01-01
+        2027.04.01 :milestone, 2027-02-01, 2027-02-01
+        2027.04.02 :milestone, 2027-03-01, 2027-03-01
+        2027.04.03 :milestone, 2027-04-01, 2027-04-01
+```
+
+The following plot depicts the automated branching and cherry-picking of bugfix commits into a release branch:
+
+```mermaid
+gitGraph
+   commit id:"Feature 1"
+   commit id:"Feature 2"
+   branch "2026.04"
+   checkout main
+   commit id:"Feature 3"
+   commit id:"Feature 4"
+   commit id:"Bugfix 1"
+   checkout "2026.04"
+   cherry-pick id:"Bugfix 1"
+   checkout "main"
+   commit id:"Feature 5"
+   commit id:"Bugfix 2"
+   checkout "2026.04"
+   cherry-pick id:"Bugfix 2"
+   checkout "main"
+   commit id:"Feature 6"
+   commit id:"Feature 7"
+```
+
 ### Automated Release Branching
 
 At the beginning of a release window (quarter for feature release), a release branch is created automatically through the use of a GitHub cron workflow.  At the end of the release window, the release shall be made automatically with a tag with a GitHub cron workflow, if possible, and the next window shall open.
