@@ -5,9 +5,9 @@
 | Type           | Core Change                                                                                                      |
 | Status         | Proposed                                                                                                         |
 | Author(s)      | Pieter Hijma @pieterhijma                                                                                        |
-| Version        | 1.0                                                                                                              |
+| Version        | 1.1                                                                                                              |
 | Created        | 2025-09-23                                                                                                       |
-| Updated        | 2025-10-10                                                                                                       |
+| Updated        | 2025-11-08                                                                                                       |
 | Discussion     | [💬 Discussion FEP-0010: Variant Parts](https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/discussions/31) |
 | Implementation | n/a                                                                                                              |
 
@@ -30,7 +30,7 @@ parametric part with the following properties:
 
 In FreeCAD, it is virtually impossible to create parts with these properties.
 As a result, in FreeCAD, parametric design is limited.  It is not possible to
-reuse or exchange parts independently, and as such, parametric parts are not
+ reuse or exchange parts independently, and as such, parametric parts are not
 modular (see these videos [[1](#ref1)]).  This modularity in parametric designs
 is important because since FreeCAD is an open source application, seamless
 sharing and exchange of parts should be central to FreeCAD's mission.
@@ -166,8 +166,8 @@ property accesses and redirects these to temporary data structures.  A benefit
 of this system is that it gives FreeCAD support for variants at a very low
 level and only one mechanism is needed.  Additionally, this system has the
 potential to be used for concurrency because reads and writes can be captured
-temporarily.  A drawback of this approach is that each property type with each
-property access needs to be touched.
+temporarily.  A drawback of this approach is that the code of each property
+type with each property access needs to be touched.
 
 ### Chosen directions
 
@@ -199,9 +199,9 @@ maintaining copies are avoided.
 
 ## Specification
 
-In this section we provide the specification for variant parts with exposed
-properties, property intercepts, and providing the full subtree.  The exposed
-properties have the following goals:
+In this section we provide the specification for variant parts with
+fine-grained dependency checking, property intercepts, and providing the full
+subtree.  Fine-grained dependency checking has the following goals:
 1. Allow users to avoid cyclic dependencies without requiring the use of hidden
    references.
 2. Capture the design intent for parametric design.
@@ -210,7 +210,7 @@ properties have the following goals:
    some cases.
 
 Property intercepts allows us to act at a very low level of property access,
-ensuring that variant parts is supported by FreeCAD's core and avoiding full
+ensuring that variant parts are supported by FreeCAD's core and avoiding full
 copies that require complex administration.
 
 Subtree-based variants allow users to access the full subtree of the variants.
@@ -223,37 +223,42 @@ finally we discuss backward compatibility issues.
 
 ### User Perspective
 
-The user obtains a new type of property, namely **exposed properties**,
-properties that have a status flag "exposed".  Marking properties as exposed in
+The user obtains two new property types, namely **input properties**,
+properties that have a status flag "input" and **exposed properties**,
+properties that have a status flag "exposed".  Marking properties as input in
 obj $o$ ensures that these properties can be referenced within objects that are
-dependent on $o$ without introducing cyclic dependencies.  You can consider
-those properties to be outside of the object.  This eliminates the use of
-hidden references for the purpose of creating variants.
+dependent on $o$ without introducing cyclic dependencies.  Input properties
+should not be modified during recomputation of a document object.  Having input
+properties eliminates the need to create hidden references for the purpose of
+creating variants.
 
-The set of exposed properties define what I call the **Application Geometry Interface** [[3](#ref3)],
-the interface for geometry that defines how a part should be
-parameterized.  The Application Geometry Interface captures design intent in
-the context of parametric design.
+Only input properties can be exposed properties.  The set of exposed properties
+define the **Exposed Property Interface**, properties that define how a part
+should be parameterized for variants (previously called "Application Geometry
+Interface" [[3](#ref3)]).  The Exposed Property Interface captures design
+intent in the context of parametric design.
 
 In addition, links become aware of exposed properties.  The exposed properties
 are incorporated in the link and marked clearly as exposed.  Changing one of
 the exposed properties automatically creates a variant of the object that is
-linked to.
+linked to and only this variant will be changed.  In contrast, changing an
+input property of the variant or any other internal properties will change all
+variants of that part.
 
 Finally, the user will experience improved recomputes where a change of
 property $p$ in an object $o$ does not trigger recomputes for all objects that
 depend on $o$, but only the ones that depend on $p$:
 
-Given $n$ objects $o_1, \dots, o_n$ that depend an object $q$ by means of
+Given $n$ objects $o_1, \dots, o_n$ that depend on object $q$ by means of
 properties $p_1, \dots, p_n$ in $q$ where $x \in \lbrace 1,2,\dots,n \rbrace$ and
 $o_x$ only refers to $p_x$ and $p_x$ is only referred to by $o_x$, then
-changing one property $p_x$ of the set $\lbrace p_1, \dots, p_n \rbrace$ only recomputes $o_x$.
+changing a property $p_x$ of the set $\lbrace p_1, \dots, p_n \rbrace$ only recomputes $o_x$.
 
 ### Developer perspective
 
 From the viewpoint of the developer, dependency checking is changed, FreeCAD
-acquires exposed properties, a new extension to document objects is introduced,
-and the link code is adapted to exposed properties.
+acquires input and exposed properties, a new extension to document objects is
+introduced, and the link code is adapted to exposed properties.
 
 #### Dependency checking
 
@@ -277,33 +282,29 @@ is defined by the following relation:
    is a property of $o$, then $(x, y) \in E$ with the following exceptions:
    1. $y$ is an output property.
 3. If $x \in V$ and $y \in V$, $x = \text{ HEAD}$, $x$ represents object $o$,
-   and $y$ is an output property $o$, then $(y, x) in E$.
+   and $y$ is an output property $o$, then $(y, x) \in E$.
 
 In FreeCAD $G$ should be acyclic to be able to do recomputes and a cycle is
 considered an erroneous state.
 
-#### Exposed properties
+#### Input properties
 
-Properties obtain a new status flag "Exposed" which indicates that a property
-can be considered outside of the object it is defined in.  To define this, we
-add a second exception to clause 2. of the $E$ relation defined above:
-ii. $y$ is an exposed property.
+Properties obtain a new status flag "Input" which indicates that a property
+only serves as input to the document object and should not be modified in the
+recompute phase.  More precisely, in the recompute phase, an input property may
+be written by the expression engine execute phase to make sure that the input
+properties have the correct value if they are based on expressions.  Then in
+subsequent phases, input properties must not be written, that is, (1) in the
+recompute phase of the document object that includes the execute phase and (2)
+in the second expression engine execute phase that updates the values of the
+output properties.
 
-Although this is sufficient to properly define the relation for exposed
-properties, for the sake of clarity we can explicitly add the following clause
-without changing the relation:
-
-If $x \in V$ and $y \in V$, $x = \text{ HEAD}$, $x$ represents object $o$, $y$
-is a property of $o$, and $y$ is exposed, then $(x, y) \notin E$.  This allows
-objects that depend on $o$ to link to $y$ without introducing cycles.
-
-An example of a dependency graph is listed below from [[4](#ref4)]: The blue
-property is an exposed property and since HEAD does not have an edge to
-property Length, it is possible to link to Length from VarSet which depends on
-Part.
+An example of a dependency graph is listed below: The blue property is an input
+property and since HEAD has an edge to property Length of which we know for
+certain that Length cannot be modified by HEAD (so Length does not depend on
+HEAD), it is possible to link to Length from VarSet which depends on Part.
 
 ![](./assets/FEP-0010-property-deps.png)
-
 
 #### Variant Extension
 
@@ -380,13 +381,13 @@ An early specification with implementation exists for the idea of variant
 parts.  The **specification** focused on VarSets having a central role in
 defining the application programming interface in combination with `App::Part`.
 Both these objects would become "special" to support variants.  The
-specification of this is listed in issue #12531 [[5](#ref5)].  This idea is
+specification of this is listed in issue #12531 [[4](#ref4)].  This idea is
 rejected because it is not general enough.  Only `App::Part` objects with an
 exposed VarSet would become variants, while there are many other valid objects
 that may need to be variants.  An example is a simple cube that cannot contain
 a VarSet inside.
 
-The **implementation** is proposed in PR #12532 [[6](#ref6)].  This
+The **implementation** is proposed in PR #12532 [[5](#ref5)].  This
 implementation has been built on top of the existing logic of hidden
 references, rewriting expressions, and redirecting property access with adding
 special cases to object identifiers.  This implementation brought to light that
@@ -398,19 +399,19 @@ limitations, this implementation is rejected.
 ## Implementation
 
 A proof-of-concept has been created in the context of the FPA program "Research
-Variant Parts", the results of which are listed on the forum [[7](#ref7)].
+Variant Parts", the results of which are listed on the forum [[6](#ref6)].
 This proposal is a direct result of that project.  Other than what is proposed
-here, the proof-of-concept in PRs #18412, #19733, and #19735 [[8](#ref8),
-[9](#ref9), [10](#ref10)] has:
+here, the proof-of-concept in PRs #18412, #19733, and #19735 [[7](#ref7),
+[8](#ref8), [9](#ref9)] has:
 - the current dependency check with special cases as opposed to fine-grained dependency checks,
 - shape-based variants instead of subtree-based variants, and
 - property intercept has only been partially implemented (not for all
   properties).
 
 The implementation of this proposal will happen in two phases.  The first phase
-will focus on fine-grained recomputation and adding exposed properties.  The
-second phase will focus on adding property intercept, the variant extension,
-and adapting `App::Link`.
+will focus on fine-grained recomputation and adding input properties.  The
+second phase will focus on adding property intercept, exposed properties, the
+variant extension, and adapting `App::Link`.
 
 ### Phase 1: Fine-grained recomputation
 
@@ -418,24 +419,25 @@ The implementation will start with a simple test with a VarSet that has two
 properties `sizeCube1` and `sizeCube2` that drive the sizes of two simple cubes
 respectively.  Then changing the property `sizeCube1` should only cause the
 first cube to be marked for recomputation and not the second.  This test would
-currently fail in FreeCAD.  As of now, FreeCAD has not tests for recomputation,
+currently fail in FreeCAD.  As of now, FreeCAD has few tests for recomputation,
 but this implementation will provide a test suite for recomputation and
 dependency checking.
 
-For exposed properties, the flag `App::Property::Status::User4` will be changed
-to `App::Property::Status::Exposed`.  Please note that `User1`, `User2`, and
-`User3` are already in use for various purposes.  The exposed properties will
-be incorporated into the recomputation logic and tests will be provided for
-this as well.
+For input properties, the flag `App::Property::Status::User4` will be changed
+to `App::Property::Status::Input`.  Please note that `User1`, `User2`, and
+`User3` are already in use for various purposes.  The input properties will be
+incorporated into the recomputation logic and tests will be provided for this
+as well.
 
 ### Phase 2: Adding variant links
 
 The second phase will add the logic for acquiring variant links.  This is
-composed of adding property intercept, the variant extension, and incorporating
-the variant extension into `App::Link`.
+composed of adding property intercept, the variant extension, introducing a
+flag `App::Property::Status::Exposed` and incorporating the variant extension
+into `App::Link`.
 
 More background on **intercepting property access** can be found on the forum
-[[11](#ref11)].  A typical property access for a float property is listed below:
+[[10](#ref10)].  A typical property access for a float property is listed below:
 
 ```c++
 void PropertyFloat::setValue(double lValue)
@@ -480,7 +482,7 @@ change is local to the FreeCAD source and will work for any document object
 defined in any external workbench.
 
 The **variant extension** will be roughly like the one introduced in PR #19733
-[[9](#ref9)] in the form of `App::VariantExtension`.  On execution of a variant
+[[8](#ref8)] in the form of `App::VariantExtension`.  On execution of a variant
 extension, the extension will obtain a topologically sorted outlist of object
 $o$ of which this is a variant.  For each of these objects, a context will be
 created and pushed onto the stack for property intercept.  Then the object $o$
@@ -509,7 +511,8 @@ as well.
 
 ## Changelog
 
-- 1.0 (current) - Moved the proposal to proposed
+- 1.1 (current) - Separation of concerns between input and exposed properties
+- [1.0](https://github.com/pieterhijma/FreeCAD-Enhancement-Proposals/blob/f07841ca9c6228f6b1970d832b31f69482d13527/FEPs/FEP-0010-variant-parts/README.md) - Moved the proposal to proposed
 - [0.2](https://github.com/pieterhijma/FreeCAD-Enhancement-Proposals/blob/ecac8462b89132fea5c6ad49ee2edbb1f9041380/FEPs/FEP-0010-variant-parts/README.md) - Add a more precise definition of the dependency graph
 - [0.1](https://github.com/pieterhijma/FreeCAD-Enhancement-Proposals/blob/5b686e4103d64a53aecc9dd7105af5e672c1d3d7/FEPs/FEP-0010-variant-parts/README.md) - Initial version
 
@@ -518,14 +521,13 @@ as well.
 1. <span name=ref1>Two videos explaining modularity problems in FreeCAD designs</span>: <https://github.com/FreeCAD/FreeCAD/pull/12532#issuecomment-1956491941>
 2. <span name=ref2>Forum post with videos of the 4 alternatives</span>: <https://forum.freecad.org/viewtopic.php?p=786692&sid=3e7a311d0f05b2f10697de4128d9b33f#p786692>
 3. <span name=ref3>Forum post with video on an interface for geometry</span>: <https://forum.freecad.org/viewtopic.php?p=788072#p788072>
-4. <span name=ref4>Forum post with new dependency representation</span>: <https://forum.freecad.org/viewtopic.php?p=795719#p795719>
-5. <span name=ref5>Specification of exposing properties VarSets in App::Part</span> <https://github.com/FreeCAD/FreeCAD/issues/12531>
-6. <span name=ref6>PR #12532: Core: Enable exposing VarSets in App::Part</span>
-7. <span name=ref7>Forum post with the results of "Research Variant Parts"</span>: <https://forum.freecad.org/viewtopic.php?p=814501#p814501>
-8. <span name=ref8>PR #18412, Core: Allow exposing properties</span>: <https://github.com/FreeCAD/FreeCAD/pull/18412>
-9. <span name=ref9>PR #19733, Core: Compute shapes for variants</span>: <https://github.com/FreeCAD/FreeCAD/pull/19733>
-10. <span name=ref10>PR #19735, Gui: Add Part variant logic</span>: <https://github.com/FreeCAD/FreeCAD/pull/19735>
-11. <span name=ref11>Forum post with background on property intercept</span>: <https://forum.freecad.org/viewtopic.php?p=812491#p812491>
+4. <span name=ref4>Specification of exposing properties VarSets in App::Part</span> <https://github.com/FreeCAD/FreeCAD/issues/12531>
+5. <span name=ref5>PR #12532: Core: Enable exposing VarSets in App::Part</span>
+6. <span name=ref6>Forum post with the results of "Research Variant Parts"</span>: <https://forum.freecad.org/viewtopic.php?p=814501#p814501>
+7. <span name=ref7>PR #18412, Core: Allow exposing properties</span>: <https://github.com/FreeCAD/FreeCAD/pull/18412>
+8. <span name=ref8>PR #19733, Core: Compute shapes for variants</span>: <https://github.com/FreeCAD/FreeCAD/pull/19733>
+9. <span name=ref9>PR #19735, Gui: Add Part variant logic</span>: <https://github.com/FreeCAD/FreeCAD/pull/19735>
+10. <span name=ref10>Forum post with background on property intercept</span>: <https://forum.freecad.org/viewtopic.php?p=812491#p812491>
 
 ## License / Copyright
 
