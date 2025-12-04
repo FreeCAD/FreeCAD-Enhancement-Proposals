@@ -72,7 +72,7 @@ One alternative discussed in the forum is the automatic creation or injection of
 ## References
 
 - PR: [FreeCAD#23610](https://github.com/FreeCAD/FreeCAD/pull/23610)
-- Issue: [FreeCAD#22797](https://github.com/FreeCAD/FreeCAD/issues/22797)
+- Issue:
 - Process: [FEP-0001](https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/tree/master/FEPs/FEP-0001-process)
 - Forum discussion: [FreeCAD Forum Thread](https://forum.freecad.org/viewtopic.php?t=99744)
 
