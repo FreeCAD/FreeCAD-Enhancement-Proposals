@@ -3,7 +3,7 @@
 | FEP-0010       |                                                                                                                  |
 |----------------|------------------------------------------------------------------------------------------------------------------|
 | Type           | Core Change                                                                                                      |
-| Status         | Proposed                                                                                                         |
+| Status         | Accepted                                                                                                         |
 | Author(s)      | Pieter Hijma @pieterhijma                                                                                        |
 | Version        | 1.1                                                                                                              |
 | Created        | 2025-09-23                                                                                                       |
