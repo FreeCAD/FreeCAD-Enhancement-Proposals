@@ -7,7 +7,7 @@
 | Author(s)      | David Carter                                                                                    |
 | Version        | 0.1                                                                                             |
 | Created        | 2025-07-04                                                                                      |
-| Updated        | 2025-07-04                                                                                      |
+| Updated        | 2025-12-18                                                                                      |
 | Discussion     | https://forum.freecad.org/viewtopic.php?t=96071                                                 |
 | Implementation |                                                                                                 |
 
@@ -26,6 +26,12 @@ Enhancements
 - Materials: Material Libraries API needed https://github.com/FreeCAD/FreeCAD/issues/10898
 
 Issues
+- Material: Creating new material triggers 'Save Over' dialogue https://github.com/FreeCAD/FreeCAD/issues/25817
+- Material: Setting small values to a new property results in 0 https://github.com/FreeCAD/FreeCAD/issues/25804
+- Material: Editing and saving over existing custom material in user-created folder results in creating a copy https://github.com/FreeCAD/FreeCAD/issues/25802
+- Material: When Material with no appearance is applied, the appearance is not changed when another material is applied https://github.com/FreeCAD/FreeCAD/issues/25793
+- Material: Order of Appearance properties in the editor https://github.com/FreeCAD/FreeCAD/issues/23219
+- Material: Transparency in object property is displayed 100x the actual value https://github.com/FreeCAD/FreeCAD/issues/21271
 - Materials: Parameter editing in material editor almost impossible https://github.com/FreeCAD/FreeCAD/issues/19996
 - Material: Density unit incorrect https://github.com/FreeCAD/FreeCAD/issues/18870
 - Material: Ability to select incorrect unit https://github.com/FreeCAD/FreeCAD/issues/18272
@@ -52,6 +58,12 @@ The primary goals of the reworked editor include:
 
 ![](./assets/MaterialsEditor.png)
 
+### Scope
+
+This proposal covers only the materials editor. It does not cover all things materials such as implementation within the workbenches, assignments of materials or appearances to paarts, etc. While important those are separate topics warranting separate discussions. There is a lot of room for improvement across the board.
+
+Limiting the scope is essential for producing deliverable results.
+
 ### Libraries
 
 Libraries fall into two basic categories: local and remote.
@@ -71,10 +83,10 @@ The material tree will look similar to that of the current editor, but will be u
 ![](./assets/Toolbar.png)
 
 This is a new feature of the editor replacing the push buttons on the right pain. It includes common operations that can be enabled or disabled with context. From left to right, these actions are:
-- New Library
-- New Folder
 - New Material
 - New Material From Selected
+- New Library
+- New Folder
 - Cut
 - Copy
 - Paste
@@ -115,6 +127,12 @@ Materials and folders can be dragged to new locations within a library, or even 
 Basic search will be a simple substring match on the material folder or name. Selecting advanced search will allow the user to select more parameters for the search. For example, the search can match on property values or material tags depending on what the user selects.
 
 ![](./assets/Search.png)
+
+### Tag Widget
+
+Tags have been a part of the materials specification as part of the original design, but have not been supported in the materials editor due to time constraints. A generic Tags widget will support tag editing and added as a core widget. multiple tags are entered separated by commas, or singly ended when return is entered. They can be edited, or removed when the cross on the tag is selected.
+
+![](./assets/TagWidget.png)
 
 ### External Library Support
 
