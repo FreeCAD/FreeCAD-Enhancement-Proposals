@@ -7,7 +7,7 @@
 | Author(s)      | David Carter                                                                                    |
 | Version        | 0.1                                                                                             |
 | Created        | 2025-07-04                                                                                      |
-| Updated        | 2025-12-18                                                                                      |
+| Updated        | 2025-12-20                                                                                      |
 | Discussion     | https://forum.freecad.org/viewtopic.php?t=96071                                                 |
 | Implementation |                                                                                                 |
 
@@ -140,9 +140,9 @@ As mentioned previously, the editor will fully support materials saved in add on
 
 ### Impact on existing features / subsystems
 
-Local libraries are currently managed through preference pages. That will not be eliminated but will need updates to allow for multiple local libraries. Legacy modules may still use the cardutils.py Python module to list libraries and materials, so this will need to be updated as well.
+Local libraries are currently managed through preference pages. This will be removed from the preferences in favor of the updated editor.
 
-Legacy applications are still directed through the model and material managers for material data, so no change should be required to support external interfaces. This will need to be tested.
+Legacy applications are still directed through the model and material managers for material data, so no change should be required to support external interfaces.
 
 Existing consumers of material data should be unaffected by changes in the editor.
 
