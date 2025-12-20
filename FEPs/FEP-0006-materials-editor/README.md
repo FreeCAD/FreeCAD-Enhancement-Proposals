@@ -3,9 +3,9 @@
 | FEP-0006       |                                                                                                 |
 | -------------- | ----------------------------------------------------------------------------------------------- |
 | Type           | Core Change                                                                                     |
-| Status         | Draft                                                                                           |
+| Status         | Proposed                                                                                        |
 | Author(s)      | David Carter                                                                                    |
-| Version        | 0.1                                                                                             |
+| Version        | 1.0                                                                                             |
 | Created        | 2025-07-04                                                                                      |
 | Updated        | 2025-12-20                                                                                      |
 | Discussion     | https://forum.freecad.org/viewtopic.php?t=96071                                                 |
@@ -60,7 +60,7 @@ The primary goals of the reworked editor include:
 
 ### Scope
 
-This proposal covers only the materials editor. It does not cover all things materials such as implementation within the workbenches, assignments of materials or appearances to paarts, etc. While important those are separate topics warranting separate discussions. There is a lot of room for improvement across the board.
+This proposal covers only the materials editor. It does not cover all things materials such as implementation within the workbenches, assignments of materials or appearances to parts, etc. While important those are separate topics warranting separate discussions. There is a lot of room for improvement across the board.
 
 Limiting the scope is essential for producing deliverable results.
 
@@ -146,6 +146,12 @@ Legacy applications are still directed through the model and material managers f
 
 Existing consumers of material data should be unaffected by changes in the editor.
 
+| Component | Source Location |
+| --------- | --------------- |
+| TagWidget | Gui |
+| Editor | Mod/Maaterial/Gui |
+| External Interface | Mod/Material/App |
+
 ### Backwards Compatibility (only for Core Changes)
 
 No backwards compatibility issues are anticipated except as noted in the previous section. There are no changes to the material files or formats.
@@ -183,6 +189,10 @@ The interface to the materials system is through the ModelManager and MaterialMa
 ## References (optional)
 
 https://forum.freecad.org/viewtopic.php?t=96071
+
+Prototype: https://github.com/davesrocketshop/FreeCAD branch editor_tree_functions8
+
+Database external module: https://github.com/davesrocketshop/MaterialDB
 
 ## License / Copyright
 
