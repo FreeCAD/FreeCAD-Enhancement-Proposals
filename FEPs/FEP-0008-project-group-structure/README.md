@@ -4,7 +4,7 @@
 | ---------- | ----------------------------------------------- |
 | Type       | Process                                         |
 | Status     | Draft                                           |
-| Author(s)  | Kacper Donat @kadet1090 (maintainer, DWG, CQWG) |
+| Author(s)  | Kacper Donat @kadet1090 (maintainer, DWG, CQWG), Turan Furkan Topak @Reqrefusion |
 | Version    | 0.1                                             |
 | Created    | 2025-07-27                                      |
 | Updated    | TBD                                             |
