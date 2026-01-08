@@ -1,14 +1,14 @@
-| FEP-0002           |                                                                   |
-| ------------------ | ----------------------------------------------------------------- |
-| **Title**          | Asynchronous Document Recompute and Multithreading Infrastructure |
-| **Type**           | Core Change                                                       |
-| **Status**         | Draft                                                             |
-| **Author(s)**      | Joao Matos (tritao)                                               |
-| **Version**        | 0.1                                                               |
-| **Created**        | 2025-05-20                                                        |
-| **Updated**        | 2025-05-20                                                        |
-| **Discussion**     | TBD                                                               |
-| **Implementation** | TBD                                                               |
+| FEP-0002           |                                                                         |
+| ------------------ | ------------------------------------------------------------------------|
+| **Title**          | Asynchronous Document Recompute and Multithreading Infrastructure       |
+| **Type**           | Core Change                                                             |
+| **Status**         | Active                                                                  |
+| **Author(s)**      | Joao Matos (tritao)                                                     |
+| **Version**        | 0.2                                                                     |
+| **Created**        | 2025-05-20                                                              |
+| **Updated**        | 2026-01-08                                                              |
+| **Discussion**     | https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/discussions/34 |
+| **Implementation** | https://github.com/FreeCAD/FreeCAD/pull/21292                           |
 
 A proposal to introduce foundational asynchronous and multithreaded infrastructure in FreeCAD, improving UI responsiveness and paving the way for parallel document recomputation.
 
@@ -154,6 +154,10 @@ A proof-of-concept async recompute model using GIL-based locking approach exists
 ### 0.1 - 2025-05-20
 
 * Initial version sent as draft for feedback
+
+### 0.2 - 2026-01-08
+
+* Sent for discussion.
 
 ## References
 
