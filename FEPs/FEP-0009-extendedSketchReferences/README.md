@@ -63,10 +63,10 @@ The system replaces static coordinate assumptions with a dynamic resolution engi
 
 ### Impact on existing features / subsystems
 
-The proposed change is a **transparent generalization** of the existing coordinate resolution and linking logic. 
+The proposed change is a **transparent generalization** of the existing coordinate resolution and linking logic.
 
 * **No Negative Impact on Existing Workflows**: Since the modification expands the allowed link scope rather than restricting it, all current modeling techniques remain fully functional. Users can continue to use manual SubShapeBinders or work within single-body constraints exactly as they did before.
-* **Workbench and Addon Compatibility**: 
+* **Workbench and Addon Compatibility**:
     - **PartDesign**: This workbench is the primary beneficiary, achieving native multibody support without workarounds.
     - **Other Workbenches**: Any workbench utilizing the Sketcher or Attachment engine (e.g.,Part, BIM, SheetMetal) will automatically benefit from the expanded link scope without requiring code changes within the workbenches themselves.
 * **Safety through Generalization**: By resolving transformations at the core level (`GeoFeatureGroupExtension`), we ensure uniform behavior across the application without patching individual features.
