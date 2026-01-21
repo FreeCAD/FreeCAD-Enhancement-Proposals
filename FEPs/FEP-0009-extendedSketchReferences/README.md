@@ -47,19 +47,35 @@ The implementation within `GeoFeatureGroupExtension` and `AttachExtension` allow
 
 ## Specification
 
-### 1. Universal Container Transparency
+### Universal Container Transparency
 The `GeoFeatureGroupExtension` class, base for containers such as `Body`, `Part`, and `Boolean`, is now transparent by default.
 * **Class-Level Control**: Transparency is managed by the `setActsAsGroupBoundary(bool)` flag allowing links through their hierarchy.
 * **Flexible Architecture**: While the default is `false`, this mechanism serves as a safety valve to isolate container types that might require restrictions in the future.
 
-### 2. Generalized Coordinate Mapping
+### Generalized Coordinate Mapping
 The system replaces static coordinate assumptions with a dynamic resolution engine:
 * **Dynamic Relative Placement**: The system calculates the transformation matrix between source and target by traversing the parent hierarchy up to the nearest non-transparent boundary.
 * **Matrix Calculation**: Matrix inversion and multiplication are used to resolve final placement relative to external supports: $T_{rel} = T_{target}^{-1} \cdot T_{refGroup} \cdot T_{ref}$.
 
-### 3. Automated Recompute Propagation
+### Automated Recompute Propagation
 * **Deferred Notification**: Placement changes trigger a "deferred touch" on child objects, processed at the end of the transaction via `onCommitTransaction`.
 * **Sketcher Synchronization**: Specifically forces an update of the `ExternalGeometry` property, ensuring 2D constraints re-solve against the updated 3D spatial data of external references.
+
+### Impact on existing features / subsystems
+
+The proposed change is a **transparent generalization** of the existing coordinate resolution and linking logic. 
+
+* **No Negative Impact on Existing Workflows**: Since the modification expands the allowed link scope rather than restricting it, all current modeling techniques remain fully functional. Users can continue to use manual SubShapeBinders or work within single-body constraints exactly as they did before.
+* **Workbench and Addon Compatibility**: 
+    - **PartDesign**: This workbench is the primary beneficiary, achieving native multibody support without workarounds.
+    - **Other Workbenches**: Any workbench utilizing the Sketcher or Attachment engine (e.g.,Part, BIM, SheetMetal) will automatically benefit from the expanded link scope without requiring code changes within the workbenches themselves.
+* **Safety through Generalization**: By resolving transformations at the core level (`GeoFeatureGroupExtension`), we ensure uniform behavior across the application without patching individual features.
+
+### Backwards Compatibility (only for Core Changes)
+
+* **File Compatibility**: Existing files are not negatively affected. The generalized mapping logic is backward compatible with documents created in previous versions of FreeCAD.
+* **Workflow Continuity**: The change does not break existing Python scripts or macros. The resolution happens at the C++ core level, maintaining consistent behavior for high-level API calls.
+* **Migration**: No explicit migration of old data is required, as the new logic interprets the existing hierarchy more flexibly without changing the underlying data structure of old objects.
 
 ## Implementation
 
