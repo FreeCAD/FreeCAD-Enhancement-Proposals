@@ -102,5 +102,3 @@ One alternative discussed in the forum is the automatic creation or injection of
 - **Part**: A higher-level container providing a common coordinate system.
 - **SubShapeBinder**: A proxy for referencing geometry across Parts.
 - **GeoFeatureGroupExtension**: Base providing group behavior and link scoping.
-
-
