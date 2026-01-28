@@ -3,11 +3,11 @@
 | FEP-0006       |                                                                                                 |
 | -------------- | ----------------------------------------------------------------------------------------------- |
 | Type           | Core Change                                                                                     |
-| Status         | Proposed                                                                                        |
+| Status         | Active                                                                                        |
 | Author(s)      | David Carter                                                                                    |
 | Version        | 1.0                                                                                             |
 | Created        | 2025-07-04                                                                                      |
-| Updated        | 2025-12-20                                                                                      |
+| Updated        | 2026-01-28                                                                                      |
 | Discussion     | https://forum.freecad.org/viewtopic.php?t=96071                                                 |
 | Implementation |                                                                                                 |
 
