@@ -16,6 +16,7 @@ See Proposal [FEP-0001: FEP Process](./FEPs/FEP-0001-process/README.md) for a co
  - [FEP-0009: Sketch references](https://github.com/wsteffe/FreeCAD-Enhancement-Proposals/blob/FEP-00XX-partdesign-multibody-unified-cs/FEPs/FEP-0009-extendedSketchReferences/README.md)
 ### Active
  - [FEP-0001: FEP Process](./FEPs/FEP-0001-process/README.md) - Definition of the new FreeCAD Enhancement Process
+ - [FEP-0002: Asynchronous Document Recompute and Multithreading Infrastructure](https://github.com/tritao/FreeCAD-Enhancement-Proposals/blob/patch-1/FEP0002-Asynchronous-Document-Recompute-and-Multithreading-Infrastructure.md)
  - [FEP-0007: Consistent Language Across FreeCAD](./FEPs/FEP-0007-consistent-language/README.md)
 ### Accepted (awaiting implementation)
  - [FEP-0006: Materials Editor](./FEPs/FEP-0006-materials-editor/README.md)
