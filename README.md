@@ -14,6 +14,7 @@ See Proposal [FEP-0001: FEP Process](./FEPs/FEP-0001-process/README.md) for a co
  - [FEP-0005: Dependency and Platform Policy](https://github.com/hyarion/FreeCAD-Enhancement-Proposals/blob/dependency-policy/FEPs/FEP-XXXX-process.md)
  - [FEP-0008: Group Structure](https://github.com/kadet1090/FreeCAD-Enhancement-Proposals/blob/groups-in-freecad/FEPs/FEP-0008-project-group-structure/README.md)
  - [FEP-0009: Sketch references](https://github.com/wsteffe/FreeCAD-Enhancement-Proposals/blob/FEP-00XX-partdesign-multibody-unified-cs/FEPs/FEP-0009-extendedSketchReferences/README.md)
+ - [FEP-0011: Generic Collaboration Framework](https://github.com/pieterhijma/FreeCAD-Enhancement-Proposals/blob/generic-collaboration-framework/FEPs/FEP-0011-generic-collaboration-framework/README.md)
 ### Active
  - [FEP-0001: FEP Process](./FEPs/FEP-0001-process/README.md) - Definition of the new FreeCAD Enhancement Process
  - [FEP-0007: Consistent Language Across FreeCAD](./FEPs/FEP-0007-consistent-language/README.md)
