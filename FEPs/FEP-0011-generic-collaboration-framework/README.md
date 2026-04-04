@@ -5,26 +5,29 @@
 | Type           | Core Change                                                                                                                        |
 | Status         | Draft                                                                                                                              |
 | Author(s)      | Pieter Hijma @pieterhijma                                                                                                          |
-| Version        | 0.1                                                                                                                                |
+| Version        | 0.2                                                                                                                                |
 | Created        | 2026-01-25                                                                                                                         |
-| Updated        | 2026-03-03                                                                                                                         |
+| Updated        | 2026-04-04                                                                                                                         |
 | Discussion     | [💬 Discussion FEP-0011: Generic Collaboration Framework](https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/discussions/40) |
 | Implementation |                                                                                                                                    |
 
 This document proposes to add a generic collaboration framework to FreeCAD.
-The generic collaboration framework would become a new module inside FreeCAD
-that can be extended by external addons for specific use-cases.
+The generic collaboration framework is a new module inside FreeCAD that
+provides a standardized set of features for collaboration.  Although the
+generic collaboration framework is standalone and can be used as is, it can
+also be extended by external addons for specific use-cases while maintaining
+the possibility to provide collaboration between these external addons.
 
 ## Motivation
 
 <!-- Why the proposed change is needed. Links to affected issues / PRs are also welcome. -->
 
 Now that there are various initiatives (see below) that support or could
-benefit from collaboration features, it would be good to have a shared set of
-building blocks for collaboration.  These building blocks can then be reused by
-various different initiatives to ensure that not every project reinvents the
-wheel.  Additionally, another benefit is that FreeCAD will obtain a
-standardized set of features for collaboration.
+benefit from collaboration features, it would be good to have a shared and
+standardized set of building blocks for collaboration.  These building blocks
+can then be reused and extended by various different initiatives.  This ensures
+that 1) not every project needs to reinvent the wheel and 2) collaboration
+between those different initiatives remains possible.
 
 Current known initiatives that could benefit from a generic collaboration framework are:
 - [BCF plugin for FreeCAD](https://github.com/podestplatz/BCF-Plugin-FreeCAD),
@@ -56,40 +59,42 @@ features within FreeCAD.
 <!-- Why particular decisions were made in the proposal. -->
 
 An important design choice is to make a generic collaboration framework that is
-useable as is.  However, as explained in the Motivation section, the main idea
-is that the collaboration framework is extended by means of external addons
-that target specific use-cases.  As a collaborator of the Ondsel Server and its
-Addon, I would like to build on and add functionality to the collaboration
-framework for Lens-specific features.  As an example, Lens supports versions,
-so I would like to be able to extend the collaboration framework to allow users
-to refer to specific versions of a model.
+useable as is.  However, as explained in the Motivation section, an important
+goal is that the collaboration framework can be extended by means of external
+addons that target specific use-cases.  As a collaborator of the Ondsel Server
+and its Addon, I would like to build on and add functionality to the
+collaboration framework for Lens-specific features.  As an example, Lens
+supports versions, so I would like to be able to extend the collaboration
+framework to allow users to refer to specific versions of a model.
 
 The collaboration framework will be written mostly in Python because this
 allows external addons to understand how the collaboration framework works and
 how to extend it.  Small parts need to be written in C++ because the framework
 makes use of `App::AnnotationLabel` for annotations.  Because
-`App::AnnotationLabel` only supports absolute positioning, it is extended to to
+`App::AnnotationLabel` only supports absolute positioning, it is extended to
 associate annotation labels with the geometry, for example with faces or edges.
 This allows to reposition the geometry with the annotation labels to reposition
 itself as well.
 
-Since the main idea is that the collaboration framework is used by external
+Since an important goal is that the collaboration framework is used by external
 addons, the provided API is versioned to make sure that external addons can
 target a specific API version.  This allows the collaboration framework to
 evolve and introduce a new API version without breaking functionality of the
 external addons that use older API versions.
 
-[BuildingSMART](https://www.buildingsmart.org/) is an organization for open
-standards in the BIM field.  Besides their [IFC
-Standard](https://www.buildingsmart.org/standards/bsi-standards/industry-foundation-classes/),
-they also have the [BIM Collaboration Format
-(BCF)](https://www.buildingsmart.org/standards/bsi-standards/bim-collaboration-format/).
+An important design decision is that this generic collaboration framework is
+aligned with the [BIM Collaboration Format (BCF)
+standard](https://www.buildingsmart.org/standards/bsi-standards/bim-collaboration-format/).
+This standard is issued by [BuildingSMART](https://www.buildingsmart.org/), an
+organization for open standards in the BIM field that also introduced the [IFC
+Standard](https://www.buildingsmart.org/standards/bsi-standards/industry-foundation-classes/).
+
 FreeCAD has an (unmaintained) [external addon for
-BCF](https://github.com/podestplatz/BCF-Plugin-FreeCAD) and since this is an
-important standard, we made sure that this generic collaboration framework is
-aligned with the BCF standard and supports all that the BCF standard requires.
-With this generic collaboration framework, we could revise the old external
-addon to build on top of this work.
+BCF](https://github.com/podestplatz/BCF-Plugin-FreeCAD).  Since this was one of
+the first collaboration addons for FreeCAD, the collaboration features are
+baked in and cannot be easily reused.  The goal of this generic collaboration
+framework is to prevent such a situation and to make sure that the old external
+addon can be revised to build on top of this work.
 
 A distinct design decision of the BCF standard is that the comments are stored
 in `.bcf` files separate from the `.icf` files.  As opposed to that design
@@ -118,26 +123,28 @@ The generic collaboration framework is a new module called "Collaboration" that
 is part of the FreeCAD source code.  The collaboration framework provides
 several constructs to foster collaboration among users.  The main construct is
 a Topic.  A **Topic** is document object that is created by a user.  Optionally
-a topic has an **Annotation** in the 3D view with the topic title that can be
-globally positioned to mark geometry or can be attached to geometry.  The topic
-is a collection of **Comments** created by **Users**.  A sequence of comments
-is the main contents of a topic and forms a **History**.  A **Comment** is a
-string of text associated with a **Date**, **Time**, and **User**.  A **User**
-is someone who can be uniquely identified and distinguished from other users
-and is capable of making comments.  How users are represented can be customized
-(more on this later) but as a minimal implementation, users are identified by
-email addresses.  The history of comments inside topics allow users to discuss
-models.
+a topic has an **Annotation** in the 3D view with the topic title that can
+refer to geometry in two ways: It can be globally positioned or it can be
+attached to geometry.
+
+A topic is a collection of **Comments** created by **Users**.  A sequence of
+comments is the main contents of a topic and forms a **History**.  A
+**Comment** is a string of text associated with a **Date**, **Time**, and
+**User**.  A **User** is someone who can be uniquely identified and
+distinguished from other users and is capable of making comments.  How users
+are represented can be customized (more on this later) but as a minimal
+implementation, users are identified by email addresses.  The history of
+comments inside topics allow users to discuss models.
 
 As collaboration feature, users can make **Snapshots** of a model.  A
 **Snapshot** is a screenshot of the model in its current state.  Another
 collaboration feature is a **Viewpoint**, a camera position that can direct the
 user to view a model in a particular way.
 
-The text of a comment can contain **Links** that can reference various things.
-**Links** have a standardized set of things they can refer to, but it is also
+The text of a comment can contain **Links** that can reference various items.
+**Links** have a standardized set of items they can refer to, but it is also
 possible to have **Custom Links** which will be discussed in the next section.
-The standardized set of things that a link can refer to is:
+The standardized set of items that a link can refer to is:
 - other topics,
 - other comments,
 - snapshots,
@@ -148,7 +155,8 @@ Comments are entered by users in a text field that supports a subset of
 [Markdown](https://www.markdownguide.org/).  This allows users to easily create
 links or minor markup features such as making text bold.
 
-Links are created using the Markdown syntax.  The following URL schemes are used for the items above:
+Links are created using Markdown syntax.  The following URL schemes are used
+for the items above:
 - topics: `topic:identifier`,
 - comments: `comment:identifier`,
 - snapshots: `snapshot:identifier`,
@@ -157,10 +165,11 @@ Links are created using the Markdown syntax.  The following URL schemes are used
 
 ### Customization
 
-Although the proposed collaboration framework can be used as is, the main idea
-is that the generic collaboration framework is used by external addons to adapt
-the collaboration framework for specific use-cases.  We call these addons
-**Adaptors** that adapt the generic collaboration framework through an API.
+Although the proposed collaboration framework can be used as is, an important
+design goal is that the generic collaboration framework can be used by external
+addons to adapt the collaboration framework for specific use-cases.  We call
+these addons **Adaptors** that adapt the generic collaboration framework
+through an API.
 
 Since the API is specifically meant to be used by addons, the API is versioned
 to allow the API to evolve while ensuring that old versions of the API remain
@@ -238,6 +247,10 @@ When a document is opened in FreeCAD that does not have "My adaptor" installed,
 clicking a link with scheme `myadaptormodel` will give the user a message
 indicating that to view this link, "My adaptor" will have to be installed.
 
+Please note that all collaboration information is accessible and readable to
+all FreeCAD users, even though they don't have the correct adaptor installed,
+but to make use of the links, it is required to install the correct adaptor.
+
 The collaboration framework supports all features that are required for the
 [BIM Collaboration Framework
 v3.0](https://github.com/buildingSMART/BCF-XML/tree/release_3_0/Documentation).
@@ -274,6 +287,10 @@ support for comments yet and this is planned for subsequent PRs.
 ## Changelog (once more versions are released)
 
 <!-- Any substantial changes to the FEP should be recorded in this section - latest changes should be on top: -->
+
+### 0.2 - 2026-04-04
+
+- Emphasize that the generic collaboration framework can be used standalone as well.
 
 ### 0.1 - 2026-03-03
 
