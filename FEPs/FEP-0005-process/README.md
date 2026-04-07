@@ -6,7 +6,7 @@
 | Description    | Defines the baseline platform and dependency policy             |
 | Status         | Draft                                                           |
 | Author(s)      | Benjamin Nauck (hyarion)                                        |
-| Version        | 0.3                                                             |
+| Version        | 0.4                                                             |
 | Created        | 2025-05-12                                                      |
 | Discussion     | https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/discussions/ |
 | Implementation | Process enforced through maintainer policy and CI configuration |
@@ -38,6 +38,7 @@ This policy defines the **baseline development environment** that FreeCAD must r
 * Features that depend on newer libraries or APIs **must be conditionally compiled or included**, preserving compatibility with the baseline environment.
 * CI must include at least one build targeting the baseline Ubuntu LTS environment.
 * Core FreeCAD code must compile cleanly with **GCC**, **Clang**, and **MSVC**. This ensures cross-platform compatibility and prevents compiler-specific behavior. CI infrastructure should regularly test builds using all three compilers.
+* In cases where a critical dependency is **not available in the baseline LTS repositories** (e.g., PySide6 on Ubuntu 24.04), it is acceptable to rely on an **additional package source such as a PPA**, provided that FreeCAD can still be built and run on that platform. This should be treated as a **temporary contingency**, not a permanent arrangement, and should be documented alongside CI configuration so that contributors and packagers are aware of the additional requirement.
 * While development targets the baseline LTS environment, **official FreeCAD releases and pre-releases may be built using newer dependencies** to provide the best experience for end users. This does not change the requirement that core code must remain compatible with the baseline. Any features requiring newer APIs must remain guarded or compatible.
 
 ### Platform Scope
@@ -86,6 +87,7 @@ An alternative to using a dedicated GitHub team (`@FreeCAD/packaging-team`) for 
 * *0.1* – Initial draft
 * *0.2* – Clarified support window definition, added platform-wide dependency consistency policy, formalized LTS transition notice requirements
 * *0.3* - Simplified dependency change process, added GitHub team notification, added CI runner brownout as exceptional case
+* *0.4* - Added contingency clause for dependencies not available in baseline LTS repositories (e.g., PySide6 via PPA)
 
 ## References
 
