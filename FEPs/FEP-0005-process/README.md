@@ -1,14 +1,14 @@
-# FEP-XXXX: Dependency and Platform Policy
+# FEP-0005: Dependency and Platform Policy
 
-| FEP-XXXX       |                                                                 |
+| FEP-0005       |                                                                 |
 | -------------- | --------------------------------------------------------------- |
 | Type           | Process                                                         |
 | Description    | Defines the baseline platform and dependency policy             |
 | Status         | Draft                                                           |
 | Author(s)      | Benjamin Nauck (hyarion)                                        |
-| Version        | 0.2                                                             |
+| Version        | 0.3                                                             |
 | Created        | 2025-05-12                                                      |
-| Discussion     | \[To be created]                                                |
+| Discussion     | https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/discussions/ |
 | Implementation | Process enforced through maintainer policy and CI configuration |
 
 This FEP provides a long-term policy for baseline dependency expectations in FreeCAD development. It defines which operating systems and dependency versions FreeCAD targets for compatibility, based on the oldest currently supported Ubuntu LTS under standard support. This ensures broad accessibility, simplifies packaging, and clarifies expectations for developers and contributors.
@@ -46,28 +46,18 @@ Although this policy anchors compatibility to Ubuntu LTS, it **applies across al
 
 ### Dependency Changes
 
-* Any **new required dependency** (previously optional or new entirely) or **change to the minimum required version** of an existing dependency **must be announced four weeks in advance**, regardless of whether it exceeds the baseline LTS version.
-* These changes should be communicated at least through a GitHub Pull Request and linked discussion.
-* Pull Requests that change required dependencies or affect build configuration **must be labeled `packaging-impact`** to ensure visibility for downstream packagers. Contributors are encouraged to note this need in the PR description or comments if relevant.
-
-  * Tagging active packagers directly in the PR or related discussions is encouraged but optional.
-  * For broader visibility, significant changes may also be posted to the FreeCAD development forum or a dedicated packagers channel if one exists.
-* Authors must consider the impact on packaging and downstream distributions. Excessive burden on packagers should be avoided or clearly justified.
-* Dependency changes must include:
-  * Instructions or notes for packagers (e.g., new build options, system packages needed),
-  * Compatibility guards (e.g., fallback code or build conditionals), where practical.
-* Maintainers may delay or reject changes that create unreasonable challenges for downstream maintainers or violate this policy without clear justification.
-* In **exceptional cases** - such as security fixes, urgent regressions, or high-priority build issues - maintainers may approve and merge such changes without prior notification. In those cases, a good-faith effort should be made to notify affected packagers and document the change promptly after merging.
+* Any **new required dependency** or **change to the minimum required version** of an existing dependency should be communicated via a GitHub Pull Request labeled `Packaging/building`. The team `@FreeCAD/packaging-team` should be tagged to ensure visibility for downstream packagers.
+* PRs should include relevant context for packagers (e.g., new build options, system packages needed, fallback code or build conditionals) and avoid placing unnecessary burden on downstream distributions.
+* In **exceptional cases**, such as security fixes, urgent regressions, high-priority build issues, or **loss of CI runner availability** (e.g., GitHub beginning a brownout for a supported OS), maintainers may approve changes without prior notice. A good-faith effort should be made to notify affected packagers and document the change promptly after merging.
 
 ### Transitioning to New Ubuntu LTS Releases
 
-When the current Ubuntu LTS baseline reaches the end of its standard support period, maintainers **must announce a planned transition** to the next supported LTS release. This announcement should occur **at least four weeks in advance**, via:
+When the current Ubuntu LTS baseline reaches the end of its standard support period, maintainers **should announce a planned transition** to the next supported LTS release. This announcement should occur **at least four weeks in advance**, via:
 
-* A pinned GitHub issue in the FreeCAD repository labeled `packaging-impact`,
-* A post on the FreeCAD development forum, and
-* Optionally, a notification to a dedicated packagers channel or mailing list (if one exists).
+* A pinned GitHub issue in the FreeCAD repository labeled `Packaging/building` tagging `@FreeCAD/packaging-team`, and
+* A post on the FreeCAD development forum
 
-The announcement must include:
+The announcement should include:
 
 * The expected cutoff date,
 * The new target LTS version,
@@ -78,22 +68,24 @@ Contributors should be given time to adjust CI configurations, library usage, or
 #### Timing Considerations:
 Maintainers have discretion to choose **when** to transition to the next Ubuntu LTS, as long as the current baseline is no longer under standard support. The transition **should not occur during high-risk phases** of the FreeCAD development cycle, such as just before a major release or during complex refactorings. If practical, transitions should be aligned with minor release cycles or quieter development periods to reduce disruption.
 
+If a GitHub runner brownout forces an earlier transition, the normal notice period may be shortened, but maintainers should communicate the change promptly.
+
 ## Alternatives Considered
 
 An alternative approach would have been to explicitly define and independently maintain minimum versions for each dependency across all supported platforms. This was rejected due to the additional maintenance overhead and reduced predictability it would impose on packaging and CI environments. Anchoring to the oldest supported Ubuntu LTS offers a simpler and more consistent policy.
 
+An alternative to using a dedicated GitHub team (`@FreeCAD/packaging-team`) for notification would be to rely on individual outreach to known packagers, posting to external channels (forums, mailing lists) or an RSS feed. The team-based approach was preferred because it is low-friction and stays within the existing GitHub workflow.
+
 ## Future Work
 
-* Define guidelines for dropping support for older Ubuntu LTS versions (e.g., sunset grace period).
-* Consider introducing automated tooling or bots to assist maintainers in labeling PRs with `packaging-impact`.
-* Consider setting up an RSS feed for PRs labeled `packaging-impact` to improve visibility for downstream maintainers.
-* Consider formalizing a dedicated channel or mailing list to announce major packaging changes.
+* Consider introducing automated tooling or bots to assist maintainers in labeling PRs and pinging the packaging-team.
 * Evaluate whether it would be beneficial to shift the baseline from the **oldest** supported Ubuntu LTS to the **newest** available LTS, and clarify the implications for developers and packagers.
 
 ## Changelog
 
 * *0.1* – Initial draft
 * *0.2* – Clarified support window definition, added platform-wide dependency consistency policy, formalized LTS transition notice requirements
+* *0.3* - Simplified dependency change process, added GitHub team notification, added CI runner brownout as exceptional case
 
 ## References
 
