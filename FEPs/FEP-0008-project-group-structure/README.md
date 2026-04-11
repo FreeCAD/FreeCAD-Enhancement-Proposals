@@ -191,7 +191,7 @@ Short description of the group.
  * Task2
  * ...
 
-### Communication
+#### Communication
 
 Description of how to participate in discussions with the group, with links if needed.
 
@@ -285,13 +285,13 @@ The group consists mainly of UI/UX experts, not developers, so certain tasks are
 - Implementing suggestions in PRs
 - Providing advice on implementation details
 
-### Communication
+#### Communication
 
 Discord: https://discord.gg/PzYEBh5aA8
 
 Channels:
-- `#design-working-group` – general discussion
-- `#ux-topics` – topic-specific discussions
+- `#design-working-group` -- general discussion
+- `#ux-topics` -- topic-specific discussions
 
 #### Members
 
@@ -316,24 +316,60 @@ developer is not required but is an advantage.
 
 ### CAD Working Group (CWG)
 
-The main goal of CWG is to ensure that FreeCAD is developed in a way that makes it possible to use it
-in professional scenarios, aligning it with industry standards and ensuring that most daring issues
-are tackled first.
+The main goal of CWG is to ensure that FreeCAD is developed in a way that makes it possible to use it in professional scenarios, aligning it with industry standards and ensuring that most daring issues are tackled first.
+
+Due to FreeCAD nature, a part of the CWG is more inclined towards mechanical engineering aspects while an other part is more interested in civil engineering and architecture.
 
 #### Tasks of the group
- * Establishing CAD development roadmap
- * Providing feedback for new features
 
-### Communication
+* Providing feedback for feature changes and new features
+* Ensuring industrial standards are followed
+* Ensuring that industrial good practices are followed
+* Research missing features
+* Research strength and flaws to existing solution to make FreeCAD solutions better
+* Establishing and maintaining CAD development roadmap
 
-Description of how to participate in discussions with the group, with links if needed.
+#### Non-Tasks of the group
+
+The group consists mainly in CAD professionals, not developers, so certain tasks are out of scope:
+
+* Implementing suggestions in PRs
+* Providing advice on implementation details
+
+Members are free to perform these tasks but they would not count as CWG activity.
+
+#### Communication
+
+Discord: https://discord.gg/PzYEBh5aA8
+
+Channels:
+
+* `#cad-working-group` -- general discussion
+* `#cad-topics` -- topic-specific-discussions
 
 #### Members
- * @pierreporte (chair)
 
-##### Membership Requirements
+* @pierreporte (chair)
+* @maxwxyz (co-chair)
+* @yorikvanhavre
+* @kaiwas
+* @paullee0
+* @marcuspollio
+* @furgo16
+* @semhustej
+* @FEA-Eng
+* @tigert
 
-_(TBD)_
+#### Membership Requirements
+
+A member should:
+
+* Participate actively in CAD features discussions
+* Seek consensus, even if it son aligned with personal opinion
+* Provide feedback in line with good industry practices
+* Research multiple solutions before providing feedback
+
+The group seeks member with strong CAD experience. Working as an engineer, draftsman or architect is not required but strongly prefered.
 
 ### Code Quality Working Group (CQWG)
 
@@ -347,7 +383,7 @@ contributors write clean and maintainable code.
 - Creating guidelines for code reviewers
 - Providing advice to contributors on code quality
 
-### Communication
+#### Communication
 
 Discord: https://discord.gg/hDh4zxhkrw
 
