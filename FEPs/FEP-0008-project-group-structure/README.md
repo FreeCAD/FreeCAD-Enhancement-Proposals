@@ -238,13 +238,7 @@ on GitHub.
 ### Creating a New Task Force
 
 A Task Force may be created by any community member (typically the person leading an initiative) or
-by Maintainers, who can appoint a Leader. To create a Task Force, the Leader (or a Maintainer) must
-submit a PR to the Developer Handbook repository in the “Task Forces” section, following the
-template:
-
-```
-TBD
-```
+by Maintainers, who can appoint a Leader. The process of creating Task Forces will be defined as part of the Developer Handbook.
 
 ### Differences Between Working Groups and Task Forces
 
@@ -291,7 +285,8 @@ Discord: https://discord.gg/PzYEBh5aA8
 
 Channels:
 - `#design-working-group` -- general discussion
-- `#ux-topics` -- topic-specific discussions
+- `#ux-discussions` -- specific discussions
+- `#ux-reviews` -- review-specific discussions
 
 #### Members
 
@@ -360,7 +355,7 @@ Channels:
 * @FEA-Eng
 * @tigert
 
-#### Membership Requirements
+##### Membership Requirements
 
 A member should:
 
@@ -398,19 +393,15 @@ Channels:
 - @bensay
 - @tritao
 - @pieterhijma
+- @captain0xff
 
-##### How to become a member?
+##### Membership Requirements
 
 A member should:
 * Provide constructive PR reviews
 * Participate actively in code quality discussions
 * Seek the best possible solutions to problems
 * Keep in mind constraint of the existing codebase and costs associated with changes
-
-### Infrastructure Working Group (IWG)
-
-_(TBD)_
-
 
 ## References
 
