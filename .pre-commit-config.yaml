@@ -8,3 +8,11 @@ repos:
         types: [markdown]
       - id: check-yaml
       - id: check-added-large-files
+  - repo: local
+    hooks:
+      - id: update-readme
+        name: Update README.md with FEP listing
+        language: script
+        entry: contrib/update_readme.py
+        pass_filenames: false
+        always_run: true
