@@ -3,7 +3,7 @@
 | FEP-0006       |                                                                                                 |
 | -------------- | ----------------------------------------------------------------------------------------------- |
 | Type           | Core Change                                                                                     |
-| Status         | Active                                                                                        |
+| Status         | Accepted                                                                                        |
 | Author(s)      | David Carter                                                                                    |
 | Version        | 1.0                                                                                             |
 | Created        | 2025-07-04                                                                                      |
