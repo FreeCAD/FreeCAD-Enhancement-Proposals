@@ -6,7 +6,7 @@
 | Description        | Definition of the FreeCAD Enhancement Process                    |
 | Status             | Active                                                           |
 | Author(s)          | Kacper Donat (@kadet1090), Pieter Hijma (@pieterhijma)           |
-| Version            | 1.1                                                              |
+| Version            | 1.2                                                              |
 | Created            | 2025-02-15                                                       |
 | Discussion         | https://github.com/FreeCAD/FreeCAD-Enhancement-Proposals/pull/12 |
 | Discussion Started | 2025-05-20                                                       |
@@ -151,12 +151,18 @@ changes to the proposal. However, they should be versioned (using 0.x version) a
 
 ##### Discussion
 
-When the author deems that the proposal is finalized and ready for discussion, it should be moved
-to **Proposed** state and the version should be changed to 1.0. A discussion should be created in
-the "FEP Discussion" section of the Discussion forum where the topic should have the same name as
-FEP and PR. The author may chose to create a new topic or ask Maintainers to simply move the topic
-from the "FEP Ideas" section. Once this has been accomplished, the PR containing the FEP should be
-merged into the repository assuming there are no formal problems with the PR.
+When the author deems that the proposal is finalized and ready for discussion, they must first
+present it at a **Developers Meeting**. This presentation is a prerequisite for moving the FEP from
+**Draft** to **Proposed** stage. Preferably the author should present the FEP themselves; however,
+if that is not possible for any reason, the author may ask another contributor to present it on
+their behalf, or request the Maintainers team to do so.
+
+After the FEP has been presented at a Developers Meeting, it should be moved to **Proposed** state
+and the version should be changed to 1.0. A discussion should be created in the "FEP Discussion"
+section of the Discussion forum where the topic should have the same name as FEP and PR. The author
+may chose to create a new topic or ask Maintainers to simply move the topic from the "FEP Ideas"
+section. Once this has been accomplished, the PR containing the FEP should be merged into the
+repository assuming there are no formal problems with the PR.
 
 At any stage of the process, the author can move the FEP into the **Withdrawn** stage. If the
 author is not active anymore Maintainers may also choose to move **Proposed** FEP into
@@ -226,7 +232,8 @@ registered within the older one as well.
 - [0.1] - initial version
 - [0.2] - change vote decision process into consensus based one
 - [1.0] - first approved version
-- 1.1 (current) - change structure to keep each FEP in separate directories
+- 1.1 - change structure to keep each FEP in separate directories
+- 1.2 (current) - require Developer Meeting presentation before moving FEP from Draft to Proposed
 
 ## License
 
