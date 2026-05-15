@@ -5,18 +5,18 @@
 | Type           | Process                              |
 | Status         | Draft                                |
 | Author(s)      | @oursland, Kacper Donat (@kadet1090) |
-| Version        | 0.2                                  |
+| Version        | 0.3                                  |
 | Created        | 2025-06-24                           |
-| Updated        | 2026-04-11                           |
+| Updated        | 2026-05-15                           |
 | Discussion     |                                      |
 | Implementation |                                      |
 
 ## Abstract
 
-This FEP proposes a structured release schedule for FreeCAD consisting of three releases per year,
-one of which is designated as a Long-Term Support (LTS) release. It defines fixed branching dates,
-a stabilization period following each branch, a Release Candidate (RC) cycle, and distinct
-policies for LTS vs. normal releases.
+This FEP proposes a structured release schedule for FreeCAD consisting of three releases per year.
+One of these is designated as the quality-focused release with a light feature freeze applied
+before branching. It defines fixed branching dates, a CalVer-based versioning scheme,
+a stabilization period following each branch, and a Release Candidate (RC) cycle.
 
 ## Motivation
 
@@ -34,31 +34,61 @@ releases, and gives contributors a clear rhythm to work with.
   users to rely on unstable weekly builds.
 - Three releases per year balances development velocity with the capacity of a volunteer-driven
   project.
-- An LTS release once per year provides a stable target for professional users and organizations. It also aims to fix shortcomings of normal releases.
+- A quality-focused release once per year -- without any long-term support commitment -- provides
+  a stable and well-polished target for users who prioritize reliability.
 - Short, well-defined stabilization windows keep the project focused without long feature freezes
   that stall contributor momentum.
 
 ## Specification
 
+### Versioning Scheme
+
+FreeCAD shall adopt a CalVer-based versioning scheme of the form `YY.N`, where:
+
+- `YY` is the two-digit year of the `.1` quality-focused release (i.e., the year of the
+  January branch).
+- `N` is the sequential release number within that cycle (1, 2, or 3).
+
+Patch releases append a third component: `YY.N.P` (e.g. `27.1.1`).
+
+The first release under this scheme is `26.3`, branched on 30 September 2026. The first
+quality-focused release is `27.1`, branched on 31 January 2027. Each subsequent cycle begins
+on 31 January of the following year.
+
+Examples: `26.3`, `27.1`, `27.2`, `27.3`, `28.1`, `28.2`, `28.3`.
+
 ### Release Cadence
 
-FreeCAD shall produce three releases per year on a fixed schedule. One of these shall be
-designated the LTS release.
+FreeCAD shall produce three releases per year on a fixed schedule. One of these -- the `.1`
+release — is designated as the quality-focused release.
 
-Each release kind should get one patch release per month. For now the process shall remain manual
-but the automation should be considered at a later date without need of separate FEP. If no backport was made since last patch release - the release is skipped.
+Each release should get one patch release per month. For now the process shall remain manual,
+but automation should be considered at a later date without need of a separate FEP. If no
+backport was made since the last patch release, the patch release is skipped.
 
 ### Branching Dates
 
 Release branches are created on the following fixed dates each year:
 
-| Branch Date  | Release Type |
-| ------------ | ------------ |
-| 31 May       | Normal       |
-| 30 September | Normal       |
-| 31 January   | LTS          |
+| Branch Date  | Release | Type            |
+| ------------ | ------- | --------------- |
+| 31 January   | YY.1    | Quality-Focused |
+| 31 May       | YY.2    | Normal          |
+| 30 September | YY.3    | Normal          |
 
-Releases for normal types are expected to happen within 4-6 weeks period after branching with 2-3 RC release candidates. LTS release can take a bit more time due to more strict requirements in terms of stability.
+Releases are expected to ship within 4–6 weeks after branching, with 2-3 release candidates.
+
+### Light Feature Freeze
+
+In the four weeks preceding the `31 January` branching date, a light feature freeze applies
+to `main`:
+
+- Only improvements to already-merged work, bug fixes, and lower-risk features are accepted.
+- Large or speculative new features should be postponed to the next cycle.
+- The goal is that the `.1` quality-focused branch starts in a cleaner, more coherent state.
+
+A public announcement is made at the start of this light freeze to inform contributors and
+workbench developers.
 
 ### Stabilization Period
 
@@ -85,22 +115,38 @@ fixing regressions, and preparing release candidates.
   to the next release if it is not critical. Blockers resulting in data loss cannot be postponed.
 - There is no strict feature freeze on `main` during normal release windows.
 
-### LTS Releases
+### Quality-Focused Release
 
-- The LTS release window applies a light feature freeze: the focus is on bug fixes, stability
-  improvements, and completing work that was not resolved in previous normal releases.
-- Lower-risk features may be accepted, but the emphasis is on quality and stability rather than
-  new functionality.
-- All release blockers must be addressed before an LTS release ships: either fixed or explicitly
+- The quality-focused release (`.1`) applies a light feature freeze on `main` in the four weeks
+  before the branching date (see [Light Feature Freeze](#light-feature-freeze)).
+- On the release branch, the focus is on bug fixes, stability improvements, and completing work
+  that was not resolved in previous releases.
+- Lower-risk features may be accepted on the branch, but the emphasis is on quality and
+  coherence rather than new functionality.
+- All release blockers must be addressed before the release ships: either fixed or explicitly
   unmarked as blockers with documented rationale.
+- The quality-focused release carries no long-term support commitment. It is not an LTS release
+  although in rare cases it may receive additional patches.
 
 ### Backport Policy
 
-Each release is supported until the next release of the same kind is branched. This means backports target at most two active branches at any time (the latest normal release branch and the latest LTS release branch). Under normal circumstances, only bugfix patches should be cherry-picked to the release branch.  In special circumstances, a feature may be cherry-picked to the release branch, but it is a priority to ensure that this does not degrade the user experience of the release.
+Each release is supported until the next release branches. Only one release branch is actively
+maintained at any time. Under normal circumstances, only bugfix patches should be cherry-picked
+to the release branch. In special circumstances, a feature may be cherry-picked, but it must
+not degrade the user experience of the release.
 
 Backporting is aided by tooling such as
 [`backport-action`](https://github.com/korthout/backport-action): maintainers label PRs
-for backporting and the tooling cherry-picks them to the appropriate branches automatically. Contributors may aid maintainers with the choice by explicitly asking for backport.
+for backporting and the tooling cherry-picks them to the appropriate branches automatically.
+Contributors may aid maintainers with the choice by explicitly asking for a backport.
+
+### Transition Plan
+
+Following acceptance of this FEP, an announcement shall be made to inform contributors and
+the wider community of the new release schedule. The first branch under this scheme is
+`releases/26.3`, created on **30 September 2026**. This is a normal release; no light freeze
+applies before it. The first quality-focused release is `27.1`, branched on **31 January 2027**,
+with a light freeze announcement preceding that date by four weeks (around **1 January 2027**).
 
 ### Example Schedule
 
@@ -111,56 +157,66 @@ gantt
   axisFormat %b %Y
 
   section main
-  Ongoing development :active, 2026-01-01, 2027-06-30
+  Ongoing development       :active, 2026-08-01, 2028-06-30
+  Light freeze (27.1)       :2027-01-01, 2027-01-31
 
-  section releases/FreeCAD-1.2-lts
-  Stabilization          :2026-01-31, 2026-02-21
-  RC cycle               :2026-02-21, 2026-03-21
-  1.2.0 (lts)            :milestone, 2026-03-21, 0d
-  1.2.1 (lts)            :milestone, 2026-04-21, 0d
-  1.2.2 (lts)            :milestone, 2026-05-21, 0d
-  1.2.3 (lts)            :milestone, 2026-06-21, 0d
-  1.2.4 (lts)            :milestone, 2026-07-21, 0d
-  1.2.5 (lts)            :milestone, 2026-08-21, 0d
-  1.2.6 (lts)            :milestone, 2026-09-21, 0d
-  1.2.7 (lts)            :milestone, 2026-10-21, 0d
-  1.2.8 (lts)            :milestone, 2026-11-21, 0d
-  1.2.9 (lts)            :milestone, 2026-12-21, 0d
-  1.2.10 (lts)           :milestone, 2027-01-21, 0d
+  section releases/26.3
+  Stabilization             :2026-09-30, 2026-10-21
+  RC cycle                  :2026-10-21, 2026-11-18
+  26.3.0                    :milestone, 2026-11-18, 0d
+  26.3.1                    :milestone, 2026-12-18, 0d
+  26.3.2                    :milestone, 2027-01-18, 0d
 
-  section releases/FreeCAD-1.3
-  Stabilization          :2026-05-31, 2026-06-21
-  RC cycle               :2026-06-21, 2026-07-19
-  1.3.0                  :milestone, 2026-07-19, 0d
-  1.3.1                  :milestone, 2026-08-19, 0d
-  1.3.2                  :milestone, 2026-09-19, 0d
+  section releases/27.1
+  Stabilization             :2027-01-31, 2027-02-21
+  RC cycle                  :2027-02-21, 2027-03-21
+  27.1.0 (quality-focused)  :milestone, 2027-03-21, 0d
+  27.1.1                    :milestone, 2027-04-21, 0d
+  27.1.2                    :milestone, 2027-05-21, 0d
 
-  section releases/FreeCAD-1.4
-  Stabilization          :2026-09-30, 2026-10-21
-  1.4.0                  :milestone, 2026-12-18, 0d
-  1.4.1                  :milestone, 2026-12-18, 0d
-  1.4.2                  :milestone, 2027-01-18, 0d
+  section releases/27.2
+  Stabilization             :2027-05-31, 2027-06-21
+  RC cycle                  :2027-06-21, 2027-07-19
+  27.2.0                    :milestone, 2027-07-19, 0d
+  27.2.1                    :milestone, 2027-08-19, 0d
+  27.2.2                    :milestone, 2027-09-19, 0d
+
+  section releases/27.3
+  Stabilization             :2027-09-30, 2027-10-21
+  RC cycle                  :2027-10-21, 2027-11-18
+  27.3.0                    :milestone, 2027-11-18, 0d
+  27.3.1                    :milestone, 2027-12-18, 0d
+  27.3.2                    :milestone, 2028-01-18, 0d
+
+  section releases/28.1
+  Stabilization             :2028-01-31, 2028-02-21
+  RC cycle                  :2028-02-21, 2028-03-21
+  28.1.0 (quality-focused)  :milestone, 2028-03-21, 0d
 ```
 
 ### Impact on existing features / subsystems
 
-This FEP will put additional strain on Release Manager due to increased release frequency. Most of the work can be automated after the proposal is successfully implemented and validated.
+This FEP will put additional strain on Release Manager due to increased release frequency.
+Most of the work can be automated after the proposal is successfully implemented and validated.
+Switching to CalVer requires existing references to FreeCAD versioning to be updated
+in documentation and tooling.
 
 ## Further Work (optional)
 
-### Change to versioning scheme
+### Blocker Definition
 
-This proposal does not specify a versioning scheme. CalVer (e.g. `26.1`) is a natural fit
-for a date-anchored release cycle and is recommended, but the choice of versioning scheme is
-left to a separate FEP or amendment to this one.
+This proposal does not define what constitutes a "blocker" issue. A narrow, well-agreed
+definition would reduce the risk of prolonged stabilization periods. Defining blocker criteria
+is deferred to a separate FEP or amendment to avoid stalling adoption of this schedule.
 
-### Automated Branching
+### Automated Branching and Releasing
 
 Release branches can be created automatically via a GitHub cron workflow on each branching date.
 Automatic tagging and release shall only occur when no open blocker issues are present on the
 release branch.
 
-This can be done after we validate and stabilize the proposal and shall not be considered as change requiring separate FEP.
+This can be done after we validate and stabilize the proposal and shall not be considered a
+change requiring a separate FEP.
 
 ## References
 

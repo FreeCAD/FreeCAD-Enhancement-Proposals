@@ -8,10 +8,9 @@ See Proposal [FEP-0001: FEP Process](./FEPs/FEP-0001-process/README.md) for a co
 ## FEPs
 ### Proposed
  - [FEP-0002: Asynchronous Document Recompute and Multithreading Infrastructure](https://github.com/tritao/FreeCAD-Enhancement-Proposals/blob/patch-1/FEPs/FEP-0002-async-document-recompute/README.md)
- - [FEP-0003: FreeCAD Release Schedule and Process - Alternative](https://github.com/kadet1090/FreeCAD-Enhancement-Proposals/blob/pull-16/FEPs/FEP-0003-release-schedule/README.md)
  - [FEP-0008: Project Group Structure](https://github.com/kadet1090/FreeCAD-Enhancement-Proposals/blob/groups-in-freecad/FEPs/FEP-0008-project-group-structure/README.md)
 ### Draft
- - [FEP-0003: FreeCAD Release Schedule and Process](https://github.com/oursland/FreeCAD-Enhancement-Proposals/blob/FEP-0002/FEPs/FEP-0003-release-schedule/README.md)
+ - [FEP-0003: FreeCAD Release Schedule and Process](./FEPs/FEP-0003-release-schedule/README.md) - ## Abstract
  - [FEP-0004: Python API Versioning.](https://github.com/oursland/FreeCAD-Enhancement-Proposals/blob/FEP-0003/FEPs/FEP-0004-python-api-versioning/README.md)
  - [FEP-0005: Dependency and Platform Policy](https://github.com/hyarion/FreeCAD-Enhancement-Proposals/blob/dependency-policy/FEPs/FEP-0005-process/README.md)
  - [FEP-0009: Sketch references (External Geometry & Attachment Supports) across Bodies and Parts](https://github.com/wsteffe/FreeCAD-Enhancement-Proposals/blob/FEP-00XX-partdesign-multibody-unified-cs/FEPs/FEP-0009-extendedSketchReferences/README.md)
