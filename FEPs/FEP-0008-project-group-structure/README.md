@@ -63,29 +63,7 @@ final decision.
 
 ### Current Project Maintainers
 
-In alphabetical order:
-
-- Adrián Insaurralde Avalos (@adrianinsaval)
-- Benjamin Nauck (@hyarion)
-- **Brad Collette** (@sliptonic)
-- **Chris Hennes** (@chennes)
-- Kacper Donat (@kadet1090)
-- @Roy-043
-- @WandererFan
-- **Werner Mayer** (@wwmayer)
-- **Yorik van Havre** (@yorik)
-
-**Bolded** names indicate Project Administrators.
-
-#### Inactive Maintainers
-
-Some Maintainers who were once active are no longer participating in development. While they do not
-lose their Maintainer status, those who are inactive for an extended period will have their write
-access temporarily suspended for security reasons. Access is restored if and when they return.
-
-Current list of inactive maintainers:
-
-- ...
+The current project Maintainers team can be viewed on the GitHub organization: https://github.com/orgs/FreeCAD/teams/maintainers
 
 ### How to Become a Maintainer
 
@@ -290,12 +268,7 @@ Channels:
 
 #### Members
 
-- @obelisk79 (chairperson)
-- @kadet1090 (co-chair)
-- @maxwxyz (co-chair)
-- @pierreporte
-- @MisterMakerNL
-- @tigert
+The list of current Design Working Group members can be viewed here: https://github.com/orgs/FreeCAD/teams/design-working-group
 
 ##### Membership Requirements
 
@@ -344,16 +317,7 @@ Channels:
 
 #### Members
 
-* @pierreporte (chair)
-* @maxwxyz (co-chair)
-* @yorikvanhavre
-* @kaiwas
-* @paullee0
-* @marcuspollio
-* @furgo16
-* @semhustej
-* @FEA-Eng
-* @tigert
+The list of current CAD Working Group members can be viewed here: https://github.com/orgs/FreeCAD/teams/cad-working-group
 
 ##### Membership Requirements
 
@@ -388,12 +352,7 @@ Channels:
 
 #### Members
 
-- @kadet1090 (chairperson)
-- @hyarion (co-chair)
-- @bensay
-- @tritao
-- @pieterhijma
-- @captain0xff
+The list of current Code Quality Working Group members can be viewed here: https://github.com/orgs/FreeCAD/teams/code-quality-working-group
 
 ##### Membership Requirements
 
