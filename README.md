@@ -15,7 +15,7 @@ See Proposal [FEP-0001: FEP Process](./FEPs/FEP-0001-process/README.md) for a co
  - [FEP-0011: Generic Collaboration Framework](https://github.com/pieterhijma/FreeCAD-Enhancement-Proposals/blob/generic-collaboration-framework/FEPs/FEP-0011-generic-collaboration-framework/README.md)
 ### Active
  - [FEP-0001: FEP Process](./FEPs/FEP-0001-process/README.md) - Definition of the FreeCAD Enhancement Process
- - [FEP-0003: FreeCAD Release Schedule and Process](./FEPs/FEP-0003-release-schedule/README.md) - ## Abstract
+ - [FEP-0003: FreeCAD Release Schedule and Process](./FEPs/FEP-0003-release-schedule/README.md) - Defines a three-release-per-year CalVer schedule for FreeCAD.
  - [FEP-0007: Consistent Language Across FreeCAD](./FEPs/FEP-0007-consistent-language/README.md) - This document defines consistent rules for user-facing text in FreeCAD: menu items, toolbars, dialogs, tooltips, input hints, and other strings.
  - [FEP-0008: Project Groups Structure](./FEPs/FEP-0008-project-group-structure/README.md) - FreeCAD, as a project, has not historically had a well-defined management or responsibility structure.
 ### Accepted (awaiting implementation)

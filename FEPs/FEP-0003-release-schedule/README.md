@@ -11,6 +11,8 @@
 | Discussion     | 2026-05-16                           |
 | Implementation | 2026-06-07                           |
 
+Defines a three-release-per-year CalVer schedule for FreeCAD.
+
 ## Abstract
 
 This FEP proposes a structured release schedule for FreeCAD consisting of three releases per year.
