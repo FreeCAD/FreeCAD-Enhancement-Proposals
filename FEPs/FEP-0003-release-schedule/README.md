@@ -3,13 +3,13 @@
 | FEP-0003       |                                      |
 | -------------- | ------------------------------------ |
 | Type           | Process                              |
-| Status         | Draft                                |
+| Status         | Active                               |
 | Author(s)      | @oursland, Kacper Donat (@kadet1090) |
-| Version        | 0.3                                  |
+| Version        | 1.0                                  |
 | Created        | 2025-06-24                           |
 | Updated        | 2026-05-15                           |
-| Discussion     |                                      |
-| Implementation |                                      |
+| Discussion     | 2026-05-16                           |
+| Implementation | 2026-06-07                           |
 
 ## Abstract
 
