@@ -3,12 +3,13 @@
 | FEP-0008   |                                                 |
 | ---------- | ----------------------------------------------- |
 | Type       | Process                                         |
-| Status     | Draft                                           |
+| Status     | Active                                          |
 | Author(s)  | Kacper Donat @kadet1090 (maintainer, DWG, CQWG), Turan Furkan Topak @Reqrefusion |
-| Version    | 0.1                                             |
+| Version    | 1.0                                             |
 | Created    | 2025-07-27                                      |
-| Updated    | TBD                                             |
-| Discussion | TBD                                             |
+| Updated        | 2026-06-04                                  |
+| Discussion     | 2026-05-16                                  |
+| Implementation | 2026-06-07                                  |
 
 FreeCAD, as a project, has not historically had a well-defined management or responsibility
 structure. Over time, however, some structures have organically emerged in the form of **Working
