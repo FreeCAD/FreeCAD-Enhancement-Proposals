@@ -176,8 +176,7 @@ Description of how to participate in discussions with the group, with links if n
 #### Members
  * @chairperson (chairperson)
  * @cochair1 (co-chair)
- * @member1
- * @member2
+ * Link to the GitHub team
 
 ##### Membership Requirements
 
