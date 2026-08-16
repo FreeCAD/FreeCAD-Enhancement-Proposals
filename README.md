@@ -13,7 +13,7 @@ See Proposal [FEP-0001: FEP Process](./FEPs/FEP-0001-process/README.md) for a co
  - [FEP-0005: Dependency and Platform Policy](https://github.com/hyarion/FreeCAD-Enhancement-Proposals/blob/dependency-policy/FEPs/FEP-0005-process/README.md)
  - [FEP-0009: Sketch references (External Geometry & Attachment Supports) across Bodies and Parts](https://github.com/wsteffe/FreeCAD-Enhancement-Proposals/blob/FEP-00XX-partdesign-multibody-unified-cs/FEPs/FEP-0009-extendedSketchReferences/README.md)
  - [FEP-0011: Generic Collaboration Framework](https://github.com/pieterhijma/FreeCAD-Enhancement-Proposals/blob/generic-collaboration-framework/FEPs/FEP-0011-generic-collaboration-framework/README.md)
- - [FEP-0012: Add FEP-0012 - Gating Network Access](https://github.com/chennes/FreeCAD-Enhancement-Proposals/blob/FEP-0012-gating-network-access/FEPs/FEP-0012-gating-network-access/README.md)
+ - [FEP-0012: Gating Network Access](https://github.com/chennes/FreeCAD-Enhancement-Proposals/blob/FEP-0012-gating-network-access/FEPs/FEP-0012-gating-network-access/README.md)
 ### Active
  - [FEP-0001: FEP Process](./FEPs/FEP-0001-process/README.md) - Definition of the FreeCAD Enhancement Process
  - [FEP-0003: FreeCAD Release Schedule and Process](./FEPs/FEP-0003-release-schedule/README.md) - Defines a three-release-per-year CalVer schedule for FreeCAD.
