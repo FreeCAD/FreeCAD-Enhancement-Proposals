@@ -16,6 +16,7 @@ See Proposal [FEP-0001: FEP Process](./FEPs/FEP-0001-process/README.md) for a co
  - [FEP-0012: Gating Network Access](https://github.com/chennes/FreeCAD-Enhancement-Proposals/blob/FEP-0012-gating-network-access/FEPs/FEP-0012-gating-network-access/README.md)
  - [FEP-0013: Visual Diffs](https://github.com/pieterhijma/FreeCAD-Enhancement-Proposals/blob/visual-diffs/FEPs/FEP-0013-visual-diffs/README.md)
  - [FEP-0014: Forms](https://github.com/PaddleStroke/FreeCAD-Enhancement-Proposals/blob/forms/FEPs/FEP-0014-Forms/README.md)
+ - [FEP-0015: Icon Theming](./FEPs/FEP-0015-icon-theming/README.md) - Defines a new solution for icon themes and recolored pixmaps in FreeCAD.
 ### Active
  - [FEP-0001: FEP Process](./FEPs/FEP-0001-process/README.md) - Definition of the FreeCAD Enhancement Process
  - [FEP-0003: FreeCAD Release Schedule and Process](./FEPs/FEP-0003-release-schedule/README.md) - Defines a three-release-per-year CalVer schedule for FreeCAD.
